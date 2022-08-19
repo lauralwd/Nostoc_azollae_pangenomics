@@ -1,4 +1,4 @@
-name: minimap2
+name: flye
 channels:
   - bioconda
 dependencies:
