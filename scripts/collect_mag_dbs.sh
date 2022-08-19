@@ -1,5 +1,5 @@
 #!/bin/bash
-mkdir  data/MAG_anvi_dbs/ 
+mkdir  data/MAG_anvi_dbs/ 2> /dev/null
 # get contigdbs
 cp --reflink=always /stor/azolla_metagenome/Azolla_genus_metagenome/data/assembly_hybrid_doublefiltered_anvio/Azfil_wild/Azfil_wild_contigs.db		             data/MAG_anvi_dbs/
 cp --reflink=always /stor/azolla_metagenome/Azolla_genus_metagenome/data/assembly_hybrid_doublefiltered_anvio/Azfil_lab/Azfil_lab_contigs.db		               data/MAG_anvi_dbs/
