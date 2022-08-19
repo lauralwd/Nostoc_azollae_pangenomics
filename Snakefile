@@ -94,3 +94,55 @@ rule map_nanopore_data:
              2>> {log.stderr} \
              > {output.bam}
     """
+
+rule map_all_nanopore_data:
+  input:
+    expand("data/nanopore_mapped/{nanopore_host}_mapped.bam",nanopore_host=NANOPORE)
+
+rule get_Nazollae_nanopore_reads:
+  input:
+    bam=  "data/nanopore_mapped/{nanopore_host}_mapped.bam"
+  output:
+    fastq="data/nanopore_filtered/{nanopore_host}_Nazollae_reads.fastq.gz"
+  log:
+    ="logs/get_Nazollae_nanopore_reads_{nanopore_host}.stderr"
+  shell:
+    """
+    samtools view {input.bam}   \
+                  'ENA|CP002059|CP002059.1' 'ENA|CP002060|CP002060.1' 'ENA|CP002061|CP002061.1' \
+    | samtools fastq -0            \
+    pigz -p {threads} > {output.fastq}          \
+    2> {log.stderr}
+    """
+
+rule get_chloroplast_nanopore_reads:
+  input:
+    bam=  "data/nanopore_mapped/{nanopore_host}_mapped.bam"
+  output:
+    fastq="data/nanopore_filtered/{nanopore_host}_chloroplast_reads.fastq.gz"
+  log:
+    ="logs/get_chloroplast_nanopore_reads_{nanopore_host}.stderr"
+  shell:
+    """
+    samtools view {input.bam}   \
+                  'Azolla_cp_v1_4' \
+    | samtools fastq -0            \
+    pigz -c -p {threads} > {output.fastq}          \
+    2> {log.stderr}
+    """
+
+rule get_mitochondrium_nanopore_reads:
+  input:
+    bam=  "data/nanopore_mapped/{nanopore_host}_mapped.bam"
+  output:
+    fastq="data/nanopore_filtered/{nanopore_host}_mitochondrium_reads.fastq.gz"
+  log:
+    ="logs/get_mitochondrium_nanopore_reads_{nanopore_host}.stderr"
+  shell:
+    """
+    samtools view {input.bam}   \
+                  'Azolla_cp_v1_4' \
+    | samtools fastq -0            \
+    pigz -p {threads} > {output.fastq}          \
+    2> {log.stderr}
+    """
