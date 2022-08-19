@@ -1,0 +1,19 @@
+[M::main::1.979*1.00] loaded/built the index for 3849 target sequence(s)
+[M::mm_mapopt_update::2.500*1.00] mid_occ = 907
+[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 3849
+[M::mm_idx_stat::2.888*1.00] distinct minimizers: 33459331 (62.13% are singletons); average occurrences: 3.537; average spacing: 5.309; total length: 628367066
+[M::worker_pipeline::131.761*10.82] mapped 197949 sequences
+[M::worker_pipeline::231.106*11.13] mapped 184857 sequences
+[M::worker_pipeline::335.253*11.22] mapped 188592 sequences
+[M::worker_pipeline::434.029*11.29] mapped 200571 sequences
+[M::worker_pipeline::553.803*11.34] mapped 188239 sequences
+[M::worker_pipeline::637.910*11.37] mapped 189985 sequences
+[M::worker_pipeline::738.781*11.40] mapped 194432 sequences
+[M::worker_pipeline::840.786*11.42] mapped 186657 sequences
+[M::worker_pipeline::954.548*11.43] mapped 210659 sequences
+[M::worker_pipeline::1037.856*11.45] mapped 204418 sequences
+[M::worker_pipeline::1118.143*11.35] mapped 157502 sequences
+[M::main] Version: 2.22-r1101
+[M::main] CMD: minimap2 -x map-ont -t 12 -a references/Azfil_combo_genome_v1.minimap2-index data/nanopore_sequencing/Azpinnata.fastq.gz
+[M::main] Real time: 1118.220 sec; CPU: 12686.542 sec; Peak RSS: 13.497 GB
+[bam_sort_core] merging from 13 files and 1 in-memory blocks...
