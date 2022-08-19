@@ -181,7 +181,7 @@ rule assembly_with_flye:
   input:
     fastq="data/nanopore_filtered/{nanopore_host}_{selection}_reads.fastq.gz"
   output:
-    dir=  "data/nanopore_assembly/{selection}/{nanopore_host}"
+    dir=  directory("data/nanopore_assembly/{selection}/{nanopore_host}")
   conda:
     "envs/flye.yaml"
   threads: 12
