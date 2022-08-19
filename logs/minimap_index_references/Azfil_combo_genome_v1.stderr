@@ -1,0 +1,8 @@
+[M::mm_idx_gen::10.812*1.60] collected minimizers
+[M::mm_idx_gen::13.708*1.89] sorted minimizers
+[M::main::15.315*1.80] loaded/built the index for 3849 target sequence(s)
+[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 3849
+[M::mm_idx_stat::15.666*1.78] distinct minimizers: 33459331 (62.13% are singletons); average occurrences: 3.537; average spacing: 5.309; total length: 628367066
+[M::main] Version: 2.22-r1101
+[M::main] CMD: minimap2 -d references/Azfil_combo_genome_v1.minimap2-index references/Azfil_combo_genome_v1.fasta
+[M::main] Real time: 15.693 sec; CPU: 27.920 sec; Peak RSS: 4.051 GB
