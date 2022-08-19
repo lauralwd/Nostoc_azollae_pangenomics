@@ -165,9 +165,14 @@ rule get_mitochondrium_nanopore_reads:
     stderr="logs/get_mitochondrium_nanopore_reads_{nanopore_host}.stderr"
   shell:
     """
-                  'Azolla_cp_v1_4'       \
-    2> {log.stderr}                      \
-    | samtools fastq -0 {output.fastq} - \
     samtools view -h {input.bam}                           \
+                  'a_filiculoides_mitochondrium_contig_10' \
+                  'a_filiculoides_mitochondrium_contig_11' \
+                  'a_filiculoides_mitochondrium_contig_12' \
+                  'a_filiculoides_mitochondrium_contig_16' \
+                  'a_filiculoides_mitochondrium_contig_22' \
+                  'a_filiculoides_mitochondrium_contig_09' \
+    2> {log.stderr}                                        \
+    | samtools fastq -0 {output.fastq} -                   \
     2>> {log.stderr}
     """
