@@ -74,7 +74,7 @@ rule map_nanopore_data:
     reads="data/nanopore_sequencing/{nanopore_host}.fastq.gz",
     index="references/Azfil_combo_genome_v1.minimap2-index"
   output:
-    bam=  "data/nanopore_mapped/{nanopore_host}_mapped.bam"
+    bam=temp("data/nanopore_mapped/{nanopore_host}_mapped.bam")
   log:
     stderr="logs/map_nanopore_data_{nanopore_host}.stderr"
   conda:
