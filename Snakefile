@@ -1,5 +1,5 @@
 NANOPORE=['Azfil_lab','Azpinnata','Azsp_bordeaux']
-
+SELECTION=['Nazollae','mitochondrium','chloroplast']
 
 # stage 1: collect MAGs and genomes of Nostoc azollae from anvio
 rule gather_anvi_MAGS:
@@ -201,3 +201,6 @@ rule assembly_with_flye:
             --out-dir {output.dir}
     """
 
+rule map_all_nanopore_assemblies:
+  input:
+    expand("data/nanopore_assembly/{selection}/{nanopore_host}",nanopore_host=NANOPORE,selection=SELECTION)
