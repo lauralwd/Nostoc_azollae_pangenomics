@@ -1,5 +1,7 @@
 NANOPORE=['Azfil_lab','Azpinnata','Azsp_bordeaux']
 
+
+# stage 1: collect MAGs and genomes of Nostoc azollae from anvio
 rule gather_anvi_MAGS:
   output:
     directory("data/MAG_anvi_dbs/")
@@ -23,6 +25,7 @@ rule create_pangenome_storage_internal:
       > {log.stdout} 2> {log.stderr}
     """
 
+# stage 2: filter and select nanopore reads, then assemble these into Nostoc azollae, mitochondria, or chloroplast genomes.
 rule get_reference_fastas:
   output:
     "references/Nazollae_0708.fasta",
