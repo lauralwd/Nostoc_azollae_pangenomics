@@ -10,9 +10,13 @@ rule create_pangenome_storage_internal:
     txt="data/Anvio_internal_genomes.txt"
   output:
     "data/anvio_genomes_storage/MAGs_only_GENOMES.db"
+  log:
+    stdout="logs/anvi_create_pangenome_storage.stdout",
+    stderr="logs/anvi_create_pangenome_storage.stderr"
   shell:
     """
     anvi-gen-genomes-storage \
       -i {input.txt} \
-      -o {output}
+      -o {output}    \
+      > {log.stdout} 2> {log.stderr}
     """
