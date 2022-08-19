@@ -208,3 +208,43 @@ rule assembly_with_flye:
 rule map_all_nanopore_assemblies:
   input:
     expand("data/nanopore_assembly/{selection}/{nanopore_host}",nanopore_host=NANOPORE,selection=SELECTION)
+
+rule nanopore_assembly_to_contigdb:
+  input:
+    "data/nanopore_assembly/{selection}/{nanopore_host}"
+  output:
+     "data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db"
+  log:
+    stdout="logs/anvi_create_contigdb/{nanopore_host}_{selection}.stdout",
+    stderr="logs/anvi_create_contigdb/{nanopore_host}_{selection}.stderr"
+  shell:
+    """
+    anvi-gen-contigs-database   \
+      -f {input}/assembly.fasta \
+      -o {output}               \
+      > {log.stdout} 2> {log.stderr}
+    """
+
+rule all_nanopore_contigdbs:
+  input:
+    expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection=SELECTION)
+
+rule create_pangenome_storage_all_Nazollaes:
+  input:
+    "data/MAG_anvi_dbs/",
+    expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='Nazollae'),
+    internal="data/Anvio_internal_genomes.txt",
+    external="data/Anvio_internal_genomes.txt"
+  output:
+    "data/anvio_genomes_storage/Nostoc_GENOMES.db"
+  log:
+    stdout="logs/anvi_create_pangenome_storage_all.stdout",
+    stderr="logs/anvi_create_pangenome_storage_all.stderr"
+  shell:
+    """
+    anvi-gen-genomes-storage \
+      -i {input.internal}    \
+      -e {input.external}    \
+      -o {output}            \
+      > {log.stdout} 2> {log.stderr}
+    """
