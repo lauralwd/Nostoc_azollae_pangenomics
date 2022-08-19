@@ -123,7 +123,8 @@ rule sort_index_bam:
 
 rule get_Nazollae_nanopore_reads:
   input:
-    bam=  "data/nanopore_mapped/{nanopore_host}_mapped.bam"
+    bam=  "data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam",
+    bai=  "data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam.bai"
   output:
     fastq="data/nanopore_filtered/{nanopore_host}_Nazollae_reads.fastq.gz"
   log:
@@ -138,7 +139,8 @@ rule get_Nazollae_nanopore_reads:
 
 rule get_chloroplast_nanopore_reads:
   input:
-    bam=  "data/nanopore_mapped/{nanopore_host}_mapped.bam"
+    bam=  "data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam",
+    bai=  "data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam.bai"
   output:
     fastq="data/nanopore_filtered/{nanopore_host}_chloroplast_reads.fastq.gz"
   log:
@@ -153,7 +155,8 @@ rule get_chloroplast_nanopore_reads:
 
 rule get_mitochondrium_nanopore_reads:
   input:
-    bam=  "data/nanopore_mapped/{nanopore_host}_mapped.bam"
+    bam=  "data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam",
+    bai=  "data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam.bai"
   output:
     fastq="data/nanopore_filtered/{nanopore_host}_mitochondrium_reads.fastq.gz"
   log:
