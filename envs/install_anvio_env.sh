@@ -75,3 +75,7 @@ then conda activate anvio7.1
 fi
 
 exit
+
+# run anvi-setup-ncbi-cogs, anvi-setup-kegg-kofams if you need to
+# run anvi-self-test --suite pangenomics if you want to run a selftest
+
