@@ -29,6 +29,7 @@ cp --reflink=always /stor/azolla_metagenome/Azolla_genus_metagenome/data/assembl
   data/MAG_anvi_dbs/Az_nil_PROFILE.db
 
 for db in ./data/MAG_anvi_dbs/*.db
-do anvi-migrate --migrate dbs-safely $db \
-     2> $db.migrate.log
+do anvi-migrate --migrate-dbs-safely $db \
+     > $db.migrate.stdout \
+     2> $db.migrate.stderr
 done
