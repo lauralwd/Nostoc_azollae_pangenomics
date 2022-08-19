@@ -185,6 +185,9 @@ rule assembly_with_flye:
   conda:
     "envs/flye.yaml"
   threads: 12
+  log:
+    stdout="logs/flye_assemble/{nanopore_host}_{selection}.stdout",
+    stderr="logs/flye_assemble/{nanopore_host}_{selection}.stderr"
   shell:
     """
     if   [ {wildcards.selection} == 'Nazollae' ]
@@ -198,7 +201,8 @@ rule assembly_with_flye:
     flye    --nano-raw {input.fastq}  \
             --genome-size $size       \
             --threads {threads}       \
-            --out-dir {output.dir}
+            --out-dir {output.dir}    \
+    > {log.stderr} 2> {log.stdout}
     """
 
 rule map_all_nanopore_assemblies:
