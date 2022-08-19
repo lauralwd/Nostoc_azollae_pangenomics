@@ -29,7 +29,7 @@ rule create_pangenome_storage_internal:
 rule get_reference_fastas:
   output:
     "references/Nazollae_0708.fasta",
-    "references_Azfil_v1.fasta",
+    "references/Azfil_v1.fasta",
     "references/Azfil_cp1.4.fasta"
   log:
     stdout="logs/get_reference_fastas.stdout",

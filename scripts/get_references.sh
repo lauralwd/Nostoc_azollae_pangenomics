@@ -5,7 +5,7 @@ fi
 
 if   [ ! -f references/Azfil_v1.2.fasta ]
 then  wget https://fernbase.org/ftp/Azolla_filiculoides/Azolla_asm_v1.1/Azolla_filiculoides.genome_v1.2.fasta \
-           -O references_Azfil_v1.fasta
+           -O references/Azfil_v1.fasta
 fi
 
 if   [ ! -f references/Azfil_cp1.4.fasta ]
