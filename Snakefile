@@ -176,3 +176,28 @@ rule get_mitochondrium_nanopore_reads:
     | samtools fastq -0 {output.fastq} -                   \
     2>> {log.stderr}
     """
+
+rule assembly_with_flye:
+  input:
+    fastq="data/nanopore_filtered/{nanopore_host}_{selection}_reads.fastq.gz"
+  output:
+    dir=  "data/nanopore_assembly/{selection}/{nanopore_host}"
+  conda:
+    "envs/flye.yaml"
+  threads: 12
+  shell:
+    """
+    if   [ {wildcards.selection} == 'Nazollae']
+    then size=6M
+    elif [ {wildcards.selection} == 'chloroplast']
+    then size=1M
+    elif [ {wildcards.selection} == 'mitochondrium']
+    then size=1M
+    fi
+
+    flye    --nano-raw {input.fastq}  \
+            --genome-size $size       \
+            --threads {threads}       \
+            --out-dir {output.dir}
+    """
+
