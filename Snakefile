@@ -23,6 +23,33 @@ rule create_pangenome_storage_internal:
       > {log.stdout} 2> {log.stderr}
     """
 
+rule get_reference_fastas:
+  output:
+    "references/Nazollae_0708.fasta",
+    "references_Azfil_v1.fasta",
+    "references/Azfil_cp1.4.fasta"
+  log:
+    stdout="logs/get_reference_fastas.stdout",
+    stderr="logs/get_reference_fastas.stderr"
+  shell:
+    """
+    bash scripts/get_references.sh
+     > {log.stdout} 2> {log.stderr}
+    """
+
+rule combine_reference_fastas:
+  input:
+    "references/Nazollae_0708.fasta",
+    "references_Azfil_v1.fasta",
+    "references/Azfil_cp1.4.fasta",
+    "references/azfi_mito_laura-v1.fasta"
+  output:
+    "references/Azfil_combo_genome_v1.fasta"
+  shell:
+    """
+    cat {input} > {output}
+    """
+
 rule make_minimap_index:
   input:
     fasta="{fasta}.fasta"
