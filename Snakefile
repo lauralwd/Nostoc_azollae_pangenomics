@@ -187,11 +187,11 @@ rule assembly_with_flye:
   threads: 12
   shell:
     """
-    if   [ {wildcards.selection} == 'Nazollae']
+    if   [ {wildcards.selection} == 'Nazollae' ]
     then size=6M
-    elif [ {wildcards.selection} == 'chloroplast']
+    elif [ {wildcards.selection} == 'chloroplast' ]
     then size=1M
-    elif [ {wildcards.selection} == 'mitochondrium']
+    elif [ {wildcards.selection} == 'mitochondrium' ]
     then size=1M
     fi
 
