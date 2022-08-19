@@ -99,6 +99,28 @@ rule map_all_nanopore_data:
   input:
     expand("data/nanopore_mapped/{nanopore_host}_mapped.bam",nanopore_host=NANOPORE)
 
+rule sort_index_bam:
+  input:
+    bam="{bam}_mapped.bam"
+  output:
+    bam="{bam}_mapped_sorted.bam",
+    bai="{bam}_mapped_sorted.bam.bai"
+  log:
+    stderr="logs/sort_index_bam_{bam}.stderr"
+  threads: 12
+  shell:
+    """
+    samtools sort {input.bam}  \
+               -o {output.bam} \
+               -l 8            \
+               -m 4G           \
+               -@ {threads}    \
+    2> {log.stderr}
+
+    samtools index {output.bam}
+    2>> {log.stderr}
+    """
+
 rule get_Nazollae_nanopore_reads:
   input:
     bam=  "data/nanopore_mapped/{nanopore_host}_mapped.bam"
