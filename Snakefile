@@ -42,18 +42,18 @@ rule make_minimap_index:
 rule map_nanopore_data:
   input:
     reads="data/nanopore_sequencing/{nanopore_host}.fastq.gz",
-    index="references/Azfil_combo_genome_v2.minimap2-index"
+    index="references/Azfil_combo_genome_v1.minimap2-index"
   output:
     bam=  "data/nanopore_mapped/{nanopore_host}_mapped.bam"
   log:
     stderr="logs/map_nanopore_data_{nanopore_host}.stderr"
   conda:
     "envs/minimap2.yaml"
-  cpu: 12
+  threads: 12
   shell:
     """
     minimap2 -x map-ont \
-             -t {cpu}   \
+             -t {threads}   \
              -a         \
              {input.index}\
              {input.reads}\
