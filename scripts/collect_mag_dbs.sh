@@ -16,17 +16,17 @@ cp --reflink=always /stor/azolla_metagenome/Azolla_genus_metagenome/data/assembl
 cp --reflink=always /stor/azolla_metagenome/Azolla_genus_metagenome/data/assembly_hybrid_doublefiltered_binningsignals_anvio/MERGED_Azfil_lab/PROFILE.db		\
   data/MAG_anvi_dbs/Azfil_lab_PROFILE.db
 cp --reflink=always /stor/azolla_metagenome/Azolla_genus_metagenome/data/assembly_singles_doublefiltered_binningsignals_anvio/MERGED_Azrub_IRRI_479/PROFILE.db		\
-  data/MAG_anvi_dbs/Az_rub_PROFILE.db
+  data/MAG_anvi_dbs/Azrub_PROFILE.db
 cp --reflink=always /stor/azolla_metagenome/Azolla_genus_metagenome/data/assembly_singles_doublefiltered_binningsignals_anvio/MERGED_Azmex_IRRI_486/PROFILE.db		\
-  data/MAG_anvi_dbs/Az_mex_PROFILE.db
+  data/MAG_anvi_dbs/Azmex_PROFILE.db
 cp --reflink=always /stor/azolla_metagenome/Azolla_genus_metagenome/data/assembly_singles_doublefiltered_binningsignals_anvio/MERGED_Azmic_IRRI_456/PROFILE.db		\
-  data/MAG_anvi_dbs/Az_mic_PROFILE.db
+  data/MAG_anvi_dbs/Azmic_PROFILE.db
 cp --reflink=always /stor/azolla_metagenome/Azolla_genus_metagenome/data/assembly_singles_doublefiltered_binningsignals_anvio/MERGED_Azspnov_IRRI1_472/PROFILE.db		\
-  data/MAG_anvi_dbs/Az_car1_PROFILE.db
+  data/MAG_anvi_dbs/Azcar1_PROFILE.db
 cp --reflink=always /stor/azolla_metagenome/Azolla_genus_metagenome/data/assembly_singles_doublefiltered_binningsignals_anvio/MERGED_Azspnov_IRRI2_489/PROFILE.db		\
-  data/MAG_anvi_dbs/Az_car2_PROFILE.db
+  data/MAG_anvi_dbs/Azcar2_PROFILE.db
 cp --reflink=always /stor/azolla_metagenome/Azolla_genus_metagenome/data/assembly_singles_doublefiltered_binningsignals_anvio/MERGED_Aznil_IRRI_479/PROFILE.db		\
-  data/MAG_anvi_dbs/Az_nil_PROFILE.db
+  data/MAG_anvi_dbs/Aznil_PROFILE.db
 
 for db in ./data/MAG_anvi_dbs/*.db
 do anvi-migrate --migrate-dbs-safely $db \
