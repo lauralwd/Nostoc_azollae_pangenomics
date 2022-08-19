@@ -1,4 +1,4 @@
-NANOPORE=['Azfil_lab' 'Azpinnata' 'Azsp_bordeaux']
+NANOPORE=['Azfil_lab','Azpinnata','Azsp_bordeaux']
 
 rule gather_anvi_MAGS:
   output:
