@@ -131,10 +131,10 @@ rule get_Nazollae_nanopore_reads:
     stderr="logs/get_Nazollae_nanopore_reads_{nanopore_host}.stderr"
   shell:
     """
-    samtools view {input.bam}          \
+    samtools view {input.bam}            \
                   'ENA|CP002059|CP002059.1' 'ENA|CP002060|CP002060.1' 'ENA|CP002061|CP002061.1' \
-    2> {log.stderr}                    \
-    | samtools fastq -0 {output.fastq} \
+    2> {log.stderr}                      \
+    | samtools fastq -0 {output.fastq} - \
     2>> {log.stderr}
     """
 
@@ -148,10 +148,10 @@ rule get_chloroplast_nanopore_reads:
     stderr="logs/get_chloroplast_nanopore_reads_{nanopore_host}.stderr"
   shell:
     """
-    samtools view {input.bam}          \
-                  'Azolla_cp_v1_4'     \
-    2> {log.stderr}                    \
-    | samtools fastq -0 {output.fastq} \
+    samtools view -b {input.bam}         \
+                  'Azolla_cp_v1_4'       \
+    2> {log.stderr}                      \
+    | samtools fastq -0 {output.fastq} - \
     2>> {log.stderr}
     """
 
@@ -165,9 +165,9 @@ rule get_mitochondrium_nanopore_reads:
     stderr="logs/get_mitochondrium_nanopore_reads_{nanopore_host}.stderr"
   shell:
     """
-    samtools view {input.bam}          \
-                  'Azolla_cp_v1_4'     \
-    2> {log.stderr}                    \
-    | samtools fastq -0 {output.fastq} \
+    samtools view {input.bam}            \
+                  'Azolla_cp_v1_4'       \
+    2> {log.stderr}                      \
+    | samtools fastq -0 {output.fastq} - \
     2>> {log.stderr}
     """
