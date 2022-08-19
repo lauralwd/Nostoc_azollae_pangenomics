@@ -2,3 +2,5 @@ data
 .*.swp
 .snakemake
 *.fasta
+*.minimap2-index
+*.bam
