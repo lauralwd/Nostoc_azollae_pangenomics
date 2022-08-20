@@ -193,9 +193,9 @@ rule assembly_with_flye:
     if   [ {wildcards.selection} == 'Nazollae' ]
     then size=6M
     elif [ {wildcards.selection} == 'chloroplast' ]
-    then size=1M
+    then size=100K
     elif [ {wildcards.selection} == 'mitochondrium' ]
-    then size=1M
+    then size=100K
     fi
 
     flye    --nano-raw {input.fastq}  \
