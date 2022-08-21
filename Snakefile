@@ -235,8 +235,8 @@ rule create_pangenome_storage_all_Nazollaes:
     "data/MAG_anvi_dbs/",
     expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='Nazollae'),
     internal="data/Anvio_internal_genomes.txt",
-    external="data/Anvio_internal_genomes.txt",
-    0708="data/nanopore_contig_dbs/Azfil_0708_Nazollae_contigs.db"
+    external="data/Anvio_external_genomes.txt",
+    ref="data/nanopore_contig_dbs/Azfil_0708_Nazollae_contigs.db"
   output:
     "data/anvio_genomes_storage/Nostoc_GENOMES.db"
   log:
