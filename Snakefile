@@ -193,15 +193,16 @@ rule assembly_with_flye:
     if   [ {wildcards.selection} == 'Nazollae' ]
     then size=6M
     elif [ {wildcards.selection} == 'chloroplast' ]
-    then size=100K
+    then size=150K
     elif [ {wildcards.selection} == 'mitochondrium' ]
     then size=100K
     fi
 
     flye    --nano-raw {input.fastq}  \
-            --genome-size $size       \
+            --genome-size "$size"     \
             --threads {threads}       \
             --out-dir {output.dir}    \
+            --asm-coverage 50         \
     > {log.stderr} 2> {log.stdout}
     """
 
