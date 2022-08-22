@@ -253,6 +253,25 @@ rule create_pangenome_storage_all_Nazollaes:
       > {log.stdout} 2> {log.stderr}
     """
 
+rule create_pangenome_storage_all_chloroplast:
+  input:
+    illuminachloroplasts=""
+    nanoporechloroplasts=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='chloroplast'),
+    external="data/Anvio_external_chloroplast.txt",
+    ref="data/nanopore_contig_dbs/Azfil_chloroplast_contigs.db"
+  output:
+    "data/anvio_genomes_storage/chloroplast_GENOMES.db"
+  log:
+    stdout="logs/anvi_create_pangenome_storage_chloroplast.stdout",
+    stderr="logs/anvi_create_pangenome_storage_chloroplast.stderr"
+  shell:
+    """
+    anvi-gen-genomes-storage \
+      -e {input.external}    \
+      -o {output}            \
+      > {log.stdout} 2> {log.stderr}
+    """
+
 rule create_pangenome_analysis:
   input:
     "data/anvio_genomes_storage/{selection}_GENOMES.db"
