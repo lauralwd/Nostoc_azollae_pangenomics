@@ -1,0 +1,5 @@
+name: ragtag
+channels:
+  - bioconda
+dependencies:
+  - ragtag=2.1.0
