@@ -232,7 +232,7 @@ rule map_illumina_reads_to_combined_reference:
     fasta="references/Azfil_combo_genome_v1.fasta",
     index="references/Azfil_combo_genome_v1.fasta.bwt"
   output:
-    bam=temporary("data/illumina_mapped/{illumina_host}_mapped.bam")
+    bam=temp("data/illumina_mapped/{illumina_host}_mapped.bam")
   log:
     stderr="logs/illumina_genomes/map_illumina_reads_to_combined_reference_{illumina_host}.stderr"
   threads: 12
@@ -255,8 +255,8 @@ rule sort_index_bam_name:
   input:
     bam="{bam}_mapped.bam"
   output:
-    bam=temporary("{bam}_mapped_sorted-name.bam"),
-    bai=temporary("{bam}_mapped_sorted-name.bam.bai")
+    bam=temp("{bam}_mapped_sorted-name.bam"),
+    bai=temp("{bam}_mapped_sorted-name.bam.bai")
   log:
     stderr="logs/samtools/sort_index_bam_name_{bam}.stderr"
   threads: 12
