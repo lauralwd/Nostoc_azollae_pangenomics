@@ -255,7 +255,7 @@ rule create_pangenome_storage_all_Nazollaes:
 
 rule create_pangenome_storage_all_chloroplast:
   input:
-    illuminachloroplasts=""
+    illuminachloroplasts="foo/bar",
     nanoporechloroplasts=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='chloroplast'),
     external="data/Anvio_external_chloroplast.txt",
     ref="data/nanopore_contig_dbs/Azfil_chloroplast_contigs.db"
