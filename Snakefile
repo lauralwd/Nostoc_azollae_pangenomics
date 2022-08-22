@@ -1,5 +1,6 @@
 NANOPORE=['Azfil_lab','Azpinnata','Azsp_bordeaux']
 SELECTION=['Nazollae','mitochondrium','chloroplast']
+ILLUMINA_HOSTS=['Acar1','Acar2','Amexicana','Amicrophylla','Anilotica','Arubra']
 
 ############################### stage 1: collect MAGs and genomes of Nostoc azollae from anvio ###############################
 rule gather_anvi_MAGS:
