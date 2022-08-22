@@ -1,0 +1,5 @@
+name: bandage
+channels:
+  - bioconda
+dependencies:
+  - bandage

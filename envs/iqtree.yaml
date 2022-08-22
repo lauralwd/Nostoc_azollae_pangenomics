@@ -1,0 +1,6 @@
+name: iqtree
+channels:
+  - bioconda
+dependencies:
+  - iqtree
+
