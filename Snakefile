@@ -211,6 +211,140 @@ rule map_all_nanopore_assemblies:
     expand("data/nanopore_assembly/{selection}/{nanopore_host}",nanopore_host=NANOPORE,selection=SELECTION)
 
 ############################### stage 3 assemble chloroplast and mito genomes from Illumina data ###############################
+rule bwa_index:
+  input:
+    "{fasta}.fasta"
+  output:
+    "{fasta}.fasta.bwt"
+  log:
+    stderr="logs/illumina_genomes/bwa_index_{fasta}.stderr",
+    stderr="logs/illumina_genomes/bwa_index_{fasta}.stderr"
+  shell:
+    """
+    bwa index {input} \
+    > {log.stderr} 2> {log.stdout}
+    """
+
+rule map_illumina_reads_to_combined_reference:
+  input:
+    R1="data/illumina_reads/{illumina_host}_R1.fastq.gz",
+    R2="data/illumina_reads/{illumina_host}_R2.fastq.gz",
+    fasta="references/Azfil_combo_genome_v1.fasta",
+    index="references/Azfil_combo_genome_v1.fasta.bwt"
+  output:
+    bam=temporary("data/illumina_mapped/{illumina_host}_mapped.bam")
+  log:
+    stderr="logs/illumina_genomes/map_illumina_reads_to_combined_reference_{illumina_host}.stderr"
+  threads: 12
+  shell:
+    """
+    bwa mem                      \
+            -t {threads}         \
+            {input.fasta}        \
+            {input.R1}           \
+            {input.R2}           \
+    2> {log.stderr}              \
+    | samtools view -F 4         \
+               -@ {threads}      \
+               -b                \
+               -o {output.bam}   \
+    2> {log.stderr}
+    """
+
+rule sort_index_bam_name:
+  input:
+    bam="{bam}_mapped.bam"
+  output:
+    bam=temporary("{bam}_mapped_sorted-name.bam"),
+    bai=temporary("{bam}_mapped_sorted-name.bam.bai")
+  log:
+    stderr="logs/samtools/sort_index_bam_name_{bam}.stderr"
+  threads: 12
+  shell:
+    """
+    samtools sort {input.bam}  \
+               -o {output.bam} \
+               -l 8            \
+               -m 4G           \
+               -n
+               -@ {threads}    \
+    2> {log.stderr}
+
+    samtools index {output.bam}
+    2>> {log.stderr}
+    """
+
+rule get_chloroplast_illumina_reads:
+  input:
+    bam="data/nanopore_mapped/{illumina_host}_mapped_sorted-name.bam",
+    bai="data/nanopore_mapped/{illumina_host}_mapped_sorted-name.bam.bai"
+  output:
+    R1="data/illumina_filtered/{illumina_host}_chloroplast_R1.fastq.gz",
+    R2="data/illumina_filtered/{illumina_host}_chloroplast_R2.fastq.gz"
+  log:
+    stderr="logs/illumina_genomes/get_chloroplast_illumina_reads_{illumina_host}.stderr"
+  shell:
+    """
+    samtools view -h {input.bam}         \
+                  'Azolla_cp_v1_4'       \
+    2> {log.stderr}                      \
+    | samtools fastq -1 {output.R1}      \
+                     -2 {output.R2}      \
+                     -                   \
+    2>> {log.stderr}
+    """
+
+rule get_mitochondrium_nanopore_reads:
+  input:
+    bam=  "data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam",
+    bai=  "data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam.bai"
+  output:
+    R1="data/illumina_filtered/{illumina_host}_mitochomdrium_R1.fastq.gz",
+    R2="data/illumina_filtered/{illumina_host}_mitochomdrium_R2.fastq.gz"
+  log:
+    stderr="logs/illumina_genomes/get_mitochondrium_illumina_reads_{illumina_host}.stderr"
+  shell:
+    """
+    samtools view -h {input.bam}                           \
+                  'a_filiculoides_mitochondrium_contig_10' \
+                  'a_filiculoides_mitochondrium_contig_11' \
+                  'a_filiculoides_mitochondrium_contig_12' \
+                  'a_filiculoides_mitochondrium_contig_16' \
+                  'a_filiculoides_mitochondrium_contig_22' \
+                  'a_filiculoides_mitochondrium_contig_09' \
+    2> {log.stderr}                                        \
+    | samtools fastq -1 {output.R1}                        \
+                     -2 {output.R2}                        \
+                     -                                     \
+    2>> {log.stderr}
+    """
+
+rule assemble_organelle_genome_SPAdes:
+  input:
+    R1="data/illumina_filtered/{illumina_host}_{selection}_R1.fastq.gz",
+    R2="data/illumina_filtered/{illumina_host}_{selection}_R2.fastq.gz"
+  output:
+    dir=directory("data/illumina_assemblies/{selection}/{illumina_host}/")
+  threads:12
+  conda:
+    "envs/spades.yaml"
+  shell:
+    """
+    spades.py -1 {input.R1}         \
+              -2 {input.R2}         \
+              -t {threads}          \
+              -o {output.dir}       \
+    > {log.stdout} 2> {log.stderr}"
+    """
+
+rule scaffold_organelle_genome_RAGTAG:
+
+rule all_illumina_assemblies:
+  input:
+    expand("data/illumina_assemblies/{selection}/{illumina_host}/",
+           selection=['chloroplast','mitochondrium'],
+           illumina_hosts=ILLUMINA_HOSTS)
+
 
 ############################### stage 4 create pangenomes ###############################
 rule nanopore_assembly_to_contigdb:
