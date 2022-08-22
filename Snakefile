@@ -240,7 +240,7 @@ rule create_pangenome_storage_all_Nazollaes:
     external="data/Anvio_external_genomes.txt",
     ref="data/nanopore_contig_dbs/Azfil_0708_Nazollae_contigs.db"
   output:
-    "data/anvio_genomes_storage/Nostoc_GENOMES.db"
+    "data/anvio_genomes_storage/Nazollae_GENOMES.db"
   log:
     stdout="logs/anvi_create_pangenome_storage_all.stdout",
     stderr="logs/anvi_create_pangenome_storage_all.stderr"
