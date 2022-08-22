@@ -219,7 +219,7 @@ rule bwa_index:
     "{fasta}.fasta.bwt"
   log:
     stderr="logs/illumina_genomes/bwa_index_{fasta}.stderr",
-    stderr="logs/illumina_genomes/bwa_index_{fasta}.stderr"
+    stdout="logs/illumina_genomes/bwa_index_{fasta}.stdout"
   shell:
     """
     bwa index {input} \
@@ -277,11 +277,11 @@ rule sort_index_bam_name:
 
 rule get_chloroplast_illumina_reads:
   input:
-    bam="data/nanopore_mapped/{illumina_host}_mapped_sorted-name.bam",
-    bai="data/nanopore_mapped/{illumina_host}_mapped_sorted-name.bam.bai"
+    bam="data/illumina_mapped/{illumina_host}_mapped_sorted-name.bam",
+    bai="data/illumina_mapped/{illumina_host}_mapped_sorted-name.bam.bai"
   output:
-    R1="data/illumina_filtered/{illumina_host}_chloroplast_R1.fastq.gz",
-    R2="data/illumina_filtered/{illumina_host}_chloroplast_R2.fastq.gz"
+    R1="data/illumina_filtered/chloroplast/{illumina_host}_R1.fastq.gz",
+    R2="data/illumina_filtered/chloroplast/{illumina_host}_R2.fastq.gz"
   log:
     stderr="logs/illumina_genomes/get_chloroplast_illumina_reads_{illumina_host}.stderr"
   shell:
@@ -295,13 +295,13 @@ rule get_chloroplast_illumina_reads:
     2>> {log.stderr}
     """
 
-rule get_mitochondrium_nanopore_reads:
+rule get_mitochondrium_illumina_reads:
   input:
-    bam=  "data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam",
-    bai=  "data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam.bai"
+    bam="data/illumina_mapped/{illumina_host}_mapped_sorted-name.bam",
+    bai="data/illumina_mapped/{illumina_host}_mapped_sorted-name.bam.bai"
   output:
-    R1="data/illumina_filtered/{illumina_host}_mitochomdrium_R1.fastq.gz",
-    R2="data/illumina_filtered/{illumina_host}_mitochomdrium_R2.fastq.gz"
+    R1="data/illumina_filtered/mitochondrium/{illumina_host}_R1.fastq.gz",
+    R2="data/illumina_filtered/mitochondrium/{illumina_host}_R2.fastq.gz"
   log:
     stderr="logs/illumina_genomes/get_mitochondrium_illumina_reads_{illumina_host}.stderr"
   shell:
@@ -322,8 +322,8 @@ rule get_mitochondrium_nanopore_reads:
 
 rule assemble_organelle_genome_SPAdes:
   input:
-    R1="data/illumina_filtered/{illumina_host}_{selection}_R1.fastq.gz",
-    R2="data/illumina_filtered/{illumina_host}_{selection}_R2.fastq.gz"
+    R1="data/illumina_filtered/{selection}/{illumina_host}_R1.fastq.gz",
+    R2="data/illumina_filtered/{selection}/{illumina_host}_R2.fastq.gz"
   output:
     scaffolds="data/illumina_assembly/{selection}/{illumina_host}/scaffolds.fasta",
     graph="data/illumina_assembly/{selection}/{illumina_host}/assembly_graph_with_scaffolds.gfa"
@@ -331,9 +331,12 @@ rule assemble_organelle_genome_SPAdes:
     pre=lambda w: expand("data/illumina_assembly/{selection}/{illumina_host}/",
                          selection=w.selection,
                          illumina_host=w.illumina_host)
-  threads:12
+  threads: 12
   conda:
     "envs/spades.yaml"
+  log:
+    stderr="logs/illumina_genomes/SPAdes_{selection}/{illumina_host}.stderr",
+    stdout="logs/illumina_genomes/SPAdes_{selection}/{illumina_host}.stdout"
   shell:
     """
     spades.py -1 {input.R1}         \
@@ -349,7 +352,7 @@ rule all_illumina_assembly:
   input:
     expand("data/illumina_assembly/{selection}/{illumina_host}/scaffolds.fasta",
            selection=['chloroplast','mitochondrium'],
-           illumina_hosts=ILLUMINA_HOSTS)
+           illumina_host=ILLUMINA_HOSTS)
 
 
 ############################### stage 4 create pangenomes ###############################
@@ -413,7 +416,7 @@ rule create_pangenome_storage_all_Nazollaes:
 
 rule create_pangenome_storage_all_chloroplast:
   input:
-    illuminachloroplasts=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",nanopore_host=ILLUMINA_HOSTS,selection='chloroplast'),
+    illuminachloroplasts=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",illumina_host=ILLUMINA_HOSTS,selection='chloroplast'),
     nanoporechloroplasts=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='chloroplast'),
     external="data/Anvio_external_chloroplast.txt",
     ref="data/nanopore_contig_dbs/Azfil_chloroplast_contigs.db"
@@ -432,7 +435,7 @@ rule create_pangenome_storage_all_chloroplast:
 
 rule create_pangenome_storage_all_mitochondrium:
   input:
-    illuminachloroplasts=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",nanopore_host=ILLUMINA_HOSTS,selection='mitochondrium'),
+    illuminachloroplasts=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",illumina_host=ILLUMINA_HOSTS,selection='mitochondrium'),
     nanoporechloroplasts=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='mitochondrium'),
     external="data/Anvio_external_mitochondrium.txt",
     ref="data/nanopore_contig_dbs/Azfil_mitochondrium_contigs.db"
@@ -499,8 +502,8 @@ rule create_pangenome_ANI_organele:
   input:
     pangenome="data/anvio_pangenomes/{selection}",
     external="data/Anvio_external_genomes_{selection}.txt",
-    extdbs=expand("data/nanopore_contig_dbs/{nanopore_host}_{{selection}}_contigs.db",nanopore_host=NANOPORE),
-    extdbs=expand("data/illumina_contig_dbs/{illumina_host}_{{selection}}_contigs.db",nanopore_host=ILLUMINA_HOSTS)
+    extdbsnanopore=expand("data/nanopore_contig_dbs/{nanopore_host}_{{selection}}_contigs.db",nanopore_host=NANOPORE),
+    extdbsillumina=expand("data/illumina_contig_dbs/{illumina_host}_{{selection}}_contigs.db",illumina_host=ILLUMINA_HOSTS)
   output:
     directory("data/anvio_pangenomes/{selection}_ANI")
   log:
