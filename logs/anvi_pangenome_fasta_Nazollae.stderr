@@ -1,0 +1,48 @@
+Mode .........................................: Working with gene clusters in collection default and bin
+                                                phylogenomic_core.
+Functions found .............................................:
+Genomes storage .............................................: Initialized (storage hash: hash203fab51)
+Num genomes in storage ......................................: 12
+Num genomes will be used ....................................: 12
+Pan DB ......................................................: Initialized:
+                                                               data/anvio_pangenomes/Nazollae/Nazollae-PAN.db
+                                                               (v. 15)
+Gene cluster homogeneity estimates ..........................: Functional: [YES]; Geometric: [YES]; Combined:
+                                                               [YES]
+
+* A short announcement for the curious: anvi'o found 7252 gene clusters in the
+database, attempted to initialize a gene clusters dictionary for 298 of them as
+requested by the user or the programmer, and managed to get back a gene clusters
+dictionary with 298 items. We just hope all these make sense to you.
+
+
+GENE CLUSTER FILTERS
+==============================================================
+Based on --min-num-genomes-gene-cluster-occurs 0, --max-num-genomes-gene-
+cluster-occurs 12, --min-num-genes-from-each-genome 0, --max-num-genes-from-
+each-genome 12, --min-functional-homogeneity-index -1.000, --max-functional-
+homogeneity-index 1.000, --min-geometric-homogeneity-index -1.000, --max-
+geometric-homogeneity-index 1.000, --min-combined-homogeneity-index -1.000,
+--max-combined-homogeneity-index 1.000 (some of these may be default values, no
+need to panic).
+
+All gene clusters (298) .....................................: GC_00001554, GC_00002267, GC_00001525, (... 295
+                                                               more (`--debug` will show all))
+Gene clusters that passed the filter (298) ..................: GC_00001864, GC_00001588, GC_00001263, (... 295
+                                                               more (`--debug` will show all))
+Genes clusters that failed the filter (0) ...................: None.
+
+
+INFO
+===============================================
+Your filters resulted in 298 gene clusters that contain a total of 3576 genes.
+for downstream analyses. Just so you know.
+
+Partition file ..............................................: data/anvio_pangenomes/Nazollae_phylogenomic_core.partitions
+
+* Your partition file is ready. Please do not forget to replace placeholders for
+model names ('[MODEL]') in this file with appropriate model names prior to your
+phylogenomic analysis.
+
+Sequence type ...............................................: Amino acid
+Output file for phylogenomics ...............................: data/anvio_pangenomes/Nazollae_phylogenomic_core.fasta
