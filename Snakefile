@@ -352,6 +352,22 @@ rule all_illumina_assembly:
 
 
 ############################### stage 4 create pangenomes ###############################
+rule illumina_assembly_to_contigdb:
+  input:
+    "data/illumina_assembly/{selection}/{illumina_host}"
+  output:
+     "data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db"
+  log:
+    stdout="logs/anvi_create_contigdb/{illumina_host}_{selection}.stdout",
+    stderr="logs/anvi_create_contigdb/{illumina_host}_{selection}.stderr"
+  shell:
+    """
+    anvi-gen-contigs-database   \
+      -f {input}/assembly.fasta \
+      -o {output}               \
+      > {log.stdout} 2> {log.stderr}
+    """
+
 rule nanopore_assembly_to_contigdb:
   input:
     "data/nanopore_assembly/{selection}/{nanopore_host}"
@@ -395,7 +411,7 @@ rule create_pangenome_storage_all_Nazollaes:
 
 rule create_pangenome_storage_all_chloroplast:
   input:
-    illuminachloroplasts="foo/bar",
+    illuminachloroplasts=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",nanopore_host=ILLUMINA_HOSTS,selection='chloroplast'),
     nanoporechloroplasts=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='chloroplast'),
     external="data/Anvio_external_chloroplast.txt",
     ref="data/nanopore_contig_dbs/Azfil_chloroplast_contigs.db"
@@ -404,6 +420,25 @@ rule create_pangenome_storage_all_chloroplast:
   log:
     stdout="logs/anvi_create_pangenome_storage_chloroplast.stdout",
     stderr="logs/anvi_create_pangenome_storage_chloroplast.stderr"
+  shell:
+    """
+    anvi-gen-genomes-storage \
+      -e {input.external}    \
+      -o {output}            \
+      > {log.stdout} 2> {log.stderr}
+    """
+
+rule create_pangenome_storage_all_mitochondrium:
+  input:
+    illuminachloroplasts=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",nanopore_host=ILLUMINA_HOSTS,selection='mitochondrium'),
+    nanoporechloroplasts=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='mitochondrium'),
+    external="data/Anvio_external_mitochondrium.txt",
+    ref="data/nanopore_contig_dbs/Azfil_mitochondrium_contigs.db"
+  output:
+    "data/anvio_genomes_storage/mitochondrium_GENOMES.db"
+  log:
+    stdout="logs/anvi_create_pangenome_storage_mitochondrium.stdout",
+    stderr="logs/anvi_create_pangenome_storage_mitochondrium.stderr"
   shell:
     """
     anvi-gen-genomes-storage \
@@ -433,14 +468,37 @@ rule create_pangenome_analysis:
      > {log.stdout} 2> {log.stderr}
      """
 
-rule create_pangenome_ANI:
+rule create_pangenome_ANI_Nazollae:
   input:
-    pangenome="data/anvio_pangenomes/{selection}",
+    pangenome="data/anvio_pangenomes/Nazollae",
     internal="data/Anvio_internal_genomes.txt",
     external="data/Anvio_external_genomes.txt",
     MAGS="data/MAG_anvi_dbs/",
-    extdbs=expand("data/nanopore_contig_dbs/{nanopore_host}_{{selection}}_contigs.db",nanopore_host=NANOPORE),
+    extdbs=expand("data/nanopore_contig_dbs/{nanopore_host}_Nazollae_contigs.db",nanopore_host=NANOPORE),
     ref="data/nanopore_contig_dbs/Azfil_0708_Nazollae_contigs.db"
+  output:
+    directory("data/anvio_pangenomes/Nazollae_ANI")
+  log:
+    stdout="logs/anvi_create_pangenome_ANI_Nazollae.stdout",
+    stderr="logs/anvi_create_pangenome_ANI_Nazollae.stderr"
+  threads: 12
+  shell:
+    """
+    anvi-compute-genome-similarity --external-genomes {input.external} \
+                                   --internal-genomes {input.internal} \
+                                   --program pyANI                     \
+                                   --output-dir {output}               \
+                                   --num-threads {threads}             \
+                                   --pan-db {input.pangenome}/{wildcards.selection}-PAN.db \
+     > {log.stdout} 2> {log.stderr}
+     """
+
+rule create_pangenome_ANI_organele:
+  input:
+    pangenome="data/anvio_pangenomes/{selection}",
+    external="data/Anvio_external_genomes_{selection}.txt",
+    extdbs=expand("data/nanopore_contig_dbs/{nanopore_host}_{{selection}}_contigs.db",nanopore_host=NANOPORE),
+    extdbs=expand("data/illumina_contig_dbs/{illumina_host}_{{selection}}_contigs.db",nanopore_host=ILLUMINA_HOSTS)
   output:
     directory("data/anvio_pangenomes/{selection}_ANI")
   log:
@@ -450,7 +508,6 @@ rule create_pangenome_ANI:
   shell:
     """
     anvi-compute-genome-similarity --external-genomes {input.external} \
-                                   --internal-genomes {input.internal} \
                                    --program pyANI                     \
                                    --output-dir {output}               \
                                    --num-threads {threads}             \
