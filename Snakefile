@@ -210,6 +210,8 @@ rule map_all_nanopore_assemblies:
   input:
     expand("data/nanopore_assembly/{selection}/{nanopore_host}",nanopore_host=NANOPORE,selection=SELECTION)
 
+
+# stage 3 create pangenomes
 rule nanopore_assembly_to_contigdb:
   input:
     "data/nanopore_assembly/{selection}/{nanopore_host}"
