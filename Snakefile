@@ -324,7 +324,12 @@ rule assemble_organelle_genome_SPAdes:
     R1="data/illumina_filtered/{illumina_host}_{selection}_R1.fastq.gz",
     R2="data/illumina_filtered/{illumina_host}_{selection}_R2.fastq.gz"
   output:
-    dir=directory("data/illumina_assemblies/{selection}/{illumina_host}/")
+    scaffolds="data/illumina_assembly/{selection}/{illumina_host}/scaffolds.fasta",
+    graph="data/illumina_assembly/{selection}/{illumina_host}/assembly_graph_with_scaffolds.gfa"
+  params:
+    pre=lambda w: expand("data/illumina_assembly/{selection}/{illumina_host}/",
+                         selection=w.selection,
+                         illumina_host=w.illumina_host)
   threads:12
   conda:
     "envs/spades.yaml"
@@ -333,15 +338,15 @@ rule assemble_organelle_genome_SPAdes:
     spades.py -1 {input.R1}         \
               -2 {input.R2}         \
               -t {threads}          \
-              -o {output.dir}       \
+              -o {params.pre}       \
     > {log.stdout} 2> {log.stderr}"
     """
 
 rule scaffold_organelle_genome_RAGTAG:
 
-rule all_illumina_assemblies:
+rule all_illumina_assembly:
   input:
-    expand("data/illumina_assemblies/{selection}/{illumina_host}/",
+    expand("data/illumina_assembly/{selection}/{illumina_host}/scaffolds.fasta",
            selection=['chloroplast','mitochondrium'],
            illumina_hosts=ILLUMINA_HOSTS)
 
