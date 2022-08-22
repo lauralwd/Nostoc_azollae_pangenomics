@@ -1,13 +1,39 @@
 NANOPORE=['Azfil_lab','Azpinnata','Azsp_bordeaux']
 SELECTION=['Nazollae','mitochondrium','chloroplast']
 ILLUMINA_HOSTS=['Azcar1','Azcar2','Azmexicana','Azmicrophylla','Aznilotica','Azrubra']
+MAG_HOSTS=['Azfil_lab','Azfil_wild','Azmex_IRRI_486','Azmic_IRRI_456','Aznil_IRRI_479','Azrub_IRRI_479','Azspnov_IRRI1_472','Azspnov_IRRI2_489']
 
 ############################### stage 1: collect MAGs and genomes of Nostoc azollae from anvio ###############################
-rule gather_anvi_MAGS:
+rule gather_anvi_MAGs:
   output:
     directory("data/MAG_anvi_dbs/")
   shell:
     "bash ./scripts/collect_mag_dbs.sh"
+
+rule anvi_MAGs_fasta:
+  input:
+    "data/MAG_anvi_dbs/"
+  output:
+    temp(expand("data/MAGs/{mag_host}_contigs.db",mag_host=MAG_HOSTS))
+  shell:
+    """
+    cp --reflink=always {input}/*_contigs.db  data/MAGs/
+    """
+
+rule anvi_MAGs_to_fasta:
+  input:
+    "data/MAGs/{mag_host}_contigs.db"
+  output:
+    "data/MAGs/{mag_host}_contigs.fasta",
+  log:
+    stderr="logs/MAG_anvi_dbs/export_contigs_{mag_host}.stderr",
+    stdout="logs/MAG_anvi_dbs/export_contigs_{mag_host}.stdout"
+  shell:
+    """
+    anvi-export-contigs -c {input}  \
+                        -o {output} \
+    > {log.stdout} 2> {log.stderr}
+    """
 
 rule create_pangenome_storage_internal:
   input:
