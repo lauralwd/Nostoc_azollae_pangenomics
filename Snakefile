@@ -339,4 +339,27 @@ rule extract_phylogenomic_fasta:
                                          -o {output.fasta}           \
     > {log.stdout} 2> {log.stderr}
     """
+
+rule phylogenomic_tree:
+  input:
+    fasta="data/anvio_pangenomes/{selection}_phylogenomic_core.fasta",
+    partition="data/anvio_pangenomes/{selection}_phylogenomic_core.partitions"
+  output:
+    tree="data/anvio_pangenomes/{selection}_phylogenomics/{selection}.treefile"
+  params:
+    pre=lambda w: expand ("data/anvio_pangenomes/{selection}_phylogenomics/",selection=w.selection)
+  threads: 12
+  log:
+    stdout="logs/IQtree/anvi_phylogenomic_{selection}.stdout",
+    stderr="logs/IQtree/anvi_phylogenomic_{selection}.stderr"
+  shell:
+    """
+    iqtree -s {input.fasta}     \
+           -p {input.partition} \
+           -m MFP+MERGE         \
+           -b 100               \
+           -nt AUTO             \
+           -ntmax {threads}     \
+           -pre {params.pre}    \
+    > {log.stdout} 2> {log.stderr}
     """
