@@ -52,6 +52,34 @@ rule create_pangenome_storage_internal:
       > {log.stdout} 2> {log.stderr}
     """
 
+rule scaffold_Nazollae_MAGs_RAGTAG:
+  input:
+    scaffolds="data/MAGs/{mag_host}_contigs.fasta",
+    Nazollae0708="references/Nazollae_0708.fasta"
+  params:
+    pre=lambda w: expand("data/MAGs/{mag_host}_scaffolded/",mag_host=w.mag_host)
+  output:
+    "data/MAGs/{mag_host}_scaffolded/ragtag.scaffold.fasta"
+  log:
+    stderr="logs/MAG_anvi_dbs/RAGTAG{mag_host}.stderr",
+    stdout="logs/MAG_anvi_dbs/RAGTAG{mag_host}.stdout"
+  threads: 12
+  conda:
+    "envs/ragtag.yaml"
+  shell:
+    """
+    ragtag.py scaffold {input.Nazollae0708} \
+                       {input.scaffolds}   \
+                       -t {threads}        \
+                       -o {params.pre}     \
+    > {log.stdout} 2> {log.stderr}"
+    """
+
+rule all_mags_scaffolded:
+  input:
+    expand("data/MAGs/{mag_host}_scaffolded/ragtag.scaffold.fasta",
+           mag_host=MAG_HOSTS)
+
 ############################### stage 2: filter and select nanopore reads, then assemble these into Nostoc azollae, mitochondria, or chloroplast genomes. ###############################
 rule get_reference_fastas:
   output:
