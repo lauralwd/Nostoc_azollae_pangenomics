@@ -273,3 +273,28 @@ rule create_pangenome_analysis:
                     --use-ncbi-blast                     \
      > {log.stdout} 2> {log.stderr}
      """
+
+rule create_pangenome_ANI:
+  input:
+    pangenome="data/anvio_pangenomes/{selection}",
+    internal="data/Anvio_internal_genomes.txt",
+    external="data/Anvio_external_genomes.txt",
+    MAGS="data/MAG_anvi_dbs/",
+    extdbs=expand("data/nanopore_contig_dbs/{nanopore_host}_{{selection}}_contigs.db",nanopore_host=NANOPORE),
+    ref="data/nanopore_contig_dbs/Azfil_0708_Nazollae_contigs.db"
+  output:
+    directory("data/anvio_pangenomes/{selection}_ANI")
+  log:
+    stdout="logs/anvi_create_pangenome_ANI_{selection}.stdout",
+    stderr="logs/anvi_create_pangenome_ANI_{selection}.stderr"
+  threads: 12
+  shell:
+    """
+    anvi-compute-genome-similarity --external-genomes {input.external} \
+                                   --internal-genomes {input.internal} \
+                                   --program pyANI                     \
+                                   --output-dir {output}               \
+                                   --num-threads {threads}             \
+                                   --pan-db {input.pangenome}/{wildcards.selection}-PAN.db \
+     > {log.stdout} 2> {log.stderr}
+     """
