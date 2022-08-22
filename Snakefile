@@ -252,3 +252,24 @@ rule create_pangenome_storage_all_Nazollaes:
       -o {output}            \
       > {log.stdout} 2> {log.stderr}
     """
+
+rule create_pangenome_analysis:
+  input:
+    "data/anvio_genomes_storage/{selection}_GENOMES.db"
+  output:
+    directory("data/anvio_pangenomes/{selection}")
+  log:
+    stdout="logs/anvi_create_pangenome_{selection}.stdout",
+    stderr="logs/anvi_create_pangenome_{selection}.stderr"
+  threads: 12
+  shell:
+    """
+    anvi-pan-genome -g {input}                           \
+                    --project-name {wildcards.selection} \
+                    --output-dir   {output}              \
+                    --num-threads  {threads}             \
+                    --minbit 0.5                         \
+                    --mcl-inflation 8                    \
+                    --use-ncbi-blast                     \
+     > {log.stdout} 2> {log.stderr}
+     """
