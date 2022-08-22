@@ -643,6 +643,8 @@ rule extract_phylogenomic_fasta:
     > {log.stdout} 2> {log.stderr}
     """
 
+# making a phylogenomic tree requires the user to manually create the phylogenomic_core bin inside the Anvi'o interactive interface
+
 rule phylogenomic_tree:
   input:
     fasta="data/anvio_pangenomes/{selection}_phylogenomic_core.fasta",
