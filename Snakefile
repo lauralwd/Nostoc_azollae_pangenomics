@@ -384,9 +384,10 @@ rule nanopore_assembly_to_contigdb:
       > {log.stdout} 2> {log.stderr}
     """
 
-rule all_nanopore_contigdbs:
+rule all_contigdbs:
   input:
-    expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection=SELECTION)
+    expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,      selection=SELECTION),
+    expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",illumina_host=ILLUMINA_HOSTS,selection=SELECTION)
 
 rule create_pangenome_storage_all_Nazollaes:
   input:
@@ -515,6 +516,10 @@ rule create_pangenome_ANI_organele:
      > {log.stdout} 2> {log.stderr}
      """
 
+rule all_Azolla_associated_pangenomes:
+  input:
+    expand("data/anvio_pangenomes/{selection}_ANI",selection=SELECTION)
+
 rule extract_phylogenomic_fasta:
   input:
     pangenome="data/anvio_pangenomes/{selection}",
@@ -560,3 +565,7 @@ rule phylogenomic_tree:
            -pre {params.pre}    \
     > {log.stdout} 2> {log.stderr}
     """
+
+rule all_Azolla_associated_phylogenomics:
+  input:
+    expand("data/anvio_pangenomes/{selection}_phylogenomics/{selection}.treefile",selection=SELECTION)
