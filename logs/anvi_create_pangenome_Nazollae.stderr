@@ -1,0 +1,56 @@
+WARNING
+===============================================
+If you publish results from this workflow, please do not forget to cite DIAMOND
+(doi:10.1038/nmeth.3176), unless you use it with --use-ncbi-blast flag, and MCL
+(http://micans.org/mcl/ and doi:10.1007/978-1-61779-361-5_15)
+
+Functions found ..............................:
+Genomes storage ..............................: Initialized (storage hash: hash203fab51)
+Num genomes in storage .......................: 12
+Num genomes will be used .....................: 12
+Pan database .................................: A new database, /stor/azolla_metagenome/nostoc_pangenome/data/anvio_pangenomes/Nazollae/Nazollae-PAN.db, has been
+                                                created.
+Exclude partial gene calls ...................: False
+
+AA sequences FASTA ...........................: /stor/azolla_metagenome/nostoc_pangenome/data/anvio_pangenomes/Nazollae/combined-aas.fa
+
+Num AA sequences reported ....................: 65,756
+Num excluded gene calls ......................: 0
+Unique AA sequences FASTA ....................: /stor/azolla_metagenome/nostoc_pangenome/data/anvio_pangenomes/Nazollae/combined-aas.fa.unique
+
+WARNING
+===============================================
+You elected to use NCBI's `blastp` for amino acid sequence search. Running
+blastp will be significantly slower than DIAMOND, but in some cases, slightly
+more sensitive. We are unsure about whether the slight increase in sensitivity
+may justify significant increase in run time, but you are the boss.
+
+
+NCBI BLAST MAKEDB
+===============================================
+BLAST search db ..............................: /stor/azolla_metagenome/nostoc_pangenome/data/anvio_pangenomes/Nazollae/combined-aas.fa.unique
+
+NCBI BLAST SEARCH
+===============================================
+BLAST results ................................: /stor/azolla_metagenome/nostoc_pangenome/data/anvio_pangenomes/Nazollae/blast-search-results.txt
+
+MCL INPUT
+===============================================
+Min percent identity .........................: 0.0
+Minbit .......................................: 0.5
+Filtered search results ......................: 1,498,663 edges stored
+MCL input ....................................: /stor/azolla_metagenome/nostoc_pangenome/data/anvio_pangenomes/Nazollae/mcl-input.txt
+
+MCL
+===============================================
+MCL inflation ................................: 8.0
+MCL output ...................................: /stor/azolla_metagenome/nostoc_pangenome/data/anvio_pangenomes/Nazollae/mcl-clusters.txt
+Number of MCL clusters .......................: 7,252
+
+CITATION
+===============================================
+The workflow you are using will likely use 'muscle' by Edgar,
+doi:10.1093/nar/gkh340 (http://www.drive5.com/muscle) to align your sequences.
+If you publish your findings, please do not forget to properly credit this tool.
+
+* Your pangenome is ready with a total of 7,252 gene clusters across 12 genomes 🎉

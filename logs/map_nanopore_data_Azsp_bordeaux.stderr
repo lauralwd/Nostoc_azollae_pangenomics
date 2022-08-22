@@ -1,0 +1,11 @@
+[M::main::1.938*1.00] loaded/built the index for 3849 target sequence(s)
+[M::mm_mapopt_update::2.458*1.00] mid_occ = 907
+[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 3849
+[M::mm_idx_stat::2.846*1.00] distinct minimizers: 33459331 (62.13% are singletons); average occurrences: 3.537; average spacing: 5.309; total length: 628367066
+[M::worker_pipeline::273.241*11.34] mapped 324774 sequences
+[M::worker_pipeline::522.494*11.50] mapped 325775 sequences
+[M::worker_pipeline::539.955*11.50] mapped 82767 sequences
+[M::main] Version: 2.22-r1101
+[M::main] CMD: minimap2 -x map-ont -t 12 -a references/Azfil_combo_genome_v1.minimap2-index data/nanopore_sequencing/Azsp_bordeaux.fastq.gz
+[M::main] Real time: 540.045 sec; CPU: 6207.217 sec; Peak RSS: 12.602 GB
+[bam_sort_core] merging from 3 files and 1 in-memory blocks...

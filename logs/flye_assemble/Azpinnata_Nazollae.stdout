@@ -1,0 +1,64 @@
+[2022-08-19 16:14:23] INFO: Starting Flye 2.8.1-b1676
+[2022-08-19 16:14:23] INFO: >>>STAGE: configure
+[2022-08-19 16:14:23] INFO: Configuring run
+[2022-08-19 16:15:22] INFO: Total read length: 2711619402
+[2022-08-19 16:15:22] INFO: Input genome size: 6000000
+[2022-08-19 16:15:22] INFO: Estimated coverage: 451
+[2022-08-19 16:15:22] INFO: Reads N50/N90: 9886 / 768
+[2022-08-19 16:15:22] INFO: Minimum overlap set to 1000
+[2022-08-19 16:15:22] INFO: >>>STAGE: assembly
+[2022-08-19 16:15:22] INFO: Assembling disjointigs
+[2022-08-19 16:15:22] INFO: Reading sequences
+[2022-08-19 16:16:02] INFO: Counting k-mers:
+0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% 
+[2022-08-19 16:17:53] INFO: Filling index table (1/2)
+0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% 
+[2022-08-19 16:20:21] INFO: Filling index table (2/2)
+0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% 
+[2022-08-19 16:23:37] INFO: Extending reads
+[2022-08-19 16:26:41] INFO: Overlap-based coverage: 366
+[2022-08-19 16:26:41] INFO: Median overlap divergence: 0.0617542
+0% 80% 90% 100% 
+[2022-08-19 17:40:38] INFO: Assembled 13 disjointigs
+[2022-08-19 17:40:38] INFO: Generating sequence
+0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% 
+[2022-08-19 17:40:42] INFO: >>>STAGE: consensus
+[2022-08-19 17:40:42] INFO: Running Minimap2
+[2022-08-19 17:44:20] INFO: Computing consensus
+[2022-08-19 17:54:34] INFO: Alignment error rate: 0.076326
+[2022-08-19 17:54:34] INFO: >>>STAGE: repeat
+[2022-08-19 17:54:34] INFO: Building and resolving repeat graph
+[2022-08-19 17:54:34] INFO: Parsing disjointigs
+[2022-08-19 17:54:34] INFO: Building repeat graph
+0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% 
+[2022-08-19 17:55:02] INFO: Median overlap divergence: 0.0997698
+[2022-08-19 17:55:02] INFO: Parsing reads
+[2022-08-19 17:55:40] INFO: Aligning reads to the graph
+0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% 
+[2022-08-19 17:58:58] INFO: Aligned read sequence: 2158544532 / 2364096147 (0.913053)
+[2022-08-19 17:58:58] INFO: Median overlap divergence: 0.0191846
+[2022-08-19 17:58:58] INFO: Mean edge coverage: 436
+[2022-08-19 17:58:58] INFO: Simplifying the graph
+[2022-08-19 17:59:09] INFO: >>>STAGE: contigger
+[2022-08-19 17:59:09] INFO: Generating contigs
+[2022-08-19 17:59:09] INFO: Reading sequences
+[2022-08-19 17:59:46] INFO: Generated 17 contigs
+[2022-08-19 17:59:46] INFO: Added 0 scaffold connections
+[2022-08-19 17:59:47] INFO: >>>STAGE: polishing
+[2022-08-19 17:59:47] INFO: Polishing genome (1/1)
+[2022-08-19 17:59:48] INFO: Running minimap2
+[2022-08-19 18:03:03] INFO: Separating alignment into bubbles
+[2022-08-19 18:23:14] INFO: Alignment error rate: 0.048768
+[2022-08-19 18:23:14] INFO: Correcting bubbles
+0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% 
+[2022-08-19 18:24:24] INFO: >>>STAGE: finalize
+[2022-08-19 18:24:24] INFO: Assembly statistics:
+
+	Total length:	5089865
+	Fragments:	12
+	Fragments N50:	4986311
+	Largest frg:	4986311
+	Scaffolds:	0
+	Mean coverage:	496
+
+[2022-08-19 18:24:24] INFO: Final assembly: /stor/azolla_metagenome/nostoc_pangenome/data/nanopore_assembly/Nazollae/Azpinnata/assembly.fasta
