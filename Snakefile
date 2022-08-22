@@ -346,19 +346,62 @@ rule assemble_organelle_genome_SPAdes:
     > {log.stdout} 2> {log.stderr}"
     """
 
-rule scaffold_organelle_genome_RAGTAG:
+rule scaffold_chloroplast_genome_RAGTAG:
+  input:
+    scaffolds="data/illumina_assembly/chloroplast/{illumina_host}/scaffolds.fasta",
+    chloroplast="references/Azfil_cp1.4.fasta"
+  params:
+    pre=lambda w: expand("data/illumina_assembly/chloroplast/{illumina_host}_scaffolded/scaffolds.fasta",illumina_host=w.illumina_host)
+  output:
+    "data/illumina_assembly/chloroplast/{illumina_host}_scaffolded/ragtag.scaffold.fasta"
+  log:
+    stderr="logs/illumina_genomes/SPAdes_chloroplast/{illumina_host}.stderr",
+    stdout="logs/illumina_genomes/SPAdes_chloroplast/{illumina_host}.stdout"
+  threads: 12
+  conda:
+    "envs/ragtag.yaml"
+  shell:
+    """
+    ragtag.py scaffold {input.chloroplast} \
+                       {input.scaffolds}   \
+                       -t {threads}        \
+                       -o
+    > {log.stdout} 2> {log.stderr}"
+    """
+
+rule scaffold_mitochondrium_genome_RAGTAG:
+  input:
+    scaffolds="data/illumina_assembly/mitochondrium/{illumina_host}/scaffolds.fasta",
+    mitochondrium="references/azfi_mito_laura-v1.fasta"
+  params:
+    pre=lambda w: expand("data/illumina_assembly/mitochondrium/{illumina_host}_scaffolded/scaffolds.fasta",illumina_host=w.illumina_host)
+  output:
+    "data/illumina_assembly/mitochondrium/{illumina_host}_scaffolded/ragtag.scaffold.fasta"
+  log:
+    stderr="logs/illumina_genomes/SPAdes_mitochondrium{illumina_host}.stderr",
+    stdout="logs/illumina_genomes/SPAdes_mitochondrium/{illumina_host}.stdout"
+  threads: 12
+  conda:
+    "envs/ragtag.yaml"
+  shell:
+    """
+    ragtag.py scaffold {input.mitochondrium} \
+                       {input.scaffolds}   \
+                       -t {threads}        \
+                       -o
+    > {log.stdout} 2> {log.stderr}"
+    """
 
 rule all_illumina_assembly:
   input:
-    expand("data/illumina_assembly/{selection}/{illumina_host}/scaffolds.fasta",
+    expand("data/illumina_assembly/{selection}/{illumina_host}_scaffolded/ragtag.scaffold.fasta",
            selection=['chloroplast','mitochondrium'],
            illumina_host=ILLUMINA_HOSTS)
-
 
 ############################### stage 4 create pangenomes ###############################
 rule illumina_assembly_to_contigdb:
   input:
-    "data/illumina_assembly/{selection}/{illumina_host}"
+    "data/illumina_assembly/{selection}/{illumina_host}_scaffolded/ragtag.scaffold.fasta"
   output:
      "data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db"
   log:
