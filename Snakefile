@@ -1,7 +1,7 @@
 NANOPORE=['Azfil_lab','Azpinnata','Azsp_bordeaux']
 SELECTION=['Nazollae','mitochondrium','chloroplast']
 
-# stage 1: collect MAGs and genomes of Nostoc azollae from anvio
+############################### stage 1: collect MAGs and genomes of Nostoc azollae from anvio ###############################
 rule gather_anvi_MAGS:
   output:
     directory("data/MAG_anvi_dbs/")
@@ -25,7 +25,7 @@ rule create_pangenome_storage_internal:
       > {log.stdout} 2> {log.stderr}
     """
 
-# stage 2: filter and select nanopore reads, then assemble these into Nostoc azollae, mitochondria, or chloroplast genomes.
+############################### stage 2: filter and select nanopore reads, then assemble these into Nostoc azollae, mitochondria, or chloroplast genomes. ###############################
 rule get_reference_fastas:
   output:
     "references/Nazollae_0708.fasta",
@@ -210,7 +210,9 @@ rule map_all_nanopore_assemblies:
   input:
     expand("data/nanopore_assembly/{selection}/{nanopore_host}",nanopore_host=NANOPORE,selection=SELECTION)
 
-# stage 3 create pangenomes
+############################### stage 3 assemble chloroplast and mito genomes from Illumina data ###############################
+
+############################### stage 4 create pangenomes ###############################
 rule nanopore_assembly_to_contigdb:
   input:
     "data/nanopore_assembly/{selection}/{nanopore_host}"
