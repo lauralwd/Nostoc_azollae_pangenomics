@@ -210,7 +210,6 @@ rule map_all_nanopore_assemblies:
   input:
     expand("data/nanopore_assembly/{selection}/{nanopore_host}",nanopore_host=NANOPORE,selection=SELECTION)
 
-
 # stage 3 create pangenomes
 rule nanopore_assembly_to_contigdb:
   input:
@@ -347,7 +346,7 @@ rule phylogenomic_tree:
   output:
     tree="data/anvio_pangenomes/{selection}_phylogenomics/{selection}.treefile"
   params:
-    pre=lambda w: expand ("data/anvio_pangenomes/{selection}_phylogenomics/",selection=w.selection)
+    pre=lambda w: expand ("data/anvio_pangenomes/{selection}_phylogenomics/{selection}",selection=w.selection)
   threads: 12
   log:
     stdout="logs/IQtree/anvi_phylogenomic_{selection}.stdout",
