@@ -351,7 +351,7 @@ rule scaffold_chloroplast_genome_RAGTAG:
     scaffolds="data/illumina_assembly/chloroplast/{illumina_host}/scaffolds.fasta",
     chloroplast="references/Azfil_cp1.4.fasta"
   params:
-    pre=lambda w: expand("data/illumina_assembly/chloroplast/{illumina_host}_scaffolded/scaffolds.fasta",illumina_host=w.illumina_host)
+    pre=lambda w: expand("data/illumina_assembly/chloroplast/{illumina_host}_scaffolded",illumina_host=w.illumina_host)
   output:
     "data/illumina_assembly/chloroplast/{illumina_host}_scaffolded/ragtag.scaffold.fasta"
   log:
@@ -365,7 +365,7 @@ rule scaffold_chloroplast_genome_RAGTAG:
     ragtag.py scaffold {input.chloroplast} \
                        {input.scaffolds}   \
                        -t {threads}        \
-                       -o
+                       -o {params.pre}     \
     > {log.stdout} 2> {log.stderr}"
     """
 
@@ -374,7 +374,7 @@ rule scaffold_mitochondrium_genome_RAGTAG:
     scaffolds="data/illumina_assembly/mitochondrium/{illumina_host}/scaffolds.fasta",
     mitochondrium="references/azfi_mito_laura-v1.fasta"
   params:
-    pre=lambda w: expand("data/illumina_assembly/mitochondrium/{illumina_host}_scaffolded/scaffolds.fasta",illumina_host=w.illumina_host)
+    pre=lambda w: expand("data/illumina_assembly/mitochondrium/{illumina_host}_scaffolded",illumina_host=w.illumina_host)
   output:
     "data/illumina_assembly/mitochondrium/{illumina_host}_scaffolded/ragtag.scaffold.fasta"
   log:
@@ -388,7 +388,7 @@ rule scaffold_mitochondrium_genome_RAGTAG:
     ragtag.py scaffold {input.mitochondrium} \
                        {input.scaffolds}   \
                        -t {threads}        \
-                       -o
+                       -o {params.pre}     \
     > {log.stdout} 2> {log.stderr}"
     """
 
