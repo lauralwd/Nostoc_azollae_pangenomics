@@ -391,7 +391,7 @@ rule nanopore_assembly_to_contigdb:
 rule all_contigdbs:
   input:
     expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,      selection=SELECTION),
-    expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",illumina_host=ILLUMINA_HOSTS,selection=SELECTION)
+    expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",illumina_host=ILLUMINA_HOSTS,selection=['chloroplast','mitochondrium'])
 
 rule create_pangenome_storage_all_Nazollaes:
   input:
