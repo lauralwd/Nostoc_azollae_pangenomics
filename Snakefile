@@ -317,3 +317,22 @@ rule create_pangenome_ANI:
                                    --pan-db {input.pangenome}/{wildcards.selection}-PAN.db \
      > {log.stdout} 2> {log.stderr}
      """
+
+rule extract_phylogenomic_fasta:
+  input:
+    pangenome="data/anvio_pangenomes/{selection}",
+    genomestorage="data/anvio_genomes_storage/{selection}_GENOMES.db"
+  output:
+    "data/anvio_pangenomes/{selection}_phylogenomic_core.fasta"
+  log:
+    stdout="logs/anvi_pangenome_fasta_{selection}.stdout",
+    stderr="logs/anvi_pangenome_fasta_{selection}.stderr"
+  shell:
+    """
+    anvi-get-sequences-for-gene-clusters -p {input.pangenome}        \
+                                         -g {input.genomestorage}    \
+                                         -C default                  \
+                                         -b phylogenomic_core        \
+                                         --concatenate-gene-clusters \
+                                         -o {output}
+    """
