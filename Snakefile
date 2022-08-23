@@ -10,7 +10,7 @@ rule gather_anvi_MAGs:
   shell:
     "bash ./scripts/collect_mag_dbs.sh"
 
-rule anvi_MAGs_fasta:
+rule anvi_MAGs_expand_hack:
   input:
     "data/MAG_anvi_dbs/"
   output:
