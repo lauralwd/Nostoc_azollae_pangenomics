@@ -1,0 +1,5 @@
+name	contigs_db_path
+Nazollae_Afiliculoides_reference_0708	../data/external_contig_dbs/Nazollae_0708_contigs.db
+Nazollae_Afiliculoides_lab_nanopore	../data/nanopore_contig_dbs/Azfil_lab_Nazollae_contigs.db
+Nazollae_Apinnata_nanopore	../data/nanopore_contig_dbs/Azpinnata_Nazollae_contigs.db
+Nazollae_Asp_nanopore	../data/nanopore_contig_dbs/Azsp_bordeaux_Nazollae_contigs.db
