@@ -4,3 +4,4 @@ data
 *.fasta
 *.minimap2-index
 *.bam
+logs/IQtree
