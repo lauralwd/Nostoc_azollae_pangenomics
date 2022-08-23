@@ -674,7 +674,7 @@ rule create_pangenome_ANI_Nazollae:
                                    --program pyANI                     \
                                    --output-dir {output}               \
                                    --num-threads {threads}             \
-                                   --pan-db {input.pangenome}/{wildcards.selection}-PAN.db \
+                                   --pan-db {input.pangenome}/Nazollae-PAN.db \
     > {log.stdout} 2> {log.stderr}
     """
 
