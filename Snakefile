@@ -698,7 +698,7 @@ rule create_pangenome_ANI_organele:
      > {log.stdout} 2> {log.stderr}
     """
 
-rule all_Azolla_associated_pangenomes:
+rule all_azolla_associated_pangenomes:
   input:
     expand("data/anvio_pangenomes/{selection}_ANI",selection=SELECTION)
 
@@ -750,6 +750,8 @@ rule phylogenomic_tree:
     > {log.stdout} 2> {log.stderr}
     """
 
-rule all_Azolla_associated_phylogenomics:
+rule all_azolla_associated_phylogenomics:
   input:
     expand("data/anvio_pangenomes/{selection}_phylogenomics/{selection}.treefile",selection=SELECTION)
+
+# note to self: import these phylogenies back into anvio https://merenlab.org/2017/06/07/phylogenomics/#pangenomic--phylogenomics
