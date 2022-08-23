@@ -72,7 +72,7 @@ rule scaffold_Nazollae_MAGs_RAGTAG:
                        {input.scaffolds}   \
                        -t {threads}        \
                        -o {params.pre}     \
-    > {log.stdout} 2> {log.stderr}"
+    > {log.stdout} 2> {log.stderr}
     """
 
 rule all_mags_scaffolded:
@@ -420,7 +420,7 @@ rule scaffold_chloroplast_genome_RAGTAG:
                        {input.scaffolds}   \
                        -t {threads}        \
                        -o {params.pre}     \
-    > {log.stdout} 2> {log.stderr}"
+    > {log.stdout} 2> {log.stderr}
     """
 
 rule scaffold_mitochondrium_genome_RAGTAG:
@@ -443,7 +443,7 @@ rule scaffold_mitochondrium_genome_RAGTAG:
                        {input.scaffolds}   \
                        -t {threads}        \
                        -o {params.pre}     \
-    > {log.stdout} 2> {log.stderr}"
+    > {log.stdout} 2> {log.stderr}
     """
 
 rule all_illumina_assembly:
