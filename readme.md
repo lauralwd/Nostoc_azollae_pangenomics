@@ -8,6 +8,21 @@ With these genomes, I want to answer questions about the pangenomics, evolution,
 I'm using Anvi'o 7.1 for lots of analyses, and snakemake to process data.
 Rather than using an up-to-date snakemake, I chose to use the snakemake with anvio7.1.
 
+# to reproduce
 
+## note about data
 
+## Azolla associated pan- and phylo-genomics
+To create all pangenome databases in anvio
 
+`snakemake --use-conda all_azolla_associated_pangenomes`
+
+Then identify a set of core genes with high geometric homogeneity but low-ish sequence homogeneity, bin them as `phylogenetic_core` and next run the phylogenomics:
+
+`snakemake --use-conda all_azolla_associated_phylogenomics`
+
+## Whole genome allignments
+
+## Genome degradation
+
+## Nostoocales pan- and phylo-genomics
