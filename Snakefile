@@ -616,9 +616,9 @@ rule create_pangenome_storage_all_chloroplast:
 rule create_pangenome_storage_all_mitochondrium:
   input:
     illuminamito=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",illumina_host=ILLUMINA_HOSTS,selection='mitochondrium'),
-    illuminamito=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db.{ext}",illumina_host=ILLUMINA_HOSTS,selection='mitochondrium',ext=['hmms','kegg','cogs']),
+    illuminamitoann=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db.{ext}",illumina_host=ILLUMINA_HOSTS,selection='mitochondrium',ext=['hmms','kegg','cogs']),
     nanoporemito=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='mitochondrium'),
-    nanoporemito=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='mitochondrium',ext=['hmms','kegg','cogs']),
+    nanoporemitoann=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='mitochondrium',ext=['hmms','kegg','cogs']),
     external="data/Anvio_external_mitochondrium.txt",
     refann=expand("data/external_contig_dbs/azfi_mito_laura-v1_contigs.db.{ext}",ext=['hmms','kegg','cogs']),
     refdb =       "data/external_contig_dbs/azfi_mito_laura-v1_contigs.db"
