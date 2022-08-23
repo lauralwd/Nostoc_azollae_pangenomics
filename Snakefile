@@ -544,7 +544,9 @@ rule all_contigdbs:
     expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",      nanopore_host=NANOPORE,      selection=SELECTION                                                 ),
     expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,      selection=SELECTION                      ,ext=['hmms','kegg','cogs']),
     expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",      illumina_host=ILLUMINA_HOSTS,selection=['chloroplast','mitochondrium']                           ),
-    expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db.{ext}",illumina_host=ILLUMINA_HOSTS,selection=['chloroplast','mitochondrium'],ext=['hmms','kegg','cogs'])
+    expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db.{ext}",illumina_host=ILLUMINA_HOSTS,selection=['chloroplast','mitochondrium'],ext=['hmms','kegg','cogs']),
+    expand("data/MAGs/{mag_host}_contigs.db"                                      ,mag_host=MAG_HOSTS                                                                               ),
+    expand("data/MAGs/{mag_host}_contigs.db.{ext}"                                ,mag_host=MAG_HOSTS                                                    ,ext=['hmms','kegg','cogs'])
 
 rule create_pangenome_storage_all_Nazollaes:
   input:
