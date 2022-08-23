@@ -11,13 +11,18 @@ Rather than using an up-to-date snakemake, I chose to use the snakemake with anv
 # to reproduce
 
 ## note about data
+ - nanopore data is new and will be in ENA
+ - Illumina data is part of Li2018, but something seems wrong with the data upload. Contact me for the original data as I used it
+ - Genome and chloroplast available from fernbase
+ - Mitochondrium is novel and will be uploaded some appropriate place. 
 
 ## Azolla associated pan- and phylo-genomics
 To create all pangenome databases in anvio
 
 `snakemake --use-conda all_azolla_associated_pangenomes`
 
-Then identify a set of core genes with high geometric homogeneity but low-ish sequence homogeneity, bin them as `phylogenetic_core` and next run the phylogenomics:
+You might need to play around with the clustering parameters to get meaningfull patterns in the pangenome.
+To procreed, identify a set of core genes with high geometric homogeneity but low-ish sequence homogeneity, bin them as `phylogenetic_core` and next run the phylogenomics:
 
 `snakemake --use-conda all_azolla_associated_phylogenomics`
 
