@@ -539,6 +539,22 @@ rule nanopore_assembly_to_contigdb:
       > {log.stdout} 2> {log.stderr}
     """
 
+rule reference_to_contigdb:
+  input:
+    "references/{fasta}.fasta"
+  output:
+    "data/external_contig_dbs/{fasta}_contigs.db"
+  log:
+    stdout="logs/anvi_create_contigdb/{fasta}.stdout",
+    stderr="logs/anvi_create_contigdb/{fasta}.stderr"
+  shell:
+    """
+    anvi-gen-contigs-database   \
+      -f {input}/assembly.fasta \
+      -o {output}               \
+      > {log.stdout} 2> {log.stderr}
+    """
+
 rule all_contigdbs:
   input:
     expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",      nanopore_host=NANOPORE,      selection=SELECTION                                                 ),
