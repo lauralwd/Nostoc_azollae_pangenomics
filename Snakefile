@@ -554,7 +554,8 @@ rule create_pangenome_storage_all_Nazollaes:
     expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='Nazollae', ext=['hmms','kegg','cogs']),
     internal="data/Anvio_internal_genomes.txt",
     external="data/Anvio_external_genomes.txt",
-    ref="data/nanopore_contig_dbs/Azfil_0708_Nazollae_contigs.db"
+    ref=          "data/nanopore_contig_dbs/Azfil_0708_Nazollae_contigs.db",
+    refann=expand("data/nanopore_contig_dbs/Azfil_0708_Nazollae_contigs.db.{ext}",ext=['hmms','kegg','cogs'])
   output:
     "data/anvio_genomes_storage/Nazollae_GENOMES.db"
   log:
