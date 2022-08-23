@@ -87,7 +87,9 @@ rule anvi_MAGs_to_fasta:
 rule create_pangenome_storage_internal:
   input:
     "data/MAG_anvi_dbs/",
-    txt="data/Anvio_internal_genomes.txt"
+    txt="data/Anvio_internal_genomes.txt",
+    annotation=expand("data/MAGs/{mag_host}_contigs.db.ext",mag_host=MAG_HOSTS),{ext},ext=['hmms','kegg','cogs']),
+    dbs=expand("data/MAGs/{mag_host}_contigs.db",mag_host=MAG_HOSTS)
   output:
     "data/anvio_genomes_storage/MAGs_only_GENOMES.db"
   log:
@@ -540,13 +542,16 @@ rule nanopore_assembly_to_contigdb:
 
 rule all_contigdbs:
   input:
-    expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,      selection=SELECTION),
-    expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",illumina_host=ILLUMINA_HOSTS,selection=['chloroplast','mitochondrium'])
+    expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",      nanopore_host=NANOPORE,      selection=SELECTION),
+    expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,      selection=SELECTION),                     ext=['hmms','kegg','cogs']),
+    expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",      illumina_host=ILLUMINA_HOSTS,selection=['chloroplast','mitochondrium']),
+    expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db.{ext}",illumina_host=ILLUMINA_HOSTS,selection=['chloroplast','mitochondrium'],ext=['hmms','kegg','cogs'])
 
 rule create_pangenome_storage_all_Nazollaes:
   input:
     "data/MAG_anvi_dbs/",
     expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='Nazollae'),
+    expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='Nazollae', ext=['hmms','kegg','cogs']),
     internal="data/Anvio_internal_genomes.txt",
     external="data/Anvio_external_genomes.txt",
     ref="data/nanopore_contig_dbs/Azfil_0708_Nazollae_contigs.db"
@@ -567,7 +572,9 @@ rule create_pangenome_storage_all_Nazollaes:
 rule create_pangenome_storage_all_chloroplast:
   input:
     illuminachloroplasts=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",illumina_host=ILLUMINA_HOSTS,selection='chloroplast'),
+    illuminachloroplasts_ann=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db.{ext}",illumina_host=ILLUMINA_HOSTS,selection='chloroplast',ext=['hmms','kegg','cogs']),
     nanoporechloroplasts=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='chloroplast'),
+    nanoporechloroplasts_ann=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='chloroplast',ext=['hmms','kegg','cogs']),
     external="data/Anvio_external_chloroplast.txt",
     ref="data/nanopore_contig_dbs/Azfil_chloroplast_contigs.db"
   output:
@@ -586,7 +593,9 @@ rule create_pangenome_storage_all_chloroplast:
 rule create_pangenome_storage_all_mitochondrium:
   input:
     illuminachloroplasts=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",illumina_host=ILLUMINA_HOSTS,selection='mitochondrium'),
+    illuminachloroplasts_ann=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db.{ext}",illumina_host=ILLUMINA_HOSTS,selection='mitochondrium',ext=['hmms','kegg','cogs']),
     nanoporechloroplasts=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='mitochondrium'),
+    nanoporechloroplasts_ann=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='mitochondrium',ext=['hmms','kegg','cogs']),
     external="data/Anvio_external_mitochondrium.txt",
     ref="data/nanopore_contig_dbs/Azfil_mitochondrium_contigs.db"
   output:
