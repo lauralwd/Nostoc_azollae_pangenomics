@@ -599,7 +599,7 @@ rule create_pangenome_storage_all_chloroplast:
     nanoporechloroplasts_ann=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='chloroplast',ext=['hmms','kegg','cogs']),
     external="data/Anvio_external_chloroplast.txt",
     refann=expand("data/external_contig_dbs/Azfil_cp1.4_contigs.db.{ext}"       ,ext=['hmms','kegg','cogs']),
-    refdb= "data/external_contig_dbs/Azfil_cp1.4_contigs.db."
+    refdb= "data/external_contig_dbs/Azfil_cp1.4_contigs.db"
   output:
     "data/anvio_genomes_storage/chloroplast_GENOMES.db"
   log:
@@ -621,7 +621,7 @@ rule create_pangenome_storage_all_mitochondrium:
     nanoporemito=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='mitochondrium',ext=['hmms','kegg','cogs']),
     external="data/Anvio_external_mitochondrium.txt",
     refann=expand("data/external_contig_dbs/azfi_mito_laura-v1_contigs.db.{ext}",ext=['hmms','kegg','cogs']),
-    refdb =       "data/external_contig_dbs/azfi_mito_laura-v1_contigs.db."
+    refdb =       "data/external_contig_dbs/azfi_mito_laura-v1_contigs.db"
   output:
     "data/anvio_genomes_storage/mitochondrium_GENOMES.db"
   log:
