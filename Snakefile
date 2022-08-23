@@ -270,7 +270,11 @@ rule bwa_index:
   input:
     "{fasta}.fasta"
   output:
-    "{fasta}.fasta.bwt"
+    "{fasta}.fasta.amb",
+    "{fasta}.fasta.ann",
+    "{fasta}.fasta.bwt",
+    "{fasta}.fasta.pac",
+    "{fasta}.fasta.sa"
   log:
     stderr="logs/illumina_genomes/bwa_index_{fasta}.stderr",
     stdout="logs/illumina_genomes/bwa_index_{fasta}.stdout"
