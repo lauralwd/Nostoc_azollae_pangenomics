@@ -629,8 +629,8 @@ rule create_pangenome_analysis:
                     --minbit 0.5                         \
                     --mcl-inflation 8                    \
                     --use-ncbi-blast                     \
-     > {log.stdout} 2> {log.stderr}
-     """
+    > {log.stdout} 2> {log.stderr}
+    """
 
 rule create_pangenome_ANI_Nazollae:
   input:
@@ -651,8 +651,8 @@ rule create_pangenome_ANI_Nazollae:
                                    --output-dir {output}               \
                                    --num-threads {threads}             \
                                    --pan-db {input.pangenome}/{wildcards.selection}-PAN.db \
-     > {log.stdout} 2> {log.stderr}
-     """
+    > {log.stdout} 2> {log.stderr}
+    """
 
 rule create_pangenome_ANI_organele:
   input:
