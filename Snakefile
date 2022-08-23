@@ -88,7 +88,7 @@ rule create_pangenome_storage_internal:
   input:
     dbs=expand("data/MAG_contig_dbs/{mag_host}_contigs.db"      ,mag_host=MAG_HOSTS                           ),
     ann=expand("data/MAG_contig_dbs/{mag_host}_contigs.db.{ext}",mag_host=MAG_HOSTS,ext=['hmms','kegg','cogs']),
-    txt="data/Anvio_internal_genomes.txt"
+    txt="scripts/Nazollae_internal_genomes.anvi-list"
   output:
     "data/anvio_genomes_storage/MAGs_only_GENOMES.db"
   log:
@@ -573,8 +573,8 @@ rule create_pangenome_storage_all_Nazollaes:
     magann=expand("data/MAG_contig_dbs/{mag_host}_contigs.db.{ext}",mag_host=MAG_HOSTS,ext=['hmms','kegg','cogs']),
     nandbs=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='Nazollae'),
     nanann=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='Nazollae', ext=['hmms','kegg','cogs']),
-    internal="data/Anvio_internal_genomes.txt",
-    external="data/Anvio_external_genomes.txt",
+    internal="scripts/Nazollae_internal_genomes.anvi-list",
+    external="scripts/Nazollae_external_genomes.anvi-list",
     refdb =       "data/external_contig_dbs/Nazollae_0708_contigs.db",
     refann=expand("data/external_contig_dbs/Nazollae_0708_contigs.db.{ext}",ext=['hmms','kegg','cogs'])
   output:
@@ -659,8 +659,8 @@ rule create_pangenome_analysis:
 rule create_pangenome_ANI_Nazollae:
   input:
     pangenome="data/anvio_pangenomes/Nazollae",
-    internal="data/Anvio_internal_genomes.txt",
-    external="data/Anvio_external_genomes.txt"
+    internal="scripts/Nazollae_internal_genomes.anvi-list",
+    external="scripts/Nazollae_external_genomes.anvi-list"
   output:
     directory("data/anvio_pangenomes/Nazollae_ANI")
   log:
@@ -682,7 +682,7 @@ rule create_pangenome_ANI_organele:
   input:
     pangenome="data/anvio_pangenomes/{selection}",
     genomestorage="data/anvio_genomes_storage/{selection}_GENOMES.db",
-    external="data/Anvio_external_genomes_{selection}.txt",
+    external="references/{selection}_external_genomes.anvi-list",
     extdbsnanopore=expand("data/nanopore_contig_dbs/{nanopore_host}_{{selection}}_contigs.db",nanopore_host=NANOPORE),
     extdbsillumina=expand("data/illumina_contig_dbs/{illumina_host}_{{selection}}_contigs.db",illumina_host=ILLUMINA_HOSTS)
   output:
