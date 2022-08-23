@@ -561,8 +561,8 @@ rule all_contigdbs:
     expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,      selection=SELECTION                      ,ext=['hmms','kegg','cogs']),
     expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",      illumina_host=ILLUMINA_HOSTS,selection=['chloroplast','mitochondrium']                           ),
     expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db.{ext}",illumina_host=ILLUMINA_HOSTS,selection=['chloroplast','mitochondrium'],ext=['hmms','kegg','cogs']),
-    expand("data/MAG_contig_dbs/{mag_host}_contigs.db"                                      ,mag_host=MAG_HOSTS                                                                               ),
-    expand("data/MAG_contig_dbs/{mag_host}_contigs.db.{ext}"                                ,mag_host=MAG_HOSTS                                                    ,ext=['hmms','kegg','cogs']),
+    expand("data/MAG_contig_dbs/{mag_host}_contigs.db"                            ,mag_host=MAG_HOSTS                                                                               ),
+    expand("data/MAG_contig_dbs/{mag_host}_contigs.db.{ext}"                      ,mag_host=MAG_HOSTS                                                    ,ext=['hmms','kegg','cogs']),
     expand("data/external_contig_dbs/Nazollae_0708_contigs.db.{ext}"     ,ext=['hmms','kegg','cogs']),
     expand("data/external_contig_dbs/Azfil_cp1.4_contigs.db.{ext}"       ,ext=['hmms','kegg','cogs']),
     expand("data/external_contig_dbs/azfi_mito_laura-v1_contigs.db.{ext}",ext=['hmms','kegg','cogs'])
