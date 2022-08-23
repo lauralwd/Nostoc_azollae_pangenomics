@@ -569,10 +569,10 @@ rule all_contigdbs:
 
 rule create_pangenome_storage_all_Nazollaes:
   input:
-    expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='Nazollae'),
-    expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='Nazollae', ext=['hmms','kegg','cogs']),
     magdbs=expand("data/MAG_contig_dbs/{mag_host}_contigs.db"      ,mag_host=MAG_HOSTS                           ),
     magann=expand("data/MAG_contig_dbs/{mag_host}_contigs.db.{ext}",mag_host=MAG_HOSTS,ext=['hmms','kegg','cogs']),
+    nandbs=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='Nazollae'),
+    nanann=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='Nazollae', ext=['hmms','kegg','cogs']),
     internal="data/Anvio_internal_genomes.txt",
     external="data/Anvio_external_genomes.txt",
     ref=          "data/nanopore_contig_dbs/Azfil_0708_Nazollae_contigs.db",
