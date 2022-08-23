@@ -636,10 +636,7 @@ rule create_pangenome_ANI_Nazollae:
   input:
     pangenome="data/anvio_pangenomes/Nazollae",
     internal="data/Anvio_internal_genomes.txt",
-    external="data/Anvio_external_genomes.txt",
-    MAGS="data/MAG_anvi_dbs/",
-    extdbs=expand("data/nanopore_contig_dbs/{nanopore_host}_Nazollae_contigs.db",nanopore_host=NANOPORE),
-    ref="data/nanopore_contig_dbs/Azfil_0708_Nazollae_contigs.db"
+    external="data/Anvio_external_genomes.txt"
   output:
     directory("data/anvio_pangenomes/Nazollae_ANI")
   log:
