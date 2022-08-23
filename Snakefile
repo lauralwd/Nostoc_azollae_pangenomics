@@ -755,3 +755,6 @@ rule all_azolla_associated_phylogenomics:
     expand("data/anvio_pangenomes/{selection}_phylogenomics/{selection}.treefile",selection=SELECTION)
 
 # note to self: import these phylogenies back into anvio https://merenlab.org/2017/06/07/phylogenomics/#pangenomic--phylogenomics
+
+#rule all_azolla_associated_pangenome_svgs:
+#  input:
