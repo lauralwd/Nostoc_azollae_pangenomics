@@ -86,10 +86,9 @@ rule anvi_MAGs_to_fasta:
 
 rule create_pangenome_storage_internal:
   input:
-    "data/MAG_anvi_dbs/",
-    txt="data/Anvio_internal_genomes.txt",
-    annotation=expand("data/MAGs/{mag_host}_contigs.db.{ext}",mag_host=MAG_HOSTS,ext=['hmms','kegg','cogs']),
-    dbs=expand("data/MAGs/{mag_host}_contigs.db",mag_host=MAG_HOSTS)
+    dbs=expand("data/MAGs/{mag_host}_contigs.db"      ,mag_host=MAG_HOSTS                           ),
+    ann=expand("data/MAGs/{mag_host}_contigs.db.{ext}",mag_host=MAG_HOSTS,ext=['hmms','kegg','cogs']),
+    txt="data/Anvio_internal_genomes.txt"
   output:
     "data/anvio_genomes_storage/MAGs_only_GENOMES.db"
   log:
@@ -549,7 +548,8 @@ rule all_contigdbs:
 
 rule create_pangenome_storage_all_Nazollaes:
   input:
-    "data/MAG_anvi_dbs/",
+    dbs=expand("data/MAGs/{mag_host}_contigs.db"      ,mag_host=MAG_HOSTS                           ),
+    ann=expand("data/MAGs/{mag_host}_contigs.db.{ext}",mag_host=MAG_HOSTS,ext=['hmms','kegg','cogs']),
     expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='Nazollae'),
     expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='Nazollae', ext=['hmms','kegg','cogs']),
     internal="data/Anvio_internal_genomes.txt",
