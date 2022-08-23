@@ -6,7 +6,7 @@ MAG_HOSTS=['Azfil_lab','Azfil_wild','Azmex_IRRI_486','Azmic_IRRI_456','Aznil_IRR
 ############################### stage 1: collect MAGs and genomes of Nostoc azollae from anvio ###############################
 rule gather_anvi_MAGs:
   output:
-    directory("data/MAG_anvi_dbs/")
+    temp(directory("data/MAG_anvi_dbs/"))
   shell:
     "bash ./scripts/collect_mag_dbs.sh"
 
@@ -14,7 +14,7 @@ rule anvi_MAGs_fasta:
   input:
     "data/MAG_anvi_dbs/"
   output:
-    temp(expand("data/MAGs/{mag_host}_contigs.db",mag_host=MAG_HOSTS))
+    expand("data/MAGs/{mag_host}_contigs.db",mag_host=MAG_HOSTS)
   shell:
     """
     cp --reflink=always {input}/*_contigs.db  data/MAGs/
