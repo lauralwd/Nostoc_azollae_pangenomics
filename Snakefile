@@ -681,10 +681,7 @@ rule create_pangenome_ANI_Nazollae:
 rule create_pangenome_ANI_organele:
   input:
     pangenome="data/anvio_pangenomes/{selection}",
-    genomestorage="data/anvio_genomes_storage/{selection}_GENOMES.db",
-    external="references/{selection}_external_genomes.anvi-list",
-    extdbsnanopore=expand("data/nanopore_contig_dbs/{nanopore_host}_{{selection}}_contigs.db",nanopore_host=NANOPORE),
-    extdbsillumina=expand("data/illumina_contig_dbs/{illumina_host}_{{selection}}_contigs.db",illumina_host=ILLUMINA_HOSTS)
+    external="references/{selection}_external_genomes.anvi-list"
   output:
     directory("data/anvio_pangenomes/{selection}_ANI")
   log:
