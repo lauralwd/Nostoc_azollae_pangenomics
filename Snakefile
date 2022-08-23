@@ -20,6 +20,55 @@ rule anvi_MAGs_fasta:
     cp --reflink=always {input}/*_contigs.db  data/MAGs/
     """
 
+rule anvi_contigdb_runhmms:
+  input:
+    "{db}_contigs.db"
+  output:
+    touch("{db}_contigs.db.hmms")
+  log:
+    stderr="logs/anvi_annotate/{db}_hmms.stderr",
+    stdout="logs/anvi_annotate/{db}_hmms.stdout"
+  threads: 6
+  shell:
+    """
+    anvi-run-hmms -c {input}   \
+                  -T {threads} \
+    > {log.stdout} 2> {log.stderr}
+    """
+
+rule anvi_contigdb_kegg:
+  input:
+    "{db}_contigs.db"
+  output:
+    touch("{db}_contigs.db.kegg")
+  log:
+    stderr="logs/anvi_annotate/{db}_kegg.stderr",
+    stdout="logs/anvi_annotate/{db}_kegg.stdout"
+  threads: 6
+  shell:
+    """
+    anvi-run-kegg-kofams -c {input}   \
+                         -T {threads} \
+    > {log.stdout} 2> {log.stderr}
+    """
+
+rule anvi_contigdb_cogs:
+  input:
+    "{db}_contigs.db"
+  output:
+    touch("{db}_contigs.db.cogs")
+  log:
+    stderr="logs/anvi_annotate/{db}_cogs.stderr",
+    stdout="logs/anvi_annotate/{db}_cogs.stdout"
+  threads: 6
+  shell:
+    """
+    anvi-run-ncbi-cogs -c {input}   \
+                       -T {threads} \
+                       --sensitive  \
+    > {log.stdout} 2> {log.stderr}
+    """
+
 rule anvi_MAGs_to_fasta:
   input:
     "data/MAGs/{mag_host}_contigs.db"
