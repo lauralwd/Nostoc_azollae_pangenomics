@@ -575,8 +575,8 @@ rule create_pangenome_storage_all_Nazollaes:
     nanann=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='Nazollae', ext=['hmms','kegg','cogs']),
     internal="data/Anvio_internal_genomes.txt",
     external="data/Anvio_external_genomes.txt",
-    ref=          "data/nanopore_contig_dbs/Azfil_0708_Nazollae_contigs.db",
-    refann=expand("data/nanopore_contig_dbs/Azfil_0708_Nazollae_contigs.db.{ext}",ext=['hmms','kegg','cogs'])
+    refdb =       "data/external_contig_dbs/Nazollae_0708_contigs.db",
+    refann=expand("data/external_contig_dbs/Nazollae_0708_contigs.db.{ext}",ext=['hmms','kegg','cogs'])
   output:
     "data/anvio_genomes_storage/Nazollae_GENOMES.db"
   log:
@@ -598,7 +598,8 @@ rule create_pangenome_storage_all_chloroplast:
     nanoporechloroplasts=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='chloroplast'),
     nanoporechloroplasts_ann=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='chloroplast',ext=['hmms','kegg','cogs']),
     external="data/Anvio_external_chloroplast.txt",
-    ref="data/nanopore_contig_dbs/Azfil_chloroplast_contigs.db"
+    refann=expand("data/external_contig_dbs/Azfil_cp1.4_contigs.db.{ext}"       ,ext=['hmms','kegg','cogs']),
+    refdb= "data/external_contig_dbs/Azfil_cp1.4_contigs.db."
   output:
     "data/anvio_genomes_storage/chloroplast_GENOMES.db"
   log:
@@ -619,7 +620,8 @@ rule create_pangenome_storage_all_mitochondrium:
     nanoporechloroplasts=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='mitochondrium'),
     nanoporechloroplasts_ann=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='mitochondrium',ext=['hmms','kegg','cogs']),
     external="data/Anvio_external_mitochondrium.txt",
-    ref="data/nanopore_contig_dbs/Azfil_mitochondrium_contigs.db"
+    refann=expand("data/external_contig_dbs/azfi_mito_laura-v1_contigs.db.{ext}",ext=['hmms','kegg','cogs']),
+    refdb =       "data/external_contig_dbs/azfi_mito_laura-v1_contigs.db."
   output:
     "data/anvio_genomes_storage/mitochondrium_GENOMES.db"
   log:
