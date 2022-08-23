@@ -14,10 +14,10 @@ rule anvi_MAGs_fasta:
   input:
     "data/MAG_anvi_dbs/"
   output:
-    expand("data/MAGs/{mag_host}_contigs.db",mag_host=MAG_HOSTS)
+    expand("data/MAG_contig_dbs/{mag_host}_contigs.db",mag_host=MAG_HOSTS)
   shell:
     """
-    cp --reflink=always {input}/*_contigs.db  data/MAGs/
+    cp --reflink=always {input}/*_contigs.db  data/MAG_contig_dbs/
     """
 
 rule anvi_contigdb_runhmms:
@@ -71,9 +71,9 @@ rule anvi_contigdb_cogs:
 
 rule anvi_MAGs_to_fasta:
   input:
-    "data/MAGs/{mag_host}_contigs.db"
+    "data/MAG_contig_dbs/{mag_host}_contigs.db"
   output:
-    "data/MAGs/{mag_host}_contigs.fasta"
+    "data/MAG_contig_dbs/{mag_host}_contigs.fasta"
   log:
     stderr="logs/MAG_anvi_dbs/export_contigs_{mag_host}.stderr",
     stdout="logs/MAG_anvi_dbs/export_contigs_{mag_host}.stdout"
@@ -86,8 +86,8 @@ rule anvi_MAGs_to_fasta:
 
 rule create_pangenome_storage_internal:
   input:
-    dbs=expand("data/MAGs/{mag_host}_contigs.db"      ,mag_host=MAG_HOSTS                           ),
-    ann=expand("data/MAGs/{mag_host}_contigs.db.{ext}",mag_host=MAG_HOSTS,ext=['hmms','kegg','cogs']),
+    dbs=expand("data/MAG_contig_dbs/{mag_host}_contigs.db"      ,mag_host=MAG_HOSTS                           ),
+    ann=expand("data/MAG_contig_dbs/{mag_host}_contigs.db.{ext}",mag_host=MAG_HOSTS,ext=['hmms','kegg','cogs']),
     txt="data/Anvio_internal_genomes.txt"
   output:
     "data/anvio_genomes_storage/MAGs_only_GENOMES.db"
@@ -104,12 +104,12 @@ rule create_pangenome_storage_internal:
 
 rule scaffold_Nazollae_MAGs_RAGTAG:
   input:
-    scaffolds="data/MAGs/{mag_host}_contigs.fasta",
+    scaffolds="data/MAG_contig_dbs/{mag_host}_contigs.fasta",
     Nazollae0708="references/Nazollae_0708.fasta"
   params:
-    pre=lambda w: expand("data/MAGs/{mag_host}_scaffolded/",mag_host=w.mag_host)
+    pre=lambda w: expand("data/MAG_contig_dbs/{mag_host}_scaffolded/",mag_host=w.mag_host)
   output:
-    "data/MAGs/{mag_host}_scaffolded/ragtag.scaffold.fasta"
+    "data/MAG_contig_dbs/{mag_host}_scaffolded/ragtag.scaffold.fasta"
   log:
     stderr="logs/MAG_anvi_dbs/RAGTAG{mag_host}.stderr",
     stdout="logs/MAG_anvi_dbs/RAGTAG{mag_host}.stdout"
@@ -127,7 +127,7 @@ rule scaffold_Nazollae_MAGs_RAGTAG:
 
 rule all_mags_scaffolded:
   input:
-    expand("data/MAGs/{mag_host}_scaffolded/ragtag.scaffold.fasta",
+    expand("data/MAG_contig_dbs/{mag_host}_scaffolded/ragtag.scaffold.fasta",
            mag_host=MAG_HOSTS)
 
 ############################### stage 2: filter and select nanopore reads, then assemble these into Nostoc azollae, mitochondria, or chloroplast genomes. ###############################
@@ -545,15 +545,15 @@ rule all_contigdbs:
     expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,      selection=SELECTION                      ,ext=['hmms','kegg','cogs']),
     expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",      illumina_host=ILLUMINA_HOSTS,selection=['chloroplast','mitochondrium']                           ),
     expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db.{ext}",illumina_host=ILLUMINA_HOSTS,selection=['chloroplast','mitochondrium'],ext=['hmms','kegg','cogs']),
-    expand("data/MAGs/{mag_host}_contigs.db"                                      ,mag_host=MAG_HOSTS                                                                               ),
-    expand("data/MAGs/{mag_host}_contigs.db.{ext}"                                ,mag_host=MAG_HOSTS                                                    ,ext=['hmms','kegg','cogs'])
+    expand("data/MAG_contig_dbs/{mag_host}_contigs.db"                                      ,mag_host=MAG_HOSTS                                                                               ),
+    expand("data/MAG_contig_dbs/{mag_host}_contigs.db.{ext}"                                ,mag_host=MAG_HOSTS                                                    ,ext=['hmms','kegg','cogs']),
 
 rule create_pangenome_storage_all_Nazollaes:
   input:
-    dbs=expand("data/MAGs/{mag_host}_contigs.db"      ,mag_host=MAG_HOSTS                           ),
-    ann=expand("data/MAGs/{mag_host}_contigs.db.{ext}",mag_host=MAG_HOSTS,ext=['hmms','kegg','cogs']),
     expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='Nazollae'),
     expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='Nazollae', ext=['hmms','kegg','cogs']),
+    magdbs=expand("data/MAG_contig_dbs/{mag_host}_contigs.db"      ,mag_host=MAG_HOSTS                           ),
+    magann=expand("data/MAG_contig_dbs/{mag_host}_contigs.db.{ext}",mag_host=MAG_HOSTS,ext=['hmms','kegg','cogs']),
     internal="data/Anvio_internal_genomes.txt",
     external="data/Anvio_external_genomes.txt",
     ref=          "data/nanopore_contig_dbs/Azfil_0708_Nazollae_contigs.db",
