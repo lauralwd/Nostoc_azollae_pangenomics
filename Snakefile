@@ -550,7 +550,7 @@ rule reference_to_contigdb:
   shell:
     """
     anvi-gen-contigs-database   \
-      -f {input} \
+      -f {input}/assembly.fasta \
       -o {output}               \
       > {log.stdout} 2> {log.stderr}
     """
