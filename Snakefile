@@ -50,7 +50,7 @@ rule anvi_contigdb_kegg:
     """
     anvi-run-kegg-kofams -c {input}   \
                          -T {threads} \
-                         --just-do-it
+                         --just-do-it \
     > {log.stdout} 2> {log.stderr}
     """
 
