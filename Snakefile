@@ -377,7 +377,7 @@ rule sort_index_bam_name:
                -o {output.bam} \
                -l 8            \
                -m 4G           \
-               -n
+               -n              \
                -@ {threads}    \
     2> {log.stderr}
 
