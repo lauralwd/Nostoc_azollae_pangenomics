@@ -387,8 +387,8 @@ rule get_chloroplast_illumina_reads:
 
 rule get_mitochondrium_illumina_reads:
   input:
-    bam="data/illumina_mapped/{illumina_host}_mapped_sorted-name.bam",
-    bai="data/illumina_mapped/{illumina_host}_mapped_sorted-name.bam.bai"
+    bam="data/illumina_mapped/{illumina_host}_mapped_sorted.bam",
+    bai="data/illumina_mapped/{illumina_host}_mapped_sorted.bam.bai"
   output:
     R1="data/illumina_filtered/mitochondrium/{illumina_host}_R1.fastq.gz",
     R2="data/illumina_filtered/mitochondrium/{illumina_host}_R2.fastq.gz"
