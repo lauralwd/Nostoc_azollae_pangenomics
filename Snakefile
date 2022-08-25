@@ -354,29 +354,6 @@ rule map_illumina_reads_to_combined_reference:
     2> {log.stderr}
     """
 
-rule sort_index_bam_name:
-  input:
-    bam="{bam}_mapped.bam"
-  output:
-    bam=temp("{bam}_mapped_sorted-name.bam"),
-    bai=temp("{bam}_mapped_sorted-name.bam.bai")
-  log:
-    stderr="logs/samtools/sort_index_bam_name_{bam}.stderr"
-  threads: 12
-  shell:
-    """
-    samtools sort {input.bam}  \
-               -o {output.bam} \
-               -l 8            \
-               -m 4G           \
-               -n              \
-               -@ {threads}    \
-    2> {log.stderr}
-
-    samtools index {output.bam}
-    2>> {log.stderr}
-    """
-
 rule all_illumina_bams_sorted:
   input:
     bam=expand("data/illumina_mapped/{illumina_host}_mapped_sorted.bam"    ,illumina_host=ILLUMINA_HOSTS),
