@@ -26,6 +26,10 @@ To procreed, identify a set of core genes with high geometric homogeneity but lo
 
 `snakemake --use-conda all_azolla_associated_phylogenomics`
 
+Save your specific visualisation and binning under the name 'default' and export via
+
+`snakemake --use-conda all_azolla_associated_pangenome_svgs`
+
 ## Whole genome allignments
 
 ## Genome degradation
