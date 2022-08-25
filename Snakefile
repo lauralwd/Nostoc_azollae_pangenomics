@@ -11,6 +11,7 @@ rule gather_anvi_MAGs:
   shell:
     "bash ./scripts/collect_mag_dbs.sh"
 
+# you may need to remove old hmm, kegg, cogg results, or choose to keep your current ones and ignore the next three rules
 rule anvi_contigdb_runhmms:
   input:
     "{db}_contigs.db"
