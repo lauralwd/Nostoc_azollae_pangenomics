@@ -376,13 +376,19 @@ rule sort_index_bam_name:
     2>> {log.stderr}
     """
 
+rule all_illumina_bams_sorted:
+  input:
+    bam=expand("data/illumina_mapped/{illumina_host}_mapped_sorted.bam"    ,illumina_host=ILLUMINA_HOSTS),
+    bai=expand("data/illumina_mapped/{illumina_host}_mapped_sorted.bam.bai",illumina_host=ILLUMINA_HOSTS)
+
 rule get_chloroplast_illumina_reads:
   input:
-    bam="data/illumina_mapped/{illumina_host}_mapped_sorted-name.bam",
-    bai="data/illumina_mapped/{illumina_host}_mapped_sorted-name.bam.bai"
+    bam="data/illumina_mapped/{illumina_host}_mapped_sorted.bam",
+    bai="data/illumina_mapped/{illumina_host}_mapped_sorted.bam.bai"
   output:
     R1="data/illumina_filtered/chloroplast/{illumina_host}_R1.fastq.gz",
     R2="data/illumina_filtered/chloroplast/{illumina_host}_R2.fastq.gz"
+  threads: 3
   log:
     stderr="logs/illumina_genomes/get_chloroplast_illumina_reads_{illumina_host}.stderr"
   shell:
@@ -390,6 +396,11 @@ rule get_chloroplast_illumina_reads:
     samtools view -h {input.bam}         \
                   'Azolla_cp_v1_4'       \
     2> {log.stderr}                      \
+    | samtools sort -                    \
+               -l 0                      \
+               -m 4G                     \
+               -n                        \
+               -@ {threads}              \
     | samtools fastq -1 {output.R1}      \
                      -2 {output.R2}      \
                      -                   \
@@ -415,6 +426,11 @@ rule get_mitochondrium_illumina_reads:
                   'a_filiculoides_mitochondrium_contig_22' \
                   'a_filiculoides_mitochondrium_contig_09' \
     2> {log.stderr}                                        \
+    | samtools sort -                                      \
+               -l 0                                        \
+               -m 4G                                       \
+               -n                                          \
+               -@ {threads}                                \
     | samtools fastq -1 {output.R1}                        \
                      -2 {output.R2}                        \
                      -                                     \
