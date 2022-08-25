@@ -202,8 +202,8 @@ rule sort_index_bam:
   input:
     bam="{bam}_mapped.bam"
   output:
-    bam="{bam}_mapped_sorted.bam",
-    bai="{bam}_mapped_sorted.bam.bai"
+    bam=temp("{bam}_mapped_sorted.bam"    ),
+    bai=temp("{bam}_mapped_sorted.bam.bai")
   log:
     stderr="logs/sort_index_bam_{bam}.stderr"
   threads: 12
