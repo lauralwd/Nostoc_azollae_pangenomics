@@ -2,19 +2,30 @@ NANOPORE=['Azfil_lab','Azpinnata','Azsp_bordeaux']
 SELECTION=['Nazollae','mitochondrium','chloroplast']
 ILLUMINA_HOSTS=['Azcar1','Azcar2','Azmexicana','Azmicrophylla','Aznilotica','Azrubra']
 MAG_HOSTS=['Azfil_lab','Azfil_wild','Azmex_IRRI_486','Azmic_IRRI_456','Aznil_IRRI_479','Azrub_IRRI_479','Azspnov_IRRI1_472','Azspnov_IRRI2_489']
+MAG_HOSTS2=['Azfil_lab','Azfil_wild','Azmex_IRRI_486','Azmic_IRRI_456','Aznil_IRRI_479','Azrub_IRRI_479','Azcar1','Azcar2']
 
 ############################### stage 1: collect MAGs and genomes of Nostoc azollae from anvio ###############################
-rule gather_anvi_MAGs:
-  output:
-    temp(directory("data/MAG_anvi_dbs/"))
-  shell:
-    "bash ./scripts/collect_mag_dbs.sh"
+#rule gather_anvi_MAGs:
+#  output:
+#    temp(directory("data/MAG_anvi_dbs/"))
+#  shell:
+#    "bash ./scripts/collect_mag_dbs.sh"
 
 rule anvi_MAGs_expand_hack:
   input:
     "data/MAG_anvi_dbs/"
   output:
     expand("data/MAG_contig_dbs/{mag_host}_contigs.db",mag_host=MAG_HOSTS)
+  shell:
+    """
+    cp --reflink=always {input}/*_contigs.db  data/MAG_contig_dbs/
+    """
+
+rule anvi_MAGs_expand_hack2:
+  input:
+    "data/MAG_anvi_dbs/"
+  output:
+    expand("data/MAG_contig_dbs/{mag_host}_PROFILE.db",mag_host=MAG_HOSTS2)
   shell:
     """
     cp --reflink=always {input}/*_contigs.db  data/MAG_contig_dbs/
