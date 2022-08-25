@@ -239,8 +239,8 @@ rule get_Nazollae_nanopore_reads:
 
 rule get_chloroplast_nanopore_reads:
   input:
-    bam=  "data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam",
-    bai=  "data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam.bai"
+    bam="data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam",
+    bai="data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam.bai"
   output:
     fastq="data/nanopore_filtered/{nanopore_host}_chloroplast_reads.fastq.gz"
   log:
@@ -256,8 +256,8 @@ rule get_chloroplast_nanopore_reads:
 
 rule get_mitochondrium_nanopore_reads:
   input:
-    bam=  "data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam",
-    bai=  "data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam.bai"
+    bam="data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam",
+    bai="data/nanopore_mapped/{nanopore_host}_mapped_sorted.bam.bai"
   output:
     fastq="data/nanopore_filtered/{nanopore_host}_mitochondrium_reads.fastq.gz"
   log:
@@ -305,7 +305,7 @@ rule assembly_with_flye:
     > {log.stderr} 2> {log.stdout}
     """
 
-rule map_all_nanopore_assemblies:
+rule all_nanopore_assemblies:
   input:
     expand("data/nanopore_assembly/{selection}/{nanopore_host}",nanopore_host=NANOPORE,selection=SELECTION)
 
