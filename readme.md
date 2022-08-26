@@ -21,6 +21,10 @@ To create all pangenome databases in anvio
 
 `snakemake --use-conda all_azolla_associated_pangenomes`
 
+and run this to prevent unnecessarily rerunning any analysis:
+
+`snakemake --use-conda all_azolla_associated_pangenomes --touch`
+
 You might need to play around with the clustering parameters to get meaningfull patterns in the pangenome.
 To procreed, identify a set of core genes with high geometric homogeneity but low-ish sequence homogeneity, bin them as `phylogenetic_core` and next run the phylogenomics:
 
