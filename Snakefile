@@ -440,7 +440,7 @@ rule assemble_organelle_genome_SPAdes:
               -2 {input.R2}         \
               -t {threads}          \
               -o {params.pre}       \
-    > {log.stdout} 2> {log.stderr}"
+    > {log.stdout} 2> {log.stderr}
     """
 
 rule scaffold_chloroplast_genome_RAGTAG:
