@@ -443,6 +443,60 @@ rule assemble_organelle_genome_SPAdes:
     > {log.stdout} 2> {log.stderr}
     """
 
+rule assemble_guided_chloroplast_genome_SPAdes:
+  input:
+    R1="data/illumina_filtered/chloroplast/{illumina_host}_R1.fastq.gz",
+    R2="data/illumina_filtered/chloroplast/{illumina_host}_R2.fastq.gz",
+    chloroplast="references/Azfil_cp1.4.fasta"
+  output:
+    scaffolds="data/illumina_assembly/chloroplast_guided/{illumina_host}/scaffolds.fasta",
+    graph=    "data/illumina_assembly/chloroplast_guided/{illumina_host}/assembly_graph_with_scaffolds.gfa"
+  params:
+    pre=lambda w: expand("data/illumina_assembly/chloroplast_guided//{illumina_host}/",
+                         illumina_host=w.illumina_host)
+  threads: 12
+  conda:
+    "envs/spades.yaml"
+  log:
+    stderr="logs/illumina_genomes/SPAdes_chloroplast/{illumina_host}.stderr",
+    stdout="logs/illumina_genomes/SPAdes_chloroplast/{illumina_host}.stdout"
+  shell:
+    """
+    spades.py -1 {input.R1}         \
+              -2 {input.R2}         \
+              -t {threads}          \
+              -o {params.pre}       \
+              --trusted-contigs {input.chloroplast} \
+    > {log.stdout} 2> {log.stderr}
+    """
+
+rule assemble_guided_mitochondrium_genome_SPAdes:
+  input:
+    R1="data/illumina_filtered/mitochondrium/{illumina_host}_R1.fastq.gz",
+    R2="data/illumina_filtered/mitochondrium/{illumina_host}_R2.fastq.gz",
+    mito="references/azfi_mito_laura-v1.fasta"
+  output:
+    scaffolds="data/illumina_assembly/mitochondrium_guided/{illumina_host}/scaffolds.fasta",
+    graph=    "data/illumina_assembly/mitochondrium_guided/{illumina_host}/assembly_graph_with_scaffolds.gfa"
+  params:
+    pre=lambda w: expand("data/illumina_assembly/mitochondrium_guided//{illumina_host}/",
+                         illumina_host=w.illumina_host)
+  threads: 12
+  conda:
+    "envs/spades.yaml"
+  log:
+    stderr="logs/illumina_genomes/SPAdes_mitochondrium/{illumina_host}.stderr",
+    stdout="logs/illumina_genomes/SPAdes_mitochondrium/{illumina_host}.stdout"
+  shell:
+    """
+    spades.py -1 {input.R1}         \
+              -2 {input.R2}         \
+              -t {threads}          \
+              -o {params.pre}       \
+              --trusted-contigs {input.mito} \
+    > {log.stdout} 2> {log.stderr}
+    """
+
 rule scaffold_chloroplast_genome_RAGTAG:
   input:
     scaffolds="data/illumina_assembly/chloroplast/{illumina_host}/scaffolds.fasta",
