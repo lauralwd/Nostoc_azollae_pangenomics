@@ -561,7 +561,7 @@ rule illumina_assembly_to_contigdb:
   shell:
     """
     anvi-gen-contigs-database   \
-      -f {input}/assembly.fasta \
+      -f {input} \
       -o {output}               \
       > {log.stdout} 2> {log.stderr}
     """
@@ -593,7 +593,7 @@ rule reference_to_contigdb:
   shell:
     """
     anvi-gen-contigs-database   \
-      -f {input}/assembly.fasta \
+      -f {input}                \
       -o {output}               \
       > {log.stdout} 2> {log.stderr}
     """
