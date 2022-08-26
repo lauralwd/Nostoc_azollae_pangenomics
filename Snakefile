@@ -545,14 +545,14 @@ rule scaffold_mitochondrium_genome_RAGTAG:
 
 rule all_illumina_assembly:
   input:
-    expand("data/illumina_assembly/{selection}/{illumina_host}_scaffolded/ragtag.scaffold.fasta",
+    expand("data/illumina_assembly/{selection}_guided/{illumina_host}_scaffolded/ragtag.scaffold.fasta",
            selection=['chloroplast','mitochondrium'],
            illumina_host=ILLUMINA_HOSTS)
 
 ############################### stage 4 create pangenomes ###############################
 rule illumina_assembly_to_contigdb:
   input:
-    "data/illumina_assembly/{selection}/{illumina_host}_scaffolded/ragtag.scaffold.fasta"
+    "data/illumina_assembly/{selection}_guided/{illumina_host}/scaffolds.fasta"
   output:
      "data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db"
   log:
