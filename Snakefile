@@ -372,6 +372,8 @@ rule get_chloroplast_illumina_reads:
   shell:
     """
     samtools view -h {input.bam}         \
+                  -f 2                   \
+                  -@ {threads}           \
                   'Azolla_cp_v1_4'       \
     2> {log.stderr}                      \
     | samtools sort -                    \
