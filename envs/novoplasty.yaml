@@ -1,0 +1,5 @@
+name: novoplasty
+channels:
+  - bioconda
+dependencies:
+  - novoplasty=4.3.1
