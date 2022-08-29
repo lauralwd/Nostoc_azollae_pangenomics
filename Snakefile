@@ -498,6 +498,45 @@ rule assemble_guided_chloroplast_genome_SPAdes:
     > {log.stdout} 2> {log.stderr}
     """
 
+rule assemble_chloroplast_NOVOPlasty:
+  input:
+    R1="data/illumina_reads/{illumina_host}_R1.fastq.gz",
+    R2="data/illumina_reads/{illumina_host}_R2.fastq.gz",
+    chloroplast="references/Azfil_cp1.4.fasta",
+    config_base="scripts/novoplasty_chloroplast_config_base"
+  output:
+    sampleconfig="data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}.txt"
+  threads: 12
+  conda:
+    "envs/novoplasty.yaml"
+  params:
+    pre=lambda w: expand("data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}",
+                         illumina_host=w.illumina_host)
+  log:
+    stderr="logs/illumina_genomes/novoplasty_chloroplast/{illumina_host}.stderr",
+    stdout="logs/illumina_genomes/novoplasty_chloroplast/{illumina_host}.stdout"
+  shell:
+    """
+    echo 'Project:'                                                      > {output.sampleconfig}
+    echo '-----------------------'                                       >> {output.sampleconfig}
+    echo 'Project name          = chloroplast_{wildcards.illumina_host}' >> {output.sampleconfig}
+
+    cat {input.config_base}                                              >> {output.sampleconfig}
+
+    echo 'Forward reads         =  {input.R1}'                           >> {output.sampleconfig}
+    echo 'Reverse reads         =  {input.R2}'                           >> {output.sampleconfig}
+    echo 'Output path           =  {params.pre}'                         >> {output.sampleconfig}
+
+    NOVOPlasty4.3.1.pl -c {output.sampleconfig}   \
+    > {log.stdout} 2> {log.stderr}
+    """
+
+rule all_illumina_assembly:
+  input:
+    expand("data/illumina_assembly/{selection}_novoplasty/chloroplast_{illumina_host}.txt
+           selection=['chloroplast'],
+           illumina_host=ILLUMINA_HOSTS)
+
 rule assemble_guided_mitochondrium_genome_SPAdes:
   input:
     R1="data/illumina_filtered/mitochondrium/{illumina_host}_R1.fastq.gz",
