@@ -405,6 +405,8 @@ rule get_mitochondrium_illumina_reads:
                   'a_filiculoides_mitochondrium_contig_16' \
                   'a_filiculoides_mitochondrium_contig_22' \
                   'a_filiculoides_mitochondrium_contig_09' \
+                  -f 2                                     \
+                  -@ {threads}                             \
     2> {log.stderr}                                        \
     | samtools sort -                                      \
                -l 0                                        \
