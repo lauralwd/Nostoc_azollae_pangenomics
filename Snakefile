@@ -586,6 +586,12 @@ rule all_guided_illumina_assembly:
   input:
     expand("data/illumina_assembly/{selection}_guided/{illumina_host}/scaffolds.fasta",
            selection=['chloroplast','mitochondrium'],
+           illumina_host=ILLUMINA_HOSTS),
+    expand("data/illumina_assembly/{selection}_guided/{illumina_host}/assembly_graph_with_scaffolds.svg",
+           selection=['chloroplast','mitochondrium'],
+           illumina_host=ILLUMINA_HOSTS),
+    expand("data/illumina_assembly/{selection}_guided/{illumina_host}/assembly_graph_with_scaffolds.txt",
+           selection=['chloroplast','mitochondrium'],
            illumina_host=ILLUMINA_HOSTS)
 
 ############################### stage 4 create pangenomes ###############################
