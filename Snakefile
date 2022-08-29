@@ -604,10 +604,10 @@ rule all_guided_illumina_assembly:
     expand("data/illumina_assembly/{selection}_guided/{illumina_host}/scaffolds.fasta",
            selection=['chloroplast','mitochondrium'],
            illumina_host=ILLUMINA_HOSTS),
-    expand("data/illumina_assembly/{selection}_guided/{illumina_host}/assembly_graph_with_scaffolds.svg",
+    expand("data/illumina_assembly/{selection}_guided_{illumina_host}_assembly_graph_with_scaffolds.svg",
            selection=['chloroplast','mitochondrium'],
            illumina_host=ILLUMINA_HOSTS),
-    expand("data/illumina_assembly/{selection}_guided/{illumina_host}/assembly_graph_with_scaffolds.txt",
+    expand("data/illumina_assembly/{selection}_guided_{illumina_host}_assembly_graph_with_scaffolds.txt",
            selection=['chloroplast','mitochondrium'],
            illumina_host=ILLUMINA_HOSTS)
 
