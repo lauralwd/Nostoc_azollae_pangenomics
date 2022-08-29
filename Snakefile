@@ -577,22 +577,21 @@ rule scaffold_mitochondrium_genome_RAGTAG:
 
 rule snapshot_assembly_graph_Bandage:
   input:
-    "{graph}.gfa"
+    "data/illumina_assembly/{selection}_guided/{illumina_host}/assembly_graph_with_scaffolds.gfa"
   output:
-    "{graph}.svg",
-    "{graph}.txt"
+    svg="data/illumina_assembly/{selection}_guided_{illumina_host}_assembly_graph_with_scaffolds.svg",
+    txt="data/illumina_assembly/{selection}_guided_{illumina_host}_assembly_graph_with_scaffolds.txt"
   conda:
     "envs/bandage.yaml"
   shell:
     """
     Bandage image {input}       \
-                  {output.svg}  \
-                  --nodewidth c \
-                  --query references/Azfil_cp1.4.fasta
+                  {output.svg}
 
     Bandage info  {input}    \
-                  {output.txt}
+                  > {output.txt}
     """
+
 
 rule all_illumina_assembly:
   input:
