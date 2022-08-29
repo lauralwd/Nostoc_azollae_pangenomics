@@ -1,0 +1,11 @@
+name	contigs_db_path
+Azfi_mito_v1	../data/external_contig_dbs/azfi_mito_laura-v1_contigs.db
+illumina_Azcar1	./../data/illumina_contig_dbs/Azcar1_mitochondrium_contigs.db
+illumina_Azcar2	./../data/illumina_contig_dbs/Azcar2_mitochondrium_contigs.db
+illumina_Azmexicana	./../data/illumina_contig_dbs/Azmexicana_mitochondrium_contigs.db
+illumina_Azmicrophylla	./../data/illumina_contig_dbs/Azmicrophylla_mitochondrium_contigs.db
+illumina_Aznilotica	./../data/illumina_contig_dbs/Aznilotica_mitochondrium_contigs.db
+illumina_Azrubra	./../data/illumina_contig_dbs/Azrubra_mitochondrium_contigs.db
+nanopore_Azfil_lab	./../data/nanopore_contig_dbs/Azfil_lab_mitochondrium_contigs.db
+nanopore_Azpinnata	./../data/nanopore_contig_dbs/Azpinnata_mitochondrium_contigs.db
+nanopore_Azsp_bordeaux	./../data/nanopore_contig_dbs/Azsp_bordeaux_mitochondrium_contigs.db
