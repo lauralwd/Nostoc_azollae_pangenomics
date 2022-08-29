@@ -531,9 +531,9 @@ rule assemble_chloroplast_NOVOPlasty:
     > {log.stdout} 2> {log.stderr}
     """
 
-rule all_illumina_assembly:
+rule all_illumina_assembly_novoplasty:
   input:
-    expand("data/illumina_assembly/{selection}_novoplasty/chloroplast_{illumina_host}.txt
+    expand("data/illumina_assembly/{selection}_novoplasty/chloroplast_{illumina_host}.txt",
            selection=['chloroplast'],
            illumina_host=ILLUMINA_HOSTS)
 
