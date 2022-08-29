@@ -305,9 +305,27 @@ rule assembly_with_flye:
     > {log.stderr} 2> {log.stdout}
     """
 
+rule snapshot_flye_assembly_graph_Bandage:
+  input:
+    "data/nanopore_assembly/{selection}/{nanopore_host}"
+  output:
+    svg="data/nanopore_assembly/{selection}/{nanopore_host}.svg",
+    txt="data/nanopore_assembly/{selection}/{nanopore_host}.txt"
+  conda:
+    "envs/bandage.yaml"
+  shell:
+    """
+    Bandage image {input}/assembly_graph.gfa  \
+                  {output.svg}
+
+    Bandage info  {input}/assembly_graph.gfa    \
+                  > {output.txt}
+    """
 rule all_nanopore_assemblies:
   input:
-    expand("data/nanopore_assembly/{selection}/{nanopore_host}",nanopore_host=NANOPORE,selection=SELECTION)
+    expand("data/nanopore_assembly/{selection}/{nanopore_host}",    nanopore_host=NANOPORE,selection=SELECTION),
+    expand("data/nanopore_assembly/{selection}/{nanopore_host}.svg",nanopore_host=NANOPORE,selection=SELECTION)
+    #expand("data/nanopore_assembly/{selection}/{nanopore_host}.txt",nanopore_host=NANOPORE,selection=SELECTION)
 
 ############################### stage 3 assemble chloroplast and mito genomes from Illumina data ###############################
 rule bwa_index:
