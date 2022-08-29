@@ -814,7 +814,7 @@ rule create_pangenome_ANI_Nazollae:
 rule create_pangenome_ANI_organele:
   input:
     pangenome="data/anvio_pangenomes/{selection}",
-    external="references/{selection}_external_genomes.anvi-list"
+    external="scripts/{selection}_external_genomes.anvi-list"
   output:
     directory("data/anvio_pangenomes/{selection}_ANI")
   log:
