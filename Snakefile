@@ -736,30 +736,14 @@ rule create_list_pangenome_storage_all_mitochondrium:
     done >> {output}
     """
 
-rule create_pangenome_storage_all_chloroplast:
+rule create_pangenome_storage_plastid:
   input:
-    external="scripts/chloroplast_external_genomes.anvi-list"
+    external="scripts/{selection}_external_genomes.anvi-list"
   output:
-    "data/anvio_genomes_storage/chloroplast_GENOMES.db"
+    "data/anvio_genomes_storage/{selection}_GENOMES.db"
   log:
-    stdout="logs/anvi_create_pangenome_storage_chloroplast.stdout",
-    stderr="logs/anvi_create_pangenome_storage_chloroplast.stderr"
-  shell:
-    """
-    anvi-gen-genomes-storage \
-      -e {input.external}    \
-      -o {output}            \
-      > {log.stdout} 2> {log.stderr}
-    """
-
-rule create_pangenome_storage_all_mitochondrium:
-  input:
-    external="data/Anvio_external_mitochondrium.txt"
-  output:
-    "data/anvio_genomes_storage/mitochondrium_GENOMES.db"
-  log:
-    stdout="logs/anvi_create_pangenome_storage_mitochondrium.stdout",
-    stderr="logs/anvi_create_pangenome_storage_mitochondrium.stderr"
+    stdout="logs/anvi_create_pangenome_storage_{selection}.stdout",
+    stderr="logs/anvi_create_pangenome_storage_{selection}.stderr"
   shell:
     """
     anvi-gen-genomes-storage \
