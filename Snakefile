@@ -709,10 +709,10 @@ rule create_list_pangenome_storage_all_chloroplast:
   shell:
     """
     echo -e "name\tcontigs_db_path" > {output}
-    echo -e "Azfil_cp1-4\t{input.refdb}" >> {output}
+    echo -e "Azfil_cp1_4\t../{input.refdb}" >> {output}
     for db in data/*_contig_dbs/Az*chloroplast_contigs.db
-    do  name=$(echo db | sed 's/data\///g' | sed 's/contig_dbs\///g' | sed 's/_chloroplast_contigs.db//g')
-        echo -e "$name\t../$db"
+    do  name=$(echo $db | sed 's/data\///g' | sed 's/contig_dbs\///g' | sed 's/_chloroplast_contigs.db//g')
+        echo -e "$name\t./../$db"
     done >> {output}
     """
 
@@ -729,10 +729,10 @@ rule create_list_pangenome_storage_all_mitochondrium:
   shell:
     """
     echo -e "name\tcontigs_db_path" > {output}
-    echo -e "Azfi_mito_v1\t{input.refdb}" >> {output}
+    echo -e "Azfi_mito_v1\t../{input.refdb}" >> {output}
     for db in data/*_contig_dbs/Az*mitochondrium_contigs.db
-    do  name=$(echo db | sed 's/data\///g' | sed 's/contig_dbs\///g' | sed 's/_chloroplast_contigs.db//g')
-        echo -e "$name\t../$db"
+    do  name=$(echo $db | sed 's/data\///g' | sed 's/contig_dbs\///g' | sed 's/_mitochondrium_contigs.db//g')
+        echo -e "$name\t./../$db"
     done >> {output}
     """
 
