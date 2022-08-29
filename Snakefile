@@ -696,15 +696,49 @@ rule create_pangenome_storage_all_Nazollaes:
       > {log.stdout} 2> {log.stderr}
     """
 
-rule create_pangenome_storage_all_chloroplast:
+rule create_list_pangenome_storage_all_chloroplast:
   input:
     illuminachloroplasts=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",illumina_host=ILLUMINA_HOSTS,selection='chloroplast'),
     illuminachloroplasts_ann=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db.{ext}",illumina_host=ILLUMINA_HOSTS,selection='chloroplast',ext=['hmms','kegg','cogs']),
     nanoporechloroplasts=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='chloroplast'),
     nanoporechloroplasts_ann=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='chloroplast',ext=['hmms','kegg','cogs']),
-    external="data/Anvio_external_chloroplast.txt",
     refann=expand("data/external_contig_dbs/Azfil_cp1.4_contigs.db.{ext}"       ,ext=['hmms','kegg','cogs']),
     refdb= "data/external_contig_dbs/Azfil_cp1.4_contigs.db"
+  output:
+    external="scripts/chloroplast_external_genomes.anvi-list",
+  shell:
+    """
+    echo -e "name\tcontigs_db_path" > {output}
+    echo -e "Azfil_cp1-4\t{input.refdb}" >> {output}
+    for db in data/*_contig_dbs/Az*chloroplast_contigs.db
+    do  name=$(echo db | sed 's/data\///g' | sed 's/contig_dbs\///g' | sed 's/_chloroplast_contigs.db//g')
+        echo -e "$name\t../$db"
+    done >> {output}
+    """
+
+rule create_list_pangenome_storage_all_mitochondrium:
+  input:
+    illuminamito=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",illumina_host=ILLUMINA_HOSTS,selection='mitochondrium'),
+    illuminamitoann=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db.{ext}",illumina_host=ILLUMINA_HOSTS,selection='mitochondrium',ext=['hmms','kegg','cogs']),
+    nanoporemito=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='mitochondrium'),
+    nanoporemitoann=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='mitochondrium',ext=['hmms','kegg','cogs']),
+    refann=expand("data/external_contig_dbs/azfi_mito_laura-v1_contigs.db.{ext}",ext=['hmms','kegg','cogs']),
+    refdb =       "data/external_contig_dbs/azfi_mito_laura-v1_contigs.db"
+  output:
+    external="scripts/mitochondrium_external_genomes.anvi-list",
+  shell:
+    """
+    echo -e "name\tcontigs_db_path" > {output}
+    echo -e "Azfi_mito_v1\t{input.refdb}" >> {output}
+    for db in data/*_contig_dbs/Az*mitochondrium_contigs.db
+    do  name=$(echo db | sed 's/data\///g' | sed 's/contig_dbs\///g' | sed 's/_chloroplast_contigs.db//g')
+        echo -e "$name\t../$db"
+    done >> {output}
+    """
+
+rule create_pangenome_storage_all_chloroplast:
+  input:
+    external="scripts/chloroplast_external_genomes.anvi-list"
   output:
     "data/anvio_genomes_storage/chloroplast_GENOMES.db"
   log:
@@ -720,13 +754,7 @@ rule create_pangenome_storage_all_chloroplast:
 
 rule create_pangenome_storage_all_mitochondrium:
   input:
-    illuminamito=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db",illumina_host=ILLUMINA_HOSTS,selection='mitochondrium'),
-    illuminamitoann=expand("data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db.{ext}",illumina_host=ILLUMINA_HOSTS,selection='mitochondrium',ext=['hmms','kegg','cogs']),
-    nanoporemito=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='mitochondrium'),
-    nanoporemitoann=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='mitochondrium',ext=['hmms','kegg','cogs']),
-    external="data/Anvio_external_mitochondrium.txt",
-    refann=expand("data/external_contig_dbs/azfi_mito_laura-v1_contigs.db.{ext}",ext=['hmms','kegg','cogs']),
-    refdb =       "data/external_contig_dbs/azfi_mito_laura-v1_contigs.db"
+    external="data/Anvio_external_mitochondrium.txt"
   output:
     "data/anvio_genomes_storage/mitochondrium_GENOMES.db"
   log:
