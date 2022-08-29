@@ -1,0 +1,20 @@
+
+Type                  = chloro
+Genome Range          = 12000-22000
+K-mer                 = 33
+Max memory            = 60
+Extended log          = 0
+Save assembled reads  = no
+Seed Input            = references/Seed_RUBP_cp.fasta
+Extend seed directly  = no
+Reference sequence    = references/Azfil_cp1.4.fasta
+Variance detection    =
+Chloroplast sequence  = references/Azfil_cp1.4.fasta
+
+Dataset 1:
+-----------------------
+Read Length           = 100
+Insert size           = 500
+Platform              = illumina
+Single/Paired         = PE
+Combined reads        =
