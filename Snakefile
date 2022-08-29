@@ -429,7 +429,9 @@ rule assemble_organelle_genome_SPAdes:
   params:
     pre=lambda w: expand("data/illumina_assembly/{selection}/{illumina_host}/",
                          selection=w.selection,
-                         illumina_host=w.illumina_host)
+                         illumina_host=w.illumina_host),
+    kmers="-k 21,31,55,77,101",
+    opts="--careful"
   threads: 12
   conda:
     "envs/spades.yaml"
@@ -442,6 +444,8 @@ rule assemble_organelle_genome_SPAdes:
               -2 {input.R2}         \
               -t {threads}          \
               -o {params.pre}       \
+              {params.kmers}        \
+              {params.opts}         \
     > {log.stdout} 2> {log.stderr}
     """
 
@@ -455,7 +459,9 @@ rule assemble_guided_chloroplast_genome_SPAdes:
     graph=    "data/illumina_assembly/chloroplast_guided/{illumina_host}/assembly_graph_with_scaffolds.gfa"
   params:
     pre=lambda w: expand("data/illumina_assembly/chloroplast_guided//{illumina_host}/",
-                         illumina_host=w.illumina_host)
+                         illumina_host=w.illumina_host),
+    kmers="-k 21,31,55,77,101",
+    opts="--careful"
   threads: 12
   conda:
     "envs/spades.yaml"
@@ -468,6 +474,8 @@ rule assemble_guided_chloroplast_genome_SPAdes:
               -2 {input.R2}         \
               -t {threads}          \
               -o {params.pre}       \
+              {params.kmers}        \
+              {params.opts}         \
               --trusted-contigs {input.chloroplast} \
     > {log.stdout} 2> {log.stderr}
     """
@@ -482,7 +490,9 @@ rule assemble_guided_mitochondrium_genome_SPAdes:
     graph=    "data/illumina_assembly/mitochondrium_guided/{illumina_host}/assembly_graph_with_scaffolds.gfa"
   params:
     pre=lambda w: expand("data/illumina_assembly/mitochondrium_guided//{illumina_host}/",
-                         illumina_host=w.illumina_host)
+                         illumina_host=w.illumina_host),
+    kmers="-k 21,31,55,77,101",
+    opts="--careful"
   threads: 12
   conda:
     "envs/spades.yaml"
@@ -495,6 +505,8 @@ rule assemble_guided_mitochondrium_genome_SPAdes:
               -2 {input.R2}         \
               -t {threads}          \
               -o {params.pre}       \
+              {params.kmers}        \
+              {params.opts}         \
               --trusted-contigs {input.mito} \
     > {log.stdout} 2> {log.stderr}
     """
@@ -548,6 +560,12 @@ rule scaffold_mitochondrium_genome_RAGTAG:
 rule all_illumina_assembly:
   input:
     expand("data/illumina_assembly/{selection}_guided/{illumina_host}_scaffolded/ragtag.scaffold.fasta",
+           selection=['chloroplast','mitochondrium'],
+           illumina_host=ILLUMINA_HOSTS)
+
+rule all_guided_illumina_assembly:
+  input:
+    expand("data/illumina_assembly/{selection}_guided/{illumina_host}/scaffolds.fasta",
            selection=['chloroplast','mitochondrium'],
            illumina_host=ILLUMINA_HOSTS)
 
