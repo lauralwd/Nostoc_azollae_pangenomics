@@ -880,7 +880,7 @@ rule extract_phylogenomic_fasta:
     stderr="logs/anvi_pangenome_fasta_{selection}_mcl{mcl}.stderr"
   shell:
     """
-    anvi-get-sequences-for-gene-clusters -p {input.pangenome}/{wildcards.selection}-PAN.db \
+    anvi-get-sequences-for-gene-clusters -p {input.pangenome}        \
                                          -g {input.genomestorage}    \
                                          -C default                  \
                                          -b phylogenomic_core        \
