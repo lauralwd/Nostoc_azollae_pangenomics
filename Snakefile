@@ -528,7 +528,7 @@ rule assemble_chloroplast_NOVOPlasty:
     echo 'Reverse reads         =  {input.R2}'                           >> {output.sampleconfig}
     echo 'Output path           =  {params.pre}'                         >> {output.sampleconfig}
 
-    mkdir {params.pre} 2> {log.stderr} 
+    mkdir {params.pre} 2> {log.stderr}
 
     NOVOPlasty4.3.1.pl -c {output.sampleconfig}   \
     > {log.stdout} 2>> {log.stderr}
