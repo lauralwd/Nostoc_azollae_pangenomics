@@ -2,6 +2,7 @@ name	contigs_db_path
 Azfil_cp1_4	../data/external_contig_dbs/Azfil_cp1.4_contigs.db
 illumina_Azcar1	./../data/illumina_contig_dbs/Azcar1_chloroplast_contigs.db
 illumina_Azcar2	./../data/illumina_contig_dbs/Azcar2_chloroplast_contigs.db
+illumina_Azfil_lab	./../data/illumina_contig_dbs/Azfil_lab_chloroplast_contigs.db
 illumina_Azmexicana	./../data/illumina_contig_dbs/Azmexicana_chloroplast_contigs.db
 illumina_Azmicrophylla	./../data/illumina_contig_dbs/Azmicrophylla_chloroplast_contigs.db
 illumina_Aznilotica	./../data/illumina_contig_dbs/Aznilotica_chloroplast_contigs.db
