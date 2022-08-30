@@ -507,7 +507,7 @@ rule assemble_chloroplast_NOVOPlasty:
   output:
     sampleconfig="data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}_config.txt",
     fasta=       "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/Contigs_1_chloroplast_{illumina_host}.fasta"
-  threads: 12
+  threads: 2
   conda:
     "envs/novoplasty.yaml"
   params:
