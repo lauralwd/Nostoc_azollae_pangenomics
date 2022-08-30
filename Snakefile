@@ -806,12 +806,13 @@ rule create_pangenome_analysis:
     stderr="logs/anvi_create_pangenome_{selection}_mcl{mcl}.stderr"
   threads: 12
   params:
-    mcl= "7"
+    mcl= "7",
+    dir=lambda w: expand ("data/anvio_pangenomes/{selection}/",selection=w.selection)
   shell:
     """
     anvi-pan-genome -g {input}                           \
-                    --project-name {wildcards.selection} \
-                    --output-dir   {output}              \
+                    --project-name {wildcards.selection}_mcl{wildcards.mcl} \
+                    --output-dir   {params.dir}          \
                     --num-threads  {threads}             \
                     --minbit 0.5                         \
                     --mcl-inflation {params.mcl}         \
