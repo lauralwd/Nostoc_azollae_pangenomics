@@ -509,7 +509,7 @@ rule assemble_chloroplast_NOVOPlasty:
     fasta=       "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/Contigs_1_chloroplast_{illumina_host}.fasta"
   threads: 2
   resources:
-    mem_mb=10000
+    mem_mb=20000
   conda:
     "envs/novoplasty.yaml"
   params:

@@ -2,7 +2,7 @@
 Type                  = chloro
 Genome Range          = 140000-190000
 K-mer                 = 33
-Max memory            = 10
+Max memory            = 20
 Extended log          = 0
 Save assembled reads  = no
 Seed Input            = references/Seed_RUBP_cp.fasta
