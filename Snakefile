@@ -506,16 +506,12 @@ rule assemble_chloroplast_NOVOPlasty:
     config_base="scripts/novoplasty_chloroplast_config_base"
   output:
     sampleconfig="data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}_config.txt",
-    #fasta=       "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/Contigs_1_chloroplast_{illumina_host}.fasta"
-    fasta=       "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/Circularized_assembly_1_chloroplast_{illumina_host}.fasta"
-  threads: 2
+    dir=dir("data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/")
+    threads: 2
   resources:
     mem_mb=20000
   conda:
     "envs/novoplasty.yaml"
-  params:
-    pre=lambda w: expand("data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/",
-                         illumina_host=w.illumina_host)
   log:
     stderr="logs/illumina_genomes/novoplasty_chloroplast/{illumina_host}.stderr",
     stdout="logs/illumina_genomes/novoplasty_chloroplast/{illumina_host}.stdout"
@@ -529,14 +525,29 @@ rule assemble_chloroplast_NOVOPlasty:
 
     echo 'Forward reads         =  {input.R1}'                           >> {output.sampleconfig}
     echo 'Reverse reads         =  {input.R2}'                           >> {output.sampleconfig}
-    echo 'Output path           =  {params.pre}'                         >> {output.sampleconfig}
+    echo 'Output path           =  {output.dir}'                         >> {output.sampleconfig}
 
-    if   [ ! -d {params.pre} ]
-    then mkdir  {params.pre}
-    fi
+    #if   [ ! -d {params.pre} ]
+    #then mkdir  {params.pre}
+    #fi
 
     NOVOPlasty4.3.1.pl -c {output.sampleconfig}   \
     > {log.stdout} 2>> {log.stderr}
+    """
+
+rule choose_novoplasty_assembly
+  input:
+    "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/"
+  output:
+    "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}_assembly.fasta"
+  shell:
+    """
+    if   [ -f {input}/Circularized_assembly_1_chloroplast_{illumina_host}.fasta ]
+    then cp   {input}/Circularized_assembly_1_chloroplast_{illumina_host}.fasta {output}
+    elif [ -f {input}/Contigs_1_chloroplast_{illumina_host}.fasta ]
+    then cp   {input}/Contigs_1_chloroplast_{illumina_host}.fasta {output}
+    else exit 1
+    fi
     """
 
 rule all_illumina_assembly_novoplasty:
@@ -661,7 +672,7 @@ rule all_guided_illumina_assembly:
 ############################### stage 4 create pangenomes ###############################
 rule illumina_assembly_to_contigdb:
   input:
-    "data/illumina_assembly/{selection}_novoplasty/{selection}_{illumina_host}/Contigs_1_{selection}_{illumina_host}.fasta"
+    "data/illumina_assembly/{selection}_novoplasty/{selection}_{illumina_host}_assembly.fasta"
   output:
      "data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db"
   log:
