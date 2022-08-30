@@ -635,7 +635,7 @@ rule snapshot_assembly_graph_Bandage:
     """
 
 
-rule all_illumina_assembly:
+rule all_illumina_assembly_scaffolded:
   input:
     expand("data/illumina_assembly/{selection}_guided/{illumina_host}_scaffolded/ragtag.scaffold.fasta",
            selection=['chloroplast','mitochondrium'],
@@ -665,7 +665,7 @@ rule illumina_assembly_to_contigdb:
   shell:
     """
     anvi-gen-contigs-database   \
-      -f {input} \
+      -f {input}                \
       -o {output}               \
       > {log.stdout} 2> {log.stderr}
     """
