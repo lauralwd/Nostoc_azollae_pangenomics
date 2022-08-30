@@ -902,7 +902,9 @@ rule phylogenomic_tree:
   output:
     tree="data/anvio_pangenomes/{selection}_mcl{mcl}_phylogenomics/{selection}.treefile"
   params:
-    pre=lambda w: expand ("data/anvio_pangenomes/{selection}_mcl{mcl}_phylogenomics/{selection}",selection=w.selection)
+    pre=lambda w: expand ("data/anvio_pangenomes/{selection}_mcl{mcl}_phylogenomics/{selection}",
+                          selection=w.selection,
+                          mcl=w.mcl)
   threads: 12
   log:
     stdout="logs/IQtree/anvi_phylogenomic_{selection}_mcl{mcl}.stdout",
