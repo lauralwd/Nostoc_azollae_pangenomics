@@ -1,6 +1,6 @@
 
 Type                  = chloro
-Genome Range          = 12000-22000
+Genome Range          = 140000-190000
 K-mer                 = 33
 Max memory            = 10
 Extended log          = 0
