@@ -535,17 +535,23 @@ rule assemble_chloroplast_NOVOPlasty:
     > {log.stdout} 2>> {log.stderr}
     """
 
-rule choose_novoplasty_assembly
+rule choose_novoplasty_assembly:
   input:
     "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/"
   output:
     "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}_assembly.fasta"
   shell:
     """
-    if   [ -f {input}/Circularized_assembly_1_chloroplast_{illumina_host}.fasta ]
-    then cp   {input}/Circularized_assembly_1_chloroplast_{illumina_host}.fasta {output}
-    elif [ -f {input}/Contigs_1_chloroplast_{illumina_host}.fasta ]
-    then cp   {input}/Contigs_1_chloroplast_{illumina_host}.fasta {output}
+    if   [ -f {input}/Circularized_assembly_1_chloroplast_{wildcards.illumina_host}.fasta ]
+    then anvi-script-reformat-fasta {input}/Circularized_assembly_1_chloroplast_{wildcards.illumina_host}.fasta \
+                                    --simplify-names     \
+                                    --seq-type NT        \
+                                    -o {output}
+    elif [ -f {input}/Contigs_1_chloroplast_{wildcards.illumina_host}.fasta ]
+    then anvi-script-reformat-fasta {input}/Contigs_1_chloroplast_{wildcards.illumina_host}.fasta \
+                                    --simplify-names     \
+                                    --seq-type NT        \
+                                    -o {output}
     else exit 1
     fi
     """
