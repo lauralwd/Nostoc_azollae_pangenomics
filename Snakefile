@@ -506,8 +506,8 @@ rule assemble_chloroplast_NOVOPlasty:
     config_base="scripts/novoplasty_chloroplast_config_base"
   output:
     sampleconfig="data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}_config.txt",
-    dir=dir("data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/")
-    threads: 2
+    dir=directory("data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}")
+  threads: 2
   resources:
     mem_mb=20000
   conda:
