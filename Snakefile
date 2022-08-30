@@ -506,7 +506,8 @@ rule assemble_chloroplast_NOVOPlasty:
     config_base="scripts/novoplasty_chloroplast_config_base"
   output:
     sampleconfig="data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}_config.txt",
-    fasta=       "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/Contigs_1_chloroplast_{illumina_host}.fasta"
+    #fasta=       "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/Contigs_1_chloroplast_{illumina_host}.fasta"
+    fasta=       "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/Circularized_assembly_1_chloroplast_{illumina_host}.fasta"
   threads: 2
   resources:
     mem_mb=20000
