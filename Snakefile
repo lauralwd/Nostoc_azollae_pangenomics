@@ -505,7 +505,8 @@ rule assemble_chloroplast_NOVOPlasty:
     chloroplast="references/Azfil_cp1.4.fasta",
     config_base="scripts/novoplasty_chloroplast_config_base"
   output:
-    sampleconfig="data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}_config.txt"
+    sampleconfig="data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}_config.txt",
+    fasta=       "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/Contigs_1_chloroplast_{illumina_host}.fasta
   threads: 12
   conda:
     "envs/novoplasty.yaml"
