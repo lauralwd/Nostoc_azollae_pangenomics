@@ -1,0 +1,52 @@
+Input FASTA file .............................: /stor/azolla_metagenome/nostoc_pangenome/references/Nazollae_0708.fasta
+
+Anvi'o made things up for you
+===============================================
+You are generating a new anvi'o contigs database, but you are not specifying a
+project name for it. FINE. Anvi'o, in desperation, will use the input file name
+to set the project name for this contigs database (i.e., 'Nazollae_0708'). If
+you are not happy with that, feel free to kill and restart this process. If you
+are not happy with this name, but you don't like killing things either, maybe
+next time you should either name your FASTA files better, or use the `--project-
+name` parameter to set your desired name.
+
+Name .........................................: Nazollae_0708
+Description ..................................: No description is given
+                                                                                                              [48;5;6m[38;5;0m[24 Aug 22 10:22:04 Checking deflines and contig lengths] tick tock ...                                      [0m                                                                                                              Num threads for gene calling .................: 1
+
+Finding ORFs in contigs
+===============================================
+Genes ........................................: /tmp/tmpa6z7agc0/contigs.genes
+Amino acid sequences .........................: /tmp/tmpa6z7agc0/contigs.amino_acid_sequences
+Log file .....................................: /tmp/tmpa6z7agc0/00_log.txt
+
+CITATION
+===============================================
+Anvi'o will use 'prodigal' by Hyatt et al (doi:10.1186/1471-2105-11-119) to
+identify open reading frames in your data. When you publish your findings,
+please do not forget to properly credit their work.
+
+                                                                                                              [48;5;6m[38;5;0m[24 Aug 22 10:22:13 Processing] Identifying ORFs using 1 thread.                                             [0m                                                                                                              Result .......................................: Prodigal (v2.6.3) has identified 6456 genes.
+
+                                                                                                              [48;5;6m[38;5;0m[24 Aug 22 10:22:36 Processing] Entering 6456 gene calls into the db ...                                     [0m                                                                                                              
+CONTIGS DB CREATE REPORT
+===============================================
+Split Length .................................: 20,000
+K-mer size ...................................: 4
+Skip gene calling? ...........................: False
+External gene calls provided? ................: False
+Ignoring internal stop codons? ...............: False
+Splitting pays attention to gene calls? ......: True
+                                                                                                              [48;5;6m[38;5;0m[24 Aug 22 10:22:36 The South Loop] Contig "1"                                                      ETA: None[0m[48;5;6m[38;5;0m[24 Aug 22 10:22:36 The South Loop] Contig "1" has 6298 genes,                                      ETA: None[0m[48;5;6m[38;5;0m[24 Aug 22 10:22:36 The South Loop] Contig "1" has 6298 genes, and 5354700 nts. Now computing:  (...) ETA: 0s[0m[48;5;6m[38;5;0m[24 Aug 22 10:22:36 The South Loop] Contig "1" has 6298 genes, k-mers ...                             ETA: 0s[0m                                                                                                              [48;5;6m[38;5;0m[24 Aug 22 10:22:36 The South Loop] Contig "2"                                                        ETA: 4s[0m[48;5;6m[38;5;0m[24 Aug 22 10:22:36 The South Loop] Contig "2" has 148 genes,                                         ETA: 4s[0m[48;5;6m[38;5;0m[24 Aug 22 10:22:36 The South Loop] Contig "2" has 148 genes, and 109570 nts. Now computing: au (...) ETA: 4s[0m[48;5;6m[38;5;0m[24 Aug 22 10:22:36 The South Loop] Contig "2" has 148 genes, k-mers ...                              ETA: 4s[0m                                                                                                              [48;5;6m[38;5;0m[24 Aug 22 10:22:36 The South Loop] Contig "3"                                                        ETA: 4s[0m[48;5;6m[38;5;0m[24 Aug 22 10:22:36 The South Loop] Contig "3" has 10 genes,                                          ETA: 4s[0m[48;5;6m[38;5;0m[24 Aug 22 10:22:36 The South Loop] Contig "3" has 10 genes, and 21875 nts. Now computing: auxi (...) ETA: 4s[0m[48;5;6m[38;5;0m[24 Aug 22 10:22:36 The South Loop] Contig "3" has 10 genes, k-mers ...                               ETA: 4s[0m                                                                                                                                                                                                                            [48;5;6m[38;5;0m[24 Aug 22 10:22:51 Initializing the dictionary for gene calls] ...                                          [0m                                                                                                              Contigs with at least one gene call ..........: 3 of 3 (100.0%)
+Contigs database .............................: A new database,
+                                                data/external_contig_dbs/Nazollae_0708_contigs.db, has been
+                                                created.
+Number of contigs ............................: 3
+Number of splits .............................: 273
+Total number of nucleotides ..................: 5,486,145
+Gene calling step skipped ....................: False
+Splits broke genes (non-mindful mode) ........: False
+Desired split length (what the user wanted) ..: 20,000
+Average split length (what anvi'o gave back) .: 20,089
+
+✓ anvi-gen-contigs-database took 0:00:46.634331

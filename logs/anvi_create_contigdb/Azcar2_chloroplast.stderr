@@ -1,0 +1,51 @@
+Input FASTA file .............................: /stor/azolla_metagenome/nostoc_pangenome/data/illumina_assembly/chloroplast_novoplasty/chloroplast_Azcar2/Contigs_1_chloroplast_Azcar2.fasta
+
+Anvi'o made things up for you
+===============================================
+You are generating a new anvi'o contigs database, but you are not specifying a
+project name for it. FINE. Anvi'o, in desperation, will use the input file name
+to set the project name for this contigs database (i.e.,
+'Contigs_1_chloroplast_Azcar2'). If you are not happy with that, feel free to
+kill and restart this process. If you are not happy with this name, but you
+don't like killing things either, maybe next time you should either name your
+FASTA files better, or use the `--project-name` parameter to set your desired
+name.
+
+Name .........................................: Contigs_1_chloroplast_Azcar2
+Description ..................................: No description is given
+                                                                                                                                                                        [48;5;6m[38;5;0m[30 Aug 22 08:39:10 Checking deflines and contig lengths] tick tock ...                                                                                                [0m                                                                                                                                                                        Num threads for gene calling .................: 1
+
+Finding ORFs in contigs
+===============================================
+Genes ........................................: /tmp/tmp6unh65jx/contigs.genes
+Amino acid sequences .........................: /tmp/tmp6unh65jx/contigs.amino_acid_sequences
+Log file .....................................: /tmp/tmp6unh65jx/00_log.txt
+
+CITATION
+===============================================
+Anvi'o will use 'prodigal' by Hyatt et al (doi:10.1186/1471-2105-11-119) to
+identify open reading frames in your data. When you publish your findings,
+please do not forget to properly credit their work.
+
+                                                                                                                                                                        [48;5;6m[38;5;0m[30 Aug 22 08:39:21 Processing] Identifying ORFs using 1 thread.                                                                                                       [0m                                                                                                                                                                        Result .......................................: Prodigal (v2.6.3) has identified 19 genes.
+
+                                                                                                                                                                        [48;5;6m[38;5;0m[30 Aug 22 08:39:22 Processing] Entering 19 gene calls into the db ...                                                                                                 [0m                                                                                                                                                                        
+CONTIGS DB CREATE REPORT
+===============================================
+Split Length .................................: 20,000
+K-mer size ...................................: 4
+Skip gene calling? ...........................: False
+External gene calls provided? ................: False
+Ignoring internal stop codons? ...............: False
+Splitting pays attention to gene calls? ......: True
+                                                                                                                                                                        [48;5;6m[38;5;0m[30 Aug 22 08:39:22 The South Loop] Contig "1"                                                                                                                ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 08:39:22 The South Loop] Contig "1" has 19 genes,                                                                                                  ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 08:39:22 The South Loop] Contig "1" has 19 genes, and 22006 nts. Now computing: auxiliary ...                                                      ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 08:39:22 The South Loop] Contig "1" has 19 genes, and 22006 nts. Now computing: auxiliary ... k-mers ...                                           ETA: None[0m                                                                                                                                                                                                                                                                                                                                                [48;5;6m[38;5;0m[30 Aug 22 08:39:28 Initializing the dictionary for gene calls] ...                                                                                                    [0m                                                                                                                                                                        Contigs with at least one gene call ..........: 1 of 1 (100.0%)
+Contigs database .............................: A new database, data/illumina_contig_dbs/Azcar2_chloroplast_contigs.db, has been created.
+Number of contigs ............................: 1
+Number of splits .............................: 1
+Total number of nucleotides ..................: 22,006
+Gene calling step skipped ....................: False
+Splits broke genes (non-mindful mode) ........: False
+Desired split length (what the user wanted) ..: 20,000
+Average split length (what anvi'o gave back) .: (Anvi'o did not create any splits)
+
+✓ anvi-gen-contigs-database took 0:00:18.286006
