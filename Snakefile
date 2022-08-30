@@ -506,7 +506,7 @@ rule assemble_chloroplast_NOVOPlasty:
     config_base="scripts/novoplasty_chloroplast_config_base"
   output:
     sampleconfig="data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}_config.txt",
-    fasta=       "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/Contigs_1_chloroplast_{illumina_host}.fasta
+    fasta=       "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/Contigs_1_chloroplast_{illumina_host}.fasta"
   threads: 12
   conda:
     "envs/novoplasty.yaml"
@@ -656,7 +656,7 @@ rule all_guided_illumina_assembly:
 ############################### stage 4 create pangenomes ###############################
 rule illumina_assembly_to_contigdb:
   input:
-    "data/illumina_assembly/{selection}_novoplasty/{selection}_{illumina_host}/Contigs_1_{selection}_{illumina_host}.fasta
+    "data/illumina_assembly/{selection}_novoplasty/{selection}_{illumina_host}/Contigs_1_{selection}_{illumina_host}.fasta"
   output:
      "data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db"
   log:
