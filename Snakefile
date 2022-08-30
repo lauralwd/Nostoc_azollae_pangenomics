@@ -841,13 +841,13 @@ rule create_pangenome_ANI_Nazollae:
 
 rule create_pangenome_ANI_organele:
   input:
-    pangenome="data/anvio_pangenomes/{selection}",
+    pangenome="data/anvio_pangenomes/{selection}/{selection}_mcl{mcl}-PAN.db",
     external="scripts/{selection}_external_genomes.anvi-list"
   output:
-    directory("data/anvio_pangenomes/{selection}_ANI")
+    directory("data/anvio_pangenomes/{selection}_ANI_mcl{mcl}")
   log:
-    stdout="logs/anvi_create_pangenome_ANI_{selection}.stdout",
-    stderr="logs/anvi_create_pangenome_ANI_{selection}.stderr"
+    stdout="logs/anvi_create_pangenome_ANI_{selection}_mcl{mcl}.stdout",
+    stderr="logs/anvi_create_pangenome_ANI_{selection}_mcl{mcl}.stderr"
   threads: 12
   shell:
     """
@@ -855,13 +855,13 @@ rule create_pangenome_ANI_organele:
                                    --program pyANI                     \
                                    --output-dir {output}               \
                                    --num-threads {threads}             \
-                                   --pan-db {input.pangenome}/{wildcards.selection}-PAN.db \
+                                   --pan-db {input.pangenome}          \
      > {log.stdout} 2> {log.stderr}
     """
 
 rule all_azolla_associated_pangenomes:
   input:
-    expand("data/anvio_pangenomes/{selection}_ANI",selection=SELECTION)
+    expand("data/anvio_pangenomes/{selection}_ANI_mcl{mcl}",selection=SELECTION,mcl=7)
 
 rule extract_phylogenomic_fasta:
   input:
