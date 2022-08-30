@@ -907,7 +907,7 @@ rule phylogenomic_tree:
     pre=lambda w: expand ("data/anvio_pangenomes/{selection}_mcl{mcl}_phylogenomics/{selection}",
                           selection=w.selection,
                           mcl=w.mcl)
-  threads: 12
+  threads: 6
   log:
     stdout="logs/IQtree/anvi_phylogenomic_{selection}_mcl{mcl}.stdout",
     stderr="logs/IQtree/anvi_phylogenomic_{selection}_mcl{mcl}.stderr"
