@@ -798,11 +798,13 @@ rule create_pangenome_analysis:
   input:
     "data/anvio_genomes_storage/{selection}_GENOMES.db"
   output:
-    directory("data/anvio_pangenomes/{selection}")
+    "data/anvio_pangenomes/{selection}/{selection}_mcl{mcl}-PAN.db"
   log:
-    stdout="logs/anvi_create_pangenome_{selection}.stdout",
-    stderr="logs/anvi_create_pangenome_{selection}.stderr"
+    stdout="logs/anvi_create_pangenome_{selection}_mcl{mcl}.stdout",
+    stderr="logs/anvi_create_pangenome_{selection}_mcl{mcl}.stderr"
   threads: 12
+  params:
+    mcl= "7"
   shell:
     """
     anvi-pan-genome -g {input}                           \
@@ -810,21 +812,21 @@ rule create_pangenome_analysis:
                     --output-dir   {output}              \
                     --num-threads  {threads}             \
                     --minbit 0.5                         \
-                    --mcl-inflation 8                    \
+                    --mcl-inflation {params.mcl}         \
                     --use-ncbi-blast                     \
     > {log.stdout} 2> {log.stderr}
     """
 
 rule create_pangenome_ANI_Nazollae:
   input:
-    pangenome="data/anvio_pangenomes/Nazollae",
+    pangenome="data/anvio_pangenomes/Nazollae/Nazollae_mcl{mcl}-PAN.db",
     internal="scripts/Nazollae_internal_genomes.anvi-list",
     external="scripts/Nazollae_external_genomes.anvi-list"
   output:
-    directory("data/anvio_pangenomes/Nazollae_ANI")
+    directory("data/anvio_pangenomes/Nazollae_ANI_mcl{mcl}")
   log:
-    stdout="logs/anvi_create_pangenome_ANI_Nazollae.stdout",
-    stderr="logs/anvi_create_pangenome_ANI_Nazollae.stderr"
+    stdout="logs/anvi_create_pangenome_ANI_Nazollae_mcl{mcl}.stdout",
+    stderr="logs/anvi_create_pangenome_ANI_Nazollae_mcl{mcl}.stderr"
   threads: 12
   shell:
     """
@@ -833,7 +835,7 @@ rule create_pangenome_ANI_Nazollae:
                                    --program pyANI                     \
                                    --output-dir {output}               \
                                    --num-threads {threads}             \
-                                   --pan-db {input.pangenome}/Nazollae-PAN.db \
+                                   --pan-db {input.pangenome}          \
     > {log.stdout} 2> {log.stderr}
     """
 
@@ -863,14 +865,14 @@ rule all_azolla_associated_pangenomes:
 
 rule extract_phylogenomic_fasta:
   input:
-    pangenome="data/anvio_pangenomes/{selection}",
+    pangenome="data/anvio_pangenomes/{selection}/{selection}_mcl{mcl}-PAN.db",
     genomestorage="data/anvio_genomes_storage/{selection}_GENOMES.db"
   output:
-    fasta="data/anvio_pangenomes/{selection}_phylogenomic_core.fasta",
-    partition="data/anvio_pangenomes/{selection}_phylogenomic_core.partitions"
+    fasta="data/anvio_pangenomes/{selection}_mcl{mcl}_phylogenomic_core.fasta",
+    partition="data/anvio_pangenomes/{selection}_mcl{mcl}_phylogenomic_core.partitions"
   log:
-    stdout="logs/anvi_pangenome_fasta_{selection}.stdout",
-    stderr="logs/anvi_pangenome_fasta_{selection}.stderr"
+    stdout="logs/anvi_pangenome_fasta_{selection}_mcl{mcl}.stdout",
+    stderr="logs/anvi_pangenome_fasta_{selection}_mcl{mcl}.stderr"
   shell:
     """
     anvi-get-sequences-for-gene-clusters -p {input.pangenome}/{wildcards.selection}-PAN.db \
@@ -887,16 +889,16 @@ rule extract_phylogenomic_fasta:
 
 rule phylogenomic_tree:
   input:
-    fasta="data/anvio_pangenomes/{selection}_phylogenomic_core.fasta",
-    partition="data/anvio_pangenomes/{selection}_phylogenomic_core.partitions"
+    fasta="data/anvio_pangenomes/{selection}_mcl{mcl}_phylogenomic_core.fasta",
+    partition="data/anvio_pangenomes/{selection}_mcl{mcl}_phylogenomic_core.partitions"
   output:
-    tree="data/anvio_pangenomes/{selection}_phylogenomics/{selection}.treefile"
+    tree="data/anvio_pangenomes/{selection}_mcl{mcl}_phylogenomics/{selection}.treefile"
   params:
-    pre=lambda w: expand ("data/anvio_pangenomes/{selection}_phylogenomics/{selection}",selection=w.selection)
+    pre=lambda w: expand ("data/anvio_pangenomes/{selection}_mcl{mcl}_phylogenomics/{selection}",selection=w.selection)
   threads: 12
   log:
-    stdout="logs/IQtree/anvi_phylogenomic_{selection}.stdout",
-    stderr="logs/IQtree/anvi_phylogenomic_{selection}.stderr"
+    stdout="logs/IQtree/anvi_phylogenomic_{selection}_mcl{mcl}.stdout",
+    stderr="logs/IQtree/anvi_phylogenomic_{selection}_mcl{mcl}.stderr"
   shell:
     """
     iqtree -s {input.fasta}     \
@@ -911,7 +913,7 @@ rule phylogenomic_tree:
 
 rule all_azolla_associated_phylogenomics:
   input:
-    expand("data/anvio_pangenomes/{selection}_phylogenomics/{selection}.treefile",selection=SELECTION)
+    expand("data/anvio_pangenomes/{selection}_mcl{mcl}_phylogenomics/{selection}.treefile",selection=SELECTION,mcl=7)
 
 # note to self: import these phylogenies back into anvio https://merenlab.org/2017/06/07/phylogenomics/#pangenomic--phylogenomics
 
