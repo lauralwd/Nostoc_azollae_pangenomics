@@ -925,7 +925,30 @@ rule all_azolla_associated_phylogenomics:
   input:
     expand("data/anvio_pangenomes/{selection}_mcl{mcl}_phylogenomics/{selection}.treefile",selection=SELECTION,mcl=7)
 
-# note to self: import these phylogenies back into anvio https://merenlab.org/2017/06/07/phylogenomics/#pangenomic--phylogenomics
+rule pangenome_enrichment_anvio:
+  input:
+    pangenome="data/anvio_pangenomes/{selection}/{selection}_mcl{mcl}-PAN.db",
+    genomestorage="data/anvio_genomes_storage/{selection}_GENOMES.db"
+  output:
+    "data/anvio_pangenomes/{selection}_functional_enrichment/{category}/{annotation}_{selection}_mcl{mcl}.tab"
+  log:
+    stdout="logs/pangenome_enrichment/{category}_{annotation}_anvio_{selection}_mcl{mcl}.stdout",
+    stderr="logs/pangenome_enrichment/{category}_{annotation}_anvio_{selection}_mcl{mcl}.stderr"
+  shell:
+    """
+    anvi-compute-functional-enrichment-in-pan -p {input.pangenome}        \
+                                              -g {input.genomestorage}    \
+                                              --category-variable {wildcards.category} \
+                                              --annotation-source {wildcards.annotation} \
+                                              --include-gc-identity-as-function \
+                                              -o {output}                 \
+    > {log.stdout} 2> {log.stderr}
+    """
 
-#rule all_azolla_associated_pangenome_svgs:
-#  input:
+ANNOTATION=['COG20_FUNCTION', 'COG20_CATEGORY', 'KEGG_Module', 'KEGG_Class', 'COG20_PATHWAY', 'KOfam']
+
+rule collect_pangenome_enrichment_all_annotations:
+  input:
+    expand("data/anvio_pangenomes/functional_enrichment/subgroup/{annotation}_{{selection}}_mcl{{mcl}}.tab",annotation=ANNOTATION)
+  output:
+    touch("data/anvio_pangenomes/functional_enrichment/subgroup_ALL_{selection}_mcl{mcl}.touch")
