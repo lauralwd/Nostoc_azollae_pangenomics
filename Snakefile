@@ -656,7 +656,7 @@ rule all_guided_illumina_assembly:
 ############################### stage 4 create pangenomes ###############################
 rule illumina_assembly_to_contigdb:
   input:
-    "data/illumina_assembly/{selection}_guided/{illumina_host}/scaffolds.fasta"
+    "data/illumina_assembly/{selection}_novoplasty/{selection}_{illumina_host}/Contigs_1_{selection}_{illumina_host}.fasta
   output:
      "data/illumina_contig_dbs/{illumina_host}_{selection}_contigs.db"
   log:
