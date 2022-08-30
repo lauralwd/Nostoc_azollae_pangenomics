@@ -817,6 +817,11 @@ rule create_pangenome_analysis:
     > {log.stdout} 2> {log.stderr}
     """
 
+# in the step above, I experimented manually with the mcl value and found 7 to give the best distinction between phylogenetically meaningfull groups
+
+# Manually imported pan groups like so:
+# anvi-import-misc-data scripts/Nazollae_pan_groups.txt -p ./data/anvio_pangenomes/Nazollae/Nazollae_mcl7-PAN.db --target-data-table layers
+
 rule create_pangenome_ANI_Nazollae:
   input:
     pangenome="data/anvio_pangenomes/Nazollae/Nazollae_mcl{mcl}-PAN.db",
