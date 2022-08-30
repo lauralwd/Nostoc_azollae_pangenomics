@@ -935,7 +935,7 @@ rule phylogenomic_tree:
            -p {input.partition} \
            -m MFP+MERGE         \
            -b 100               \
-           -nt AUTO             \
+           -nt {threads}        \
            -ntmax {threads}     \
            -pre {params.pre}    \
     > {log.stdout} 2> {log.stderr}
