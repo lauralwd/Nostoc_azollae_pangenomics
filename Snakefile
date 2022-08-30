@@ -1,6 +1,6 @@
 NANOPORE=['Azfil_lab','Azpinnata','Azsp_bordeaux']
 SELECTION=['Nazollae','mitochondrium','chloroplast']
-ILLUMINA_HOSTS=['Azcar1','Azcar2','Azmexicana','Azmicrophylla','Aznilotica','Azrubra']
+ILLUMINA_HOSTS=['Azcar1','Azcar2','Azmexicana','Azmicrophylla','Aznilotica','Azrubra','Azfil_lab']
 MAG_HOSTS=['Azfil_lab','Azfil_wild','Azmex','Azmic','Aznil','Azrub','Azcar1','Azcar2']
 
 ############################### stage 1: collect MAGs and genomes of Nostoc azollae from anvio ###############################
@@ -505,12 +505,12 @@ rule assemble_chloroplast_NOVOPlasty:
     chloroplast="references/Azfil_cp1.4.fasta",
     config_base="scripts/novoplasty_chloroplast_config_base"
   output:
-    sampleconfig="data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}.txt"
+    sampleconfig="data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}_config.txt"
   threads: 12
   conda:
     "envs/novoplasty.yaml"
   params:
-    pre=lambda w: expand("data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}",
+    pre=lambda w: expand("data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/",
                          illumina_host=w.illumina_host)
   log:
     stderr="logs/illumina_genomes/novoplasty_chloroplast/{illumina_host}.stderr",
@@ -533,7 +533,7 @@ rule assemble_chloroplast_NOVOPlasty:
 
 rule all_illumina_assembly_novoplasty:
   input:
-    expand("data/illumina_assembly/{selection}_novoplasty/chloroplast_{illumina_host}.txt",
+    expand("data/illumina_assembly/{selection}_novoplasty/chloroplast_{illumina_host}_config.txt",
            selection=['chloroplast'],
            illumina_host=ILLUMINA_HOSTS)
 
