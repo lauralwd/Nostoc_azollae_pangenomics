@@ -1,6 +1,6 @@
 
-Genome Range          = 140000-200000
 Type                  = mito_plant
+Genome Range          = 40000-140000
 K-mer                 = 33
 Max memory            = 20
 Extended log          = 0
