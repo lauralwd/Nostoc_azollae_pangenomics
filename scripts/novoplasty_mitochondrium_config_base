@@ -1,0 +1,20 @@
+
+Type                  = chloro
+Genome Range          = 140000-200000
+K-mer                 = 33
+Max memory            = 20
+Extended log          = 0
+Save assembled reads  = no
+Seed Input            = references/edge11.fasta
+Extend seed directly  = no
+Reference sequence    = references/Marchantia_matK.fasta
+Variance detection    =
+Chloroplast sequence  = references/Azfil_cp1.4.fasta
+
+Dataset 1:
+-----------------------
+Read Length           = 100
+Insert size           = 500
+Platform              = illumina
+Single/Paired         = PE
+Combined reads        =
