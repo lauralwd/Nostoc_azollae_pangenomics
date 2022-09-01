@@ -1,0 +1,94 @@
+
+
+-----------------------------------------------
+NOVOPlasty: The Organelle Assembler
+Version 4.3.1
+Author: Nicolas Dierckxsens, (c) 2015-2020
+-----------------------------------------------
+
+
+Input parameters from the configuration file:   *** Verify if everything is correct ***
+
+Project:
+-----------------------
+Project name          = chloroplast_Azmexicana
+Type                  = chloro
+Genome range          = 140000-190000
+K-mer                 = 33
+Max memory            = 20
+Extended log          = 0
+Save assembled reads  = no
+Seed Input            = references/Seed_RUBP_cp.fasta
+Extend seed directly  = no
+Reference sequence    = references/Azfil_cp1.4.fasta
+Variance detection    = 
+Chloroplast sequence  = references/Azfil_cp1.4.fasta
+
+Dataset 1:
+-----------------------
+Read Length           = 100
+Insert size           = 500
+Platform              = illumina
+Single/Paired         = PE
+Combined reads        = 
+Forward reads         = data/illumina_reads/Azmexicana_R1.fastq.gz
+Reverse reads         = data/illumina_reads/Azmexicana_R2.fastq.gz
+Store Hash            = 
+
+Heteroplasmy:
+-----------------------
+Heteroplasmy          = 
+HP exclude list       = 
+PCR-free              = 
+
+Optional:
+-----------------------
+Insert size auto      = yes
+Use Quality Scores    = 
+Output path           = data/illumina_assembly/chloroplast_novoplasty/chloroplast_Azmexicana/
+
+
+Reading Input......OK
+
+Scan chloroplast sequence......OK
+
+Scan reference sequence......OK
+
+Building Hash Table......OK
+
+Subsampled fraction: 11.24 %
+Forward reads without pair: 648504
+Reverse reads without pair: 219521
+
+Retrieve Seed......OK
+
+Initial read retrieved successfully: CAAACGGAGACTAAAGCAGGTGTTGGATTCAAAGCTGGTGTTAGAGACTATCGATTGACCTATTACACTCCCGATTATGTTACCAAAGATACCGATATTT
+
+Start Assembly...
+
+100 bp 
+------------Assembly 1 finished: Contigs are automatically merged in Merged_contigs file------------
+
+Contig 01                  : 89778 bp
+Contig 02                  : 28237 bp
+Contig 03                  : 31201 bp
+
+Total contigs              : 3
+Largest contig             : 89778 bp
+Smallest contig            : 28237 bp
+Average insert size        : 484 bp
+
+
+-----------------------------------------Input data metrics-----------------------------------------
+
+Total reads                : 35576624
+Aligned reads              : 1666216
+Assembled reads            : 1566034
+Organelle genome %         : 4.68 %
+Average organelle coverage : 1127
+
+-----------------------------------------------------------------------------------------------------
+
+
+Thank you for using NOVOPlasty!
+

@@ -1,0 +1,93 @@
+
+
+-----------------------------------------------
+NOVOPlasty: The Organelle Assembler
+Version 4.3.1
+Author: Nicolas Dierckxsens, (c) 2015-2020
+-----------------------------------------------
+
+
+Input parameters from the configuration file:   *** Verify if everything is correct ***
+
+Project:
+-----------------------
+Project name          = chloroplast_Azfil_lab
+Type                  = chloro
+Genome range          = 140000-190000
+K-mer                 = 33
+Max memory            = 20
+Extended log          = 0
+Save assembled reads  = no
+Seed Input            = references/Seed_RUBP_cp.fasta
+Extend seed directly  = no
+Reference sequence    = references/Azfil_cp1.4.fasta
+Variance detection    = 
+Chloroplast sequence  = references/Azfil_cp1.4.fasta
+
+Dataset 1:
+-----------------------
+Read Length           = 100
+Insert size           = 500
+Platform              = illumina
+Single/Paired         = PE
+Combined reads        = 
+Forward reads         = data/illumina_reads/Azfil_lab_R1.fastq.gz
+Reverse reads         = data/illumina_reads/Azfil_lab_R2.fastq.gz
+Store Hash            = 
+
+Heteroplasmy:
+-----------------------
+Heteroplasmy          = 
+HP exclude list       = 
+PCR-free              = 
+
+Optional:
+-----------------------
+Insert size auto      = yes
+Use Quality Scores    = 
+Output path           = data/illumina_assembly/chloroplast_novoplasty/chloroplast_Azfil_lab/
+
+
+Reading Input......OK
+
+Scan chloroplast sequence......OK
+
+Scan reference sequence......OK
+
+Building Hash Table......OK
+
+Subsampled fraction: 18.07 %
+Forward reads without pair: 425092
+Reverse reads without pair: 125012
+
+Retrieve Seed......OK
+
+Initial read retrieved successfully: AGGAACCCATGTCACCACAAACGGAGACTAAAGCAGGTGTTGGATTCAAAGCTGGTGTTAGAGACTATCGATTGACCTATTACACTCCCGATTATGTTAC
+
+Start Assembly...
+
+100 bp 
+------------Assembly 1 finished: Contigs are automatically merged in Merged_contigs file------------
+
+Contig 01                  : 132587 bp
+Contig 02                  : 15171 bp
+ (Check manually if the two contigs overlap to merge them together!)
+Contig 02                  : 711 bp
+
+Total contigs              : 3
+Largest contig             : 132587 bp
+Smallest contig            : 711 bp
+Average insert size        : 758 bp
+
+
+-----------------------------------------Input data metrics-----------------------------------------
+
+Total reads                : 35376704
+Aligned reads              : 1217996
+Assembled reads            : 1158308
+
+-----------------------------------------------------------------------------------------------------
+
+
+Thank you for using NOVOPlasty!
+

@@ -1,0 +1,126 @@
+
+
+-----------------------------------------------
+NOVOPlasty: The Organelle Assembler
+Version 4.3.1
+Author: Nicolas Dierckxsens, (c) 2015-2020
+-----------------------------------------------
+
+
+Input parameters from the configuration file:   *** Verify if everything is correct ***
+
+Project:
+-----------------------
+Project name          = mitochondrium_Azcar2
+Type                  = mito_plant
+Genome range          = 40000-140000
+K-mer                 = 33
+Max memory            = 20
+Extended log          = 0
+Save assembled reads  = no
+Seed Input            = references/azfi_cox1_region.fasta
+Extend seed directly  = no
+Reference sequence    = references/azfi_mito_laura-v1.fasta
+Variance detection    = 
+Chloroplast sequence  = references/Azfil_cp1.4.fasta
+
+Dataset 1:
+-----------------------
+Read Length           = 100
+Insert size           = 500
+Platform              = illumina
+Single/Paired         = PE
+Combined reads        = 
+Forward reads         = data/illumina_reads/Azcar2_R1.fastq.gz
+Reverse reads         = data/illumina_reads/Azcar2_R2.fastq.gz
+Store Hash            = 
+
+Heteroplasmy:
+-----------------------
+Heteroplasmy          = 
+HP exclude list       = 
+PCR-free              = 
+
+Optional:
+-----------------------
+Insert size auto      = yes
+Use Quality Scores    = 
+Output path           = data/illumina_assembly/mitochondrium_novoplasty/mitochondrium_Azcar2/Azcar2_
+
+
+Reading Input......OK
+
+Scan chloroplast sequence......OK
+
+Scan reference sequence......OK
+
+Building Hash Table......OK
+
+Subsampled fraction: 10.99 %
+Forward reads without pair: 743137
+Reverse reads without pair: 239177
+
+Retrieve Seed......OK
+
+Initial read retrieved successfully: AGGGATTGACTAAAGAACTGGGCTTGATCTTGGCCCGGAATGAACGCTAGCAATATGCCTAACACATGCAGCAAGTTGGACGTCGTTTCTGTTCTAATTC
+
+Start Assembly...
+
+100 bp 
+-----------------Assembly 1 finished incomplete: The genome has not been circularized-----------------
+
+Contig 01           : 14654 bp
+Contig 02           : 1157 bp
+Contig 03           : 4199 bp
+Contig 04           : 3962 bp
+Contig 05           : 6509 bp
+Contig 06           : 4095 bp
+Contig 07           : 6835 bp
+Contig 08           : 3476 bp
+ (Check manually if the two contigs overlap to merge them together!)
+Contig 08           : 5732 bp
+Contig 09           : 3097 bp
+ (Check manually if the two contigs overlap to merge them together!)
+Contig 09           : 5732 bp
+Contig 10           : 1699 bp
+Contig 11           : 2085 bp
+Contig 12           : 866 bp
+Contig 13           : 1669 bp
+Contig 14           : 5254 bp
+Contig 15           : 4882 bp
+Contig 16           : 4882 bp
+Contig 17           : 5290 bp
+Contig 18           : 772 bp
+Contig 19           : 3259 bp
+Contig 20           : 4312 bp
+Contig 21           : 2441 bp
+Contig 22           : 1419 bp
+Contig 23           : 4110 bp
+Contig 24           : 2135 bp
+Contig 25           : 2130 bp
+Contig 26           : 4362 bp
+Contig 27           : 4686 bp
+Contig 28           : 7370 bp
+Contig 29           : 7008 bp
+Contig 30           : 18934 bp
+Contig 31           : 10759 bp
+
+Total contigs          : 33
+Largest contig         : 18934 bp
+Smallest contig        : 772 bp
+Average insert size    : 474 bp
+
+
+-----------------------------------------Input data metrics-----------------------------------------
+
+Total reads                : 35617062
+Aligned reads              : 69438
+Assembled reads            : 57562
+Organelle genome %         : 0.19 %
+Average organelle coverage : 90
+
+-----------------------------------------------------------------------------------------------------
+
+
+Thank you for using NOVOPlasty!
+
