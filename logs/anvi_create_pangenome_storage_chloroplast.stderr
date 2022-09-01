@@ -1,0 +1,18 @@
+WARNING
+===============================================
+Good news! Anvi'o found all these functions that are common to all of your
+genomes and will use them for downstream analyses and is very proud of you:
+'COG20_FUNCTION, KEGG_Module, KOfam, KEGG_Class, COG20_PATHWAY, COG20_CATEGORY'.
+
+JUST FYI
+===============================================
+Some of your genomes had gene calls identified by gene callers other than the
+anvi'o default, 'prodigal', and will not be processed. Use the `--debug` flag if
+this sounds important and you would like to see more of this message.
+
+* Azfil_cp1_4 is stored with 112 genes (0 of which were partial)
+
+The new genomes storage ......................: data/anvio_genomes_storage/chloroplast_GENOMES.db (v7, signature: hash597ed9df)
+Number of genomes ............................: 11 (internal: 0, external: 11)
+Number of gene calls .........................: 1,363
+Number of partial gene calls .................: 22

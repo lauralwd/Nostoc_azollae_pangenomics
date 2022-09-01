@@ -1,0 +1,24 @@
+
+CITATION
+===============================================
+Anvi'o will use 'PyANI' by Pritchard et al. (DOI: 10.1039/C5AY02550H) to compute
+ANI. If you publish your findings, please do not forget to properly credit their
+work.
+
+[PyANI] Num threads to use ...................: 12
+[PyANI] Alignment method .....................: ANIb
+[PyANI] Log file path ........................: /tmp/tmpvms_24ur
+
+ANI RESULTS
+===============================================
+* Matrix and clustering of 'alignment coverage' written to output directory
+* Matrix and clustering of 'alignment lengths' written to output directory
+* Matrix and clustering of 'hadamard' written to output directory
+* Matrix and clustering of 'percentage identity' written to output directory
+* Matrix and clustering of 'similarity errors' written to output directory
+* Matrix and clustering of 'full percentage identity' written to output directory
+
+MISC DATA MAGIC FOR YOUR PAN DB
+===============================================
+
+✓ anvi-compute-genome-similarity took 0:00:13.150738

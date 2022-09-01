@@ -1,0 +1,51 @@
+
+WARNING
+===============================================
+If you publish results from this workflow, please do not forget to cite DIAMOND
+(doi:10.1038/nmeth.3176), unless you use it with --use-ncbi-blast flag, and MCL
+(http://micans.org/mcl/ and doi:10.1007/978-1-61779-361-5_15)
+
+Num genomes in storage .......................: 11
+Num genomes will be used .....................: 11
+Pan database .................................: A new database, /stor/azolla_metagenome/nostoc_pangenome/data/anvio_pangenomes/chloroplast/chloroplast_mcl7-PAN.db, has
+                                                been created.
+Exclude partial gene calls ...................: False
+
+
+Num AA sequences reported ....................: 1,363
+Num excluded gene calls ......................: 0
+
+WARNING
+===============================================
+You elected to use NCBI's `blastp` for amino acid sequence search. Running
+blastp will be significantly slower than DIAMOND, but in some cases, slightly
+more sensitive. We are unsure about whether the slight increase in sensitivity
+may justify significant increase in run time, but you are the boss.
+
+
+DATA FROM A PREVIOUS RUN 🎊
+===============================================
+Notice: A BLAST database is found in the output directory, and will be used!
+
+
+DATA FROM A PREVIOUS RUN 🎉
+===============================================
+Notice: A BLAST search result is found in the output directory: skipping BLASTP!
+
+
+MCL INPUT
+===============================================
+Minbit .......................................: 0.5
+MCL input ....................................: /stor/azolla_metagenome/nostoc_pangenome/data/anvio_pangenomes/chloroplast/mcl-input.txt
+
+MCL
+===============================================
+MCL inflation ................................: 7.0
+Number of MCL clusters .......................: 175
+CITATION
+===============================================
+The workflow you are using will likely use 'muscle' by Edgar,
+doi:10.1093/nar/gkh340 (http://www.drive5.com/muscle) to align your sequences.
+If you publish your findings, please do not forget to properly credit this tool.
+
+
