@@ -405,18 +405,23 @@ rule assemble_mitochondrium_NOVOPlasty:
 
 rule choose_novoplasty_assembly:
   input:
-    "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}/"
+    "data/illumina_assembly/{selection}_novoplasty/{selection}_{illumina_host}/"
   output:
-    "data/illumina_assembly/chloroplast_novoplasty/chloroplast_{illumina_host}_assembly.fasta"
+    "data/illumina_assembly/{selection}_novoplasty/{selection}_{illumina_host}_assembly.fasta"
   shell:
     """
-    if   [ -f {input}/Circularized_assembly_1_chloroplast_{wildcards.illumina_host}.fasta ]
-    then anvi-script-reformat-fasta {input}/Circularized_assembly_1_chloroplast_{wildcards.illumina_host}.fasta \
+    if   [ -f {input}/Circularized_assembly_1_{wildcards.selection}_{wildcards.illumina_host}.fasta ]
+    then anvi-script-reformat-fasta {input}/Circularized_assembly_1_{wildcards.selection}_{wildcards.illumina_host}.fasta \
                                     --simplify-names     \
                                     --seq-type NT        \
                                     -o {output}
-    elif [ -f {input}/Contigs_1_chloroplast_{wildcards.illumina_host}.fasta ]
-    then anvi-script-reformat-fasta {input}/Contigs_1_chloroplast_{wildcards.illumina_host}.fasta \
+    elif [ -f {input}/Contigs_1_{wildcards.selection}_{wildcards.illumina_host}.fasta ]
+    then anvi-script-reformat-fasta {input}/Contigs_1_{wildcards.selection}_{wildcards.illumina_host}.fasta \
+                                    --simplify-names     \
+                                    --seq-type NT        \
+                                    -o {output}
+    elif [ -f {input}/Uncircularized_assemblies_1_{wildcards.selection}_{wildcards.illumina_host}.fasta ]
+    then anvi-script-reformat-fasta {input}/Uncircularized_assemblies_1_mitochondrium_{wildcards.illumina_host}.fasta \
                                     --simplify-names     \
                                     --seq-type NT        \
                                     -o {output}
