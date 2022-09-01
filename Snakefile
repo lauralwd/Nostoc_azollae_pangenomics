@@ -356,7 +356,7 @@ rule assemble_chloroplast_NOVOPlasty:
 
     echo 'Forward reads         =  {input.R1}'                           >> {output.sampleconfig}
     echo 'Reverse reads         =  {input.R2}'                           >> {output.sampleconfig}
-    echo 'Output path           =  {output.dir}/{wildcards.illumina_host}_' >> {output.sampleconfig}
+    echo 'Output path           =  {output.dir}/'                        >> {output.sampleconfig}
 
     if   [ ! -d {output.dir} ]
     then mkdir  {output.dir}
@@ -393,7 +393,7 @@ rule assemble_mitochondrium_NOVOPlasty:
 
     echo 'Forward reads         =  {input.R1}'                           >> {output.sampleconfig}
     echo 'Reverse reads         =  {input.R2}'                           >> {output.sampleconfig}
-    echo 'Output path           =  {output.dir}/{wildcards.illumina_host}_' >> {output.sampleconfig}
+    echo 'Output path           =  {output.dir}/'                        >> {output.sampleconfig}
 
     if   [ ! -d {output.dir} ]
     then mkdir  {output.dir}
