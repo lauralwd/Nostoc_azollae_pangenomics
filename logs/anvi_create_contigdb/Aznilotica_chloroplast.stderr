@@ -1,25 +1,25 @@
-Input FASTA file .............................: /stor/azolla_metagenome/nostoc_pangenome/data/illumina_assembly/chloroplast_novoplasty/chloroplast_Aznilotica/Contigs_1_chloroplast_Aznilotica.fasta
+Input FASTA file .............................: /stor/azolla_metagenome/nostoc_pangenome/data/illumina_assembly/chloroplast_novoplasty/chloroplast_Aznilotica_assembly.fasta
 
 Anvi'o made things up for you
 ===============================================
 You are generating a new anvi'o contigs database, but you are not specifying a
 project name for it. FINE. Anvi'o, in desperation, will use the input file name
 to set the project name for this contigs database (i.e.,
-'Contigs_1_chloroplast_Aznilotica'). If you are not happy with that, feel free
-to kill and restart this process. If you are not happy with this name, but you
+'chloroplast_Aznilotica_assembly'). If you are not happy with that, feel free to
+kill and restart this process. If you are not happy with this name, but you
 don't like killing things either, maybe next time you should either name your
 FASTA files better, or use the `--project-name` parameter to set your desired
 name.
 
-Name .........................................: Contigs_1_chloroplast_Aznilotica
+Name .........................................: chloroplast_Aznilotica_assembly
 Description ..................................: No description is given
-                                                                                                                                                                        [48;5;6m[38;5;0m[30 Aug 22 08:39:10 Checking deflines and contig lengths] tick tock ...                                                                                                [0m                                                                                                                                                                        Num threads for gene calling .................: 1
+                                                                                                                                                                        [48;5;6m[38;5;0m[30 Aug 22 19:13:01 Checking deflines and contig lengths] tick tock ...                                                                                                [0m                                                                                                                                                                        Num threads for gene calling .................: 1
 
 Finding ORFs in contigs
 ===============================================
-Genes ........................................: /tmp/tmp9tz_hdqx/contigs.genes
-Amino acid sequences .........................: /tmp/tmp9tz_hdqx/contigs.amino_acid_sequences
-Log file .....................................: /tmp/tmp9tz_hdqx/00_log.txt
+Genes ........................................: /tmp/tmp6okrjaql/contigs.genes
+Amino acid sequences .........................: /tmp/tmp6okrjaql/contigs.amino_acid_sequences
+Log file .....................................: /tmp/tmp6okrjaql/00_log.txt
 
 CITATION
 ===============================================
@@ -27,9 +27,9 @@ Anvi'o will use 'prodigal' by Hyatt et al (doi:10.1186/1471-2105-11-119) to
 identify open reading frames in your data. When you publish your findings,
 please do not forget to properly credit their work.
 
-                                                                                                                                                                        [48;5;6m[38;5;0m[30 Aug 22 08:39:21 Processing] Identifying ORFs using 1 thread.                                                                                                       [0m                                                                                                                                                                        Result .......................................: Prodigal (v2.6.3) has identified 23 genes.
+                                                                                                                                                                        [48;5;6m[38;5;0m[30 Aug 22 19:13:06 Processing] Identifying ORFs using 1 thread.                                                                                                       [0m                                                                                                                                                                        Result .......................................: Prodigal (v2.6.3) has identified 146 genes.
 
-                                                                                                                                                                        [48;5;6m[38;5;0m[30 Aug 22 08:39:22 Processing] Entering 23 gene calls into the db ...                                                                                                 [0m                                                                                                                                                                        
+                                                                                                                                                                        [48;5;6m[38;5;0m[30 Aug 22 19:13:08 Processing] Entering 146 gene calls into the db ...                                                                                                [0m                                                                                                                                                                        
 CONTIGS DB CREATE REPORT
 ===============================================
 Split Length .................................: 20,000
@@ -38,14 +38,14 @@ Skip gene calling? ...........................: False
 External gene calls provided? ................: False
 Ignoring internal stop codons? ...............: False
 Splitting pays attention to gene calls? ......: True
-                                                                                                                                                                        [48;5;6m[38;5;0m[30 Aug 22 08:39:22 The South Loop] Contig "1"                                                                                                                ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 08:39:22 The South Loop] Contig "1" has 23 genes,                                                                                                  ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 08:39:22 The South Loop] Contig "1" has 23 genes, and 22015 nts. Now computing: auxiliary ...                                                      ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 08:39:22 The South Loop] Contig "1" has 23 genes, and 22015 nts. Now computing: auxiliary ... k-mers ...                                           ETA: None[0m                                                                                                                                                                                                                                                                                                                                                [48;5;6m[38;5;0m[30 Aug 22 08:39:28 Initializing the dictionary for gene calls] ...                                                                                                    [0m                                                                                                                                                                        Contigs with at least one gene call ..........: 1 of 1 (100.0%)
+                                                                                                                                                                        [48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "1"                                                                                                                ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "1" has 102 genes,                                                                                                 ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "1" has 102 genes, and 132832 nts. Now computing: auxiliary ...                                                    ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "1" has 102 genes, and 132832 nts. Now computing: auxiliary ... k-mers ...                                         ETA: None[0m                                                                                                                                                                        [48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "2"                                                                                                                ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "2" has 4 genes,                                                                                                   ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "2" has 4 genes, and 7393 nts. Now computing: auxiliary ...                                                        ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "2" has 4 genes, and 7393 nts. Now computing: auxiliary ... k-mers ...                                             ETA: None[0m                                                                                                                                                                        [48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "3"                                                                                                                ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "3" has 15 genes,                                                                                                  ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "3" has 15 genes, and 15381 nts. Now computing: auxiliary ...                                                      ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "3" has 15 genes, and 15381 nts. Now computing: auxiliary ... k-mers ...                                           ETA: None[0m                                                                                                                                                                        [48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "4"                                                                                                                ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "4" has 25 genes,                                                                                                  ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "4" has 25 genes, and 36180 nts. Now computing: auxiliary ...                                                      ETA: None[0m[48;5;6m[38;5;0m[30 Aug 22 19:13:08 The South Loop] Contig "4" has 25 genes, and 36180 nts. Now computing: auxiliary ... k-mers ...                                           ETA: None[0m                                                                                                                                                                                                                                                                                                                                                [48;5;6m[38;5;0m[30 Aug 22 19:13:11 Initializing the dictionary for gene calls] ...                                                                                                    [0m                                                                                                                                                                        Contigs with at least one gene call ..........: 4 of 4 (100.0%)
 Contigs database .............................: A new database, data/illumina_contig_dbs/Aznilotica_chloroplast_contigs.db, has been created.
-Number of contigs ............................: 1
-Number of splits .............................: 1
-Total number of nucleotides ..................: 22,015
+Number of contigs ............................: 4
+Number of splits .............................: 9
+Total number of nucleotides ..................: 191,786
 Gene calling step skipped ....................: False
 Splits broke genes (non-mindful mode) ........: False
 Desired split length (what the user wanted) ..: 20,000
-Average split length (what anvi'o gave back) .: (Anvi'o did not create any splits)
+Average split length (what anvi'o gave back) .: 22,139
 
-✓ anvi-gen-contigs-database took 0:00:18.287104
+✓ anvi-gen-contigs-database took 0:00:10.845238
