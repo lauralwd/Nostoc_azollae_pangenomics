@@ -562,6 +562,10 @@ rule create_list_pangenome_storage_all_mitochondrium:
 
 rule create_pangenome_storage_plastid:
   input:
+    illumina=expand("data/illumina_contig_dbs/{illumina_host}_{{selection}}_contigs.db",illumina_host=ILLUMINA_HOSTS),
+    illuminaann=expand("data/illumina_contig_dbs/{illumina_host}_{{selection}}_contigs.db.{ext}",illumina_host=ILLUMINA_HOSTS,ext=['hmms','kegg','cogs']),
+    nanopore=expand("data/nanopore_contig_dbs/{nanopore_host}_{{selection}}_contigs.db",nanopore_host=NANOPORE),
+    nanoporeann=expand("data/nanopore_contig_dbs/{nanopore_host}_{{selection}}_contigs.db.{ext}",nanopore_host=NANOPORE,ext=['hmms','kegg','cogs']),
     external="scripts/{selection}_external_genomes.anvi-list"
   output:
     "data/anvio_genomes_storage/{selection}_GENOMES.db"
