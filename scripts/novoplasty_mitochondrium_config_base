@@ -1,6 +1,6 @@
 
-Type                  = mito
 Genome Range          = 140000-200000
+Type                  = mito_plant
 K-mer                 = 33
 Max memory            = 20
 Extended log          = 0
