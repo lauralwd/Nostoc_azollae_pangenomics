@@ -358,9 +358,9 @@ rule assemble_chloroplast_NOVOPlasty:
     echo 'Reverse reads         =  {input.R2}'                           >> {output.sampleconfig}
     echo 'Output path           =  {output.dir}/{wildcards.illumina_host}_' >> {output.sampleconfig}
 
-    #if   [ ! -d {params.pre} ]
-    #then mkdir  {params.pre}
-    #fi
+    NOVOPlasty4.3.1.pl -c {output.sampleconfig}   \
+    > {log.stdout} 2> {log.stderr}
+    """
 
     NOVOPlasty4.3.1.pl -c {output.sampleconfig}   \
     > {log.stdout} 2>> {log.stderr}
