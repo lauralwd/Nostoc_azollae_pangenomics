@@ -1,0 +1,36 @@
+Num genomes in storage ......................................: 11
+Num genomes will be used ....................................: 11
+Pan DB ......................................................: Initialized: data/anvio_pangenomes/chloroplast/chloroplast_mcl6-PAN.db (v. 15)
+Gene cluster homogeneity estimates ..........................: Functional: [YES]; Geometric: [YES]; Combined: [YES]
+* A short announcement for the curious: anvi'o found 175 gene clusters in the
+database, attempted to initialize a gene clusters dictionary for 26 of them as
+requested by the user or the programmer, and managed to get back a gene clusters
+dictionary with 26 items. We just hope all these make sense to you.
+
+GENE CLUSTER FILTERS
+==============================================================
+Based on --min-num-genomes-gene-cluster-occurs 0, --max-num-genomes-gene-
+cluster-occurs 11, --min-num-genes-from-each-genome 0, --max-num-genes-from-
+each-genome 11, --min-functional-homogeneity-index -1.000, --max-functional-
+homogeneity-index 1.000, --min-geometric-homogeneity-index -1.000, --max-
+geometric-homogeneity-index 1.000, --min-combined-homogeneity-index -1.000,
+--max-combined-homogeneity-index 1.000 (some of these may be default values, no
+need to panic).
+
+All gene clusters (26) ......................................: GC_00000054, GC_00000062, GC_00000048, (... 23 more (`--debug` will show all))
+Gene clusters that passed the filter (26) ...................: GC_00000079, GC_00000050, GC_00000054, (... 23 more (`--debug` will show all))
+Genes clusters that failed the filter (0) ...................: None.
+
+
+INFO
+===============================================
+Your filters resulted in 26 gene clusters that contain a total of 286 genes. for
+downstream analyses. Just so you know.
+
+
+* Your partition file is ready. Please do not forget to replace placeholders for
+model names ('[MODEL]') in this file with appropriate model names prior to your
+phylogenomic analysis.
+
+Sequence type ...............................................: Amino acid
+Output file for phylogenomics ...............................: data/anvio_pangenomes/chloroplast_mcl6_phylogenomic_core.fasta
