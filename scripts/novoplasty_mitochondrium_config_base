@@ -1,13 +1,13 @@
 
-Type                  = chloro
+Type                  = mito
 Genome Range          = 140000-200000
 K-mer                 = 33
 Max memory            = 20
 Extended log          = 0
 Save assembled reads  = no
-Seed Input            = references/edge11.fasta
+Seed Input            = references/Marchantia_matK.fasta
 Extend seed directly  = no
-Reference sequence    = references/Marchantia_matK.fasta
+Reference sequence    = references/azfi_mito_laura-v1.fasta
 Variance detection    =
 Chloroplast sequence  = references/Azfil_cp1.4.fasta
 
