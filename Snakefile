@@ -362,6 +362,35 @@ rule assemble_chloroplast_NOVOPlasty:
     > {log.stdout} 2> {log.stderr}
     """
 
+rule assemble_mitochondrium_NOVOPlasty:
+  input:
+    R1="data/illumina_reads/{illumina_host}_R1.fastq.gz",
+    R2="data/illumina_reads/{illumina_host}_R2.fastq.gz",
+    mitochondrium="references/azfi_mito_laura-v1.fasta",
+    config_base="scripts/novoplasty_mitochondrium_config_base"
+  output:
+    sampleconfig="data/illumina_assembly/mitochondrium_novoplasty/mitochondrium_{illumina_host}_config.txt",
+    dir=directory("data/illumina_assembly/mitochondrium_novoplasty/mitochondrium_{illumina_host}")
+  threads: 2
+  resources:
+    mem_mb=20000
+  conda:
+    "envs/novoplasty.yaml"
+  log:
+    stderr="logs/illumina_genomes/novoplasty_mitochondrium/{illumina_host}.stderr",
+    stdout="logs/illumina_genomes/novoplasty_mitochondrium/{illumina_host}.stdout"
+  shell:
+    """
+    echo 'Project:'                                                      > {output.sampleconfig}
+    echo '-----------------------'                                       >> {output.sampleconfig}
+    echo 'Project name          = mitochondrium_{wildcards.illumina_host}' >> {output.sampleconfig}
+
+    cat {input.config_base}                                              >> {output.sampleconfig}
+
+    echo 'Forward reads         =  {input.R1}'                           >> {output.sampleconfig}
+    echo 'Reverse reads         =  {input.R2}'                           >> {output.sampleconfig}
+    echo 'Output path           =  {output.dir}/{wildcards.illumina_host}_' >> {output.sampleconfig}
+
     NOVOPlasty4.3.1.pl -c {output.sampleconfig}   \
     > {log.stdout} 2>> {log.stderr}
     """
@@ -389,8 +418,8 @@ rule choose_novoplasty_assembly:
 
 rule all_illumina_assembly_novoplasty:
   input:
-    expand("data/illumina_assembly/{selection}_novoplasty/chloroplast_{illumina_host}_config.txt",
-           selection=['chloroplast'],
+    expand("data/illumina_assembly/{selection}_novoplasty/{selection}_{illumina_host}_config.txt",
+           selection=['chloroplast','mitochondrium'],
            illumina_host=ILLUMINA_HOSTS)
 
 ############################### stage 4 create pangenomes ###############################
