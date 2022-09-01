@@ -431,7 +431,7 @@ rule choose_novoplasty_assembly:
 
 rule all_illumina_assembly_novoplasty:
   input:
-    expand("data/illumina_assembly/{selection}_novoplasty/{selection}_{illumina_host}_config.txt",
+    expand("data/illumina_assembly/{selection}_novoplasty/{selection}_{illumina_host}_assembly.fasta",
            selection=['chloroplast','mitochondrium'],
            illumina_host=ILLUMINA_HOSTS)
 
