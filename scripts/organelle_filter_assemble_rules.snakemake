@@ -1,0 +1,282 @@
+rule bwa_index:
+  input:
+    "{fasta}.fasta"
+  output:
+    "{fasta}.fasta.amb",
+    "{fasta}.fasta.ann",
+    "{fasta}.fasta.bwt",
+    "{fasta}.fasta.pac",
+    "{fasta}.fasta.sa"
+  log:
+    stderr="logs/illumina_genomes/bwa_index_{fasta}.stderr",
+    stdout="logs/illumina_genomes/bwa_index_{fasta}.stdout"
+  shell:
+    """
+    bwa index {input} \
+    > {log.stderr} 2> {log.stdout}
+    """
+
+rule map_illumina_reads_to_combined_reference:
+  input:
+    R1="data/illumina_reads/{illumina_host}_R1.fastq.gz",
+    R2="data/illumina_reads/{illumina_host}_R2.fastq.gz",
+    fasta="references/Azfil_combo_genome_v1.fasta",
+    index="references/Azfil_combo_genome_v1.fasta.bwt"
+  output:
+    bam=temp("data/illumina_mapped/{illumina_host}_mapped.bam")
+  log:
+    stderr="logs/illumina_genomes/map_illumina_reads_to_combined_reference_{illumina_host}.stderr"
+  threads: 12
+  shell:
+    """
+    bwa mem                      \
+            -t {threads}         \
+            {input.fasta}        \
+            {input.R1}           \
+            {input.R2}           \
+    2> {log.stderr}              \
+    | samtools view -F 4         \
+               -@ {threads}      \
+               -b                \
+               -o {output.bam}   \
+    2> {log.stderr}
+    """
+
+rule all_illumina_bams_sorted:
+  input:
+    bam=expand("data/illumina_mapped/{illumina_host}_mapped_sorted.bam"    ,illumina_host=ILLUMINA_HOSTS),
+    bai=expand("data/illumina_mapped/{illumina_host}_mapped_sorted.bam.bai",illumina_host=ILLUMINA_HOSTS)
+
+rule get_chloroplast_illumina_reads:
+  input:
+    bam="data/illumina_mapped/{illumina_host}_mapped_sorted.bam",
+    bai="data/illumina_mapped/{illumina_host}_mapped_sorted.bam.bai"
+  output:
+    R1="data/illumina_filtered/chloroplast/{illumina_host}_R1.fastq.gz",
+    R2="data/illumina_filtered/chloroplast/{illumina_host}_R2.fastq.gz"
+  threads: 3
+  log:
+    stderr="logs/illumina_genomes/get_chloroplast_illumina_reads_{illumina_host}.stderr"
+  shell:
+    """
+    samtools view -h {input.bam}         \
+                  -f 2                   \
+                  -@ {threads}           \
+                  'Azolla_cp_v1_4'       \
+    2> {log.stderr}                      \
+    | samtools sort -                    \
+               -l 0                      \
+               -m 4G                     \
+               -n                        \
+               -@ {threads}              \
+    | samtools fastq -1 {output.R1}      \
+                     -2 {output.R2}      \
+                     -                   \
+    2>> {log.stderr}
+    """
+
+rule get_mitochondrium_illumina_reads:
+  input:
+    bam="data/illumina_mapped/{illumina_host}_mapped_sorted.bam",
+    bai="data/illumina_mapped/{illumina_host}_mapped_sorted.bam.bai"
+  output:
+    R1="data/illumina_filtered/mitochondrium/{illumina_host}_R1.fastq.gz",
+    R2="data/illumina_filtered/mitochondrium/{illumina_host}_R2.fastq.gz"
+  log:
+    stderr="logs/illumina_genomes/get_mitochondrium_illumina_reads_{illumina_host}.stderr"
+  shell:
+    """
+    samtools view -h {input.bam}                           \
+                  'a_filiculoides_mitochondrium_contig_10' \
+                  'a_filiculoides_mitochondrium_contig_11' \
+                  'a_filiculoides_mitochondrium_contig_12' \
+                  'a_filiculoides_mitochondrium_contig_16' \
+                  'a_filiculoides_mitochondrium_contig_22' \
+                  'a_filiculoides_mitochondrium_contig_09' \
+                  -f 2                                     \
+                  -@ {threads}                             \
+    2> {log.stderr}                                        \
+    | samtools sort -                                      \
+               -l 0                                        \
+               -m 4G                                       \
+               -n                                          \
+               -@ {threads}                                \
+    | samtools fastq -1 {output.R1}                        \
+                     -2 {output.R2}                        \
+                     -                                     \
+    2>> {log.stderr}
+    """
+
+rule assemble_organelle_genome_SPAdes:
+  input:
+    R1="data/illumina_filtered/{selection}/{illumina_host}_R1.fastq.gz",
+    R2="data/illumina_filtered/{selection}/{illumina_host}_R2.fastq.gz"
+  output:
+    scaffolds="data/illumina_assembly/{selection}/{illumina_host}/scaffolds.fasta",
+    graph="data/illumina_assembly/{selection}/{illumina_host}/assembly_graph_with_scaffolds.gfa"
+  params:
+    pre=lambda w: expand("data/illumina_assembly/{selection}/{illumina_host}/",
+                         selection=w.selection,
+                         illumina_host=w.illumina_host),
+    kmers="-k 21,31,55,77,101",
+    opts="--careful"
+  threads: 12
+  conda:
+    "envs/spades.yaml"
+  log:
+    stderr="logs/illumina_genomes/SPAdes_{selection}/{illumina_host}.stderr",
+    stdout="logs/illumina_genomes/SPAdes_{selection}/{illumina_host}.stdout"
+  shell:
+    """
+    spades.py -1 {input.R1}         \
+              -2 {input.R2}         \
+              -t {threads}          \
+              -o {params.pre}       \
+              {params.kmers}        \
+              {params.opts}         \
+    > {log.stdout} 2> {log.stderr}
+    """
+
+rule assemble_guided_chloroplast_genome_SPAdes:
+  input:
+    R1="data/illumina_filtered/chloroplast/{illumina_host}_R1.fastq.gz",
+    R2="data/illumina_filtered/chloroplast/{illumina_host}_R2.fastq.gz",
+    chloroplast="references/Azfil_cp1.4.fasta"
+  output:
+    scaffolds="data/illumina_assembly/chloroplast_guided/{illumina_host}/scaffolds.fasta",
+    graph=    "data/illumina_assembly/chloroplast_guided/{illumina_host}/assembly_graph_with_scaffolds.gfa"
+  params:
+    pre=lambda w: expand("data/illumina_assembly/chloroplast_guided//{illumina_host}/",
+                         illumina_host=w.illumina_host),
+    kmers="-k 21,31,55,77,101",
+    opts="--careful"
+  threads: 12
+  conda:
+    "envs/spades.yaml"
+  log:
+    stderr="logs/illumina_genomes/SPAdes_chloroplast/{illumina_host}.stderr",
+    stdout="logs/illumina_genomes/SPAdes_chloroplast/{illumina_host}.stdout"
+  shell:
+    """
+    spades.py -1 {input.R1}         \
+              -2 {input.R2}         \
+              -t {threads}          \
+              -o {params.pre}       \
+              {params.kmers}        \
+              {params.opts}         \
+              --trusted-contigs {input.chloroplast} \
+    > {log.stdout} 2> {log.stderr}
+    """
+
+    rule assemble_guided_mitochondrium_genome_SPAdes:
+      input:
+        R1="data/illumina_filtered/mitochondrium/{illumina_host}_R1.fastq.gz",
+        R2="data/illumina_filtered/mitochondrium/{illumina_host}_R2.fastq.gz",
+        mito="references/azfi_mito_laura-v1.fasta"
+      output:
+        scaffolds="data/illumina_assembly/mitochondrium_guided/{illumina_host}/scaffolds.fasta",
+        graph=    "data/illumina_assembly/mitochondrium_guided/{illumina_host}/assembly_graph_with_scaffolds.gfa"
+      params:
+        pre=lambda w: expand("data/illumina_assembly/mitochondrium_guided//{illumina_host}/",
+                             illumina_host=w.illumina_host),
+        kmers="-k 21,31,55,77,101",
+        opts="--careful"
+      threads: 12
+      conda:
+        "envs/spades.yaml"
+      log:
+        stderr="logs/illumina_genomes/SPAdes_mitochondrium/{illumina_host}.stderr",
+        stdout="logs/illumina_genomes/SPAdes_mitochondrium/{illumina_host}.stdout"
+      shell:
+        """
+        spades.py -1 {input.R1}         \
+                  -2 {input.R2}         \
+                  -t {threads}          \
+                  -o {params.pre}       \
+                  {params.kmers}        \
+                  {params.opts}         \
+                  --trusted-contigs {input.mito} \
+        > {log.stdout} 2> {log.stderr}
+        """
+
+    rule scaffold_chloroplast_genome_RAGTAG:
+      input:
+        scaffolds="data/illumina_assembly/chloroplast/{illumina_host}/scaffolds.fasta",
+        chloroplast="references/Azfil_cp1.4.fasta"
+      params:
+        pre=lambda w: expand("data/illumina_assembly/chloroplast/{illumina_host}_scaffolded",illumina_host=w.illumina_host)
+      output:
+        "data/illumina_assembly/chloroplast/{illumina_host}_scaffolded/ragtag.scaffold.fasta"
+      log:
+        stderr="logs/illumina_genomes/SPAdes_chloroplast/{illumina_host}.stderr",
+        stdout="logs/illumina_genomes/SPAdes_chloroplast/{illumina_host}.stdout"
+      threads: 12
+      conda:
+        "envs/ragtag.yaml"
+      shell:
+        """
+        ragtag.py scaffold {input.chloroplast} \
+                           {input.scaffolds}   \
+                           -t {threads}        \
+                           -o {params.pre}     \
+        > {log.stdout} 2> {log.stderr}
+        """
+
+    rule scaffold_mitochondrium_genome_RAGTAG:
+      input:
+        scaffolds="data/illumina_assembly/mitochondrium/{illumina_host}/scaffolds.fasta",
+        mitochondrium="references/azfi_mito_laura-v1.fasta"
+      params:
+        pre=lambda w: expand("data/illumina_assembly/mitochondrium/{illumina_host}_scaffolded",illumina_host=w.illumina_host)
+      output:
+        "data/illumina_assembly/mitochondrium/{illumina_host}_scaffolded/ragtag.scaffold.fasta"
+      log:
+        stderr="logs/illumina_genomes/SPAdes_mitochondrium{illumina_host}.stderr",
+        stdout="logs/illumina_genomes/SPAdes_mitochondrium/{illumina_host}.stdout"
+      threads: 12
+      conda:
+        "envs/ragtag.yaml"
+      shell:
+        """
+        ragtag.py scaffold {input.mitochondrium} \
+                           {input.scaffolds}   \
+                           -t {threads}        \
+                           -o {params.pre}     \
+        > {log.stdout} 2> {log.stderr}
+        """
+
+    rule snapshot_assembly_graph_Bandage:
+      input:
+        "data/illumina_assembly/{selection}_guided/{illumina_host}/assembly_graph_with_scaffolds.gfa"
+      output:
+        svg="data/illumina_assembly/{selection}_guided_{illumina_host}_assembly_graph_with_scaffolds.svg",
+        txt="data/illumina_assembly/{selection}_guided_{illumina_host}_assembly_graph_with_scaffolds.txt"
+      conda:
+        "envs/bandage.yaml"
+      shell:
+        """
+        Bandage image {input}       \
+                      {output.svg}
+
+        Bandage info  {input}    \
+                      > {output.txt}
+        """
+
+
+    rule all_illumina_assembly_scaffolded:
+      input:
+        expand("data/illumina_assembly/{selection}_guided/{illumina_host}_scaffolded/ragtag.scaffold.fasta",
+               selection=['chloroplast','mitochondrium'],
+               illumina_host=ILLUMINA_HOSTS)
+
+    rule all_guided_illumina_assembly:
+      input:
+        expand("data/illumina_assembly/{selection}_guided/{illumina_host}/scaffolds.fasta",
+               selection=['chloroplast','mitochondrium'],
+               illumina_host=ILLUMINA_HOSTS),
+        expand("data/illumina_assembly/{selection}_guided_{illumina_host}_assembly_graph_with_scaffolds.svg",
+               selection=['chloroplast','mitochondrium'],
+               illumina_host=ILLUMINA_HOSTS),
+        expand("data/illumina_assembly/{selection}_guided_{illumina_host}_assembly_graph_with_scaffolds.txt",
+               selection=['chloroplast','mitochondrium'],
+               illumina_host=ILLUMINA_HOSTS)
