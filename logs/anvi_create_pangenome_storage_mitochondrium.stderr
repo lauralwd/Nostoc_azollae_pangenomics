@@ -1,0 +1,37 @@
+                                                                                                                                                                        
+WARNING
+===============================================
+Anvi'o has good news and bad news for you (very balanced, as usual). The good
+news is that there are some functional annotation sources that are common to all
+of your genomes, and they will be used whenever it will be appropriate. Here
+they are: 'KOfam, COG20_FUNCTION, COG20_CATEGORY'. The bad news is you had more
+function annotation sources, but they were not common to all genomes. Here they
+are so you can say your goodbyes to them (because they will not be used):
+'KEGG_Class, COG20_PATHWAY, KEGG_Module'
+
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+JUST FYI
+===============================================
+Some of your genomes had gene calls identified by gene callers other than the
+anvi'o default, 'prodigal', and will not be processed. Use the `--debug` flag if
+this sounds important and you would like to see more of this message.
+
+                                                                                                                                                                        
+* Azfi_mito_v1 is stored with 113 genes (2 of which were partial)
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+
+The new genomes storage ......................: data/anvio_genomes_storage/mitochondrium_GENOMES.db (v7, signature: hash6a7c1f72)
+Number of genomes ............................: 11 (internal: 0, external: 11)
+Number of gene calls .........................: 1,222
+Number of partial gene calls .................: 146
