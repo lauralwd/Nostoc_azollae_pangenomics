@@ -1,0 +1,47 @@
+Input FASTA file .............................: /stor/azolla_metagenome/nostoc_pangenome/data/illumina_assembly/mitochondrium_novoplasty/mitochondrium_Azfil_lab_assembly.fasta
+
+Anvi'o made things up for you
+===============================================
+You are generating a new anvi'o contigs database, but you are not specifying a
+project name for it. FINE. Anvi'o, in desperation, will use the input file name
+to set the project name for this contigs database (i.e.,
+'mitochondrium_Azfil_lab_assembly'). If you are not happy with that, feel free
+to kill and restart this process. If you are not happy with this name, but you
+don't like killing things either, maybe next time you should either name your
+FASTA files better, or use the `--project-name` parameter to set your desired
+name.
+
+Name .........................................: mitochondrium_Azfil_lab_assembly
+Description ..................................: No description is given
+
+Finding ORFs in contigs
+===============================================
+Genes ........................................: /tmp/tmppdgyof9t/contigs.genes
+Amino acid sequences .........................: /tmp/tmppdgyof9t/contigs.amino_acid_sequences
+Log file .....................................: /tmp/tmppdgyof9t/00_log.txt
+
+CITATION
+===============================================
+Anvi'o will use 'prodigal' by Hyatt et al (doi:10.1186/1471-2105-11-119) to
+identify open reading frames in your data. When you publish your findings,
+please do not forget to properly credit their work.
+
+
+CONTIGS DB CREATE REPORT
+===============================================
+Split Length .................................: 20,000
+K-mer size ...................................: 4
+Skip gene calling? ...........................: False
+External gene calls provided? ................: False
+Ignoring internal stop codons? ...............: False
+Splitting pays attention to gene calls? ......: True
+Contigs database .............................: A new database, data/illumina_contig_dbs/Azfil_lab_mitochondrium_contigs.db, has been created.
+Number of contigs ............................: 27
+Number of splits .............................: 27
+Total number of nucleotides ..................: 182,331
+Gene calling step skipped ....................: False
+Splits broke genes (non-mindful mode) ........: False
+Desired split length (what the user wanted) ..: 20,000
+Average split length (what anvi'o gave back) .: (Anvi'o did not create any splits)
+
+✓ anvi-gen-contigs-database took 0:00:19.072684
