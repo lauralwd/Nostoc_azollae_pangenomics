@@ -19,8 +19,16 @@ coverage\
 # Collect nanopore data
 for s in ${NANOPORE[@]}
 do  for g in ${SELECTION[@]}
-    do  strain="$s"
-        seqyield=$(grep 'Total read length' data/nanopore_assembly/$g/$s/flye.log | rev | cut -d ' ' -f 1 | rev )
+    do  flye="data/nanopore_assembly/$g/$s/flye.log"
+        band="data/nanopore_assembly/$g/$s.txt"
+        strain="$s"
+        genome="$g"
+        seqyield=$(grep 'Total read length' $flye | rev | cut -d ' ' -f 1 | rev )
+        readN50bp=$(grep 'Reads N50' $flye | rev | cut -d ' ' -f 3 | rev )
+        ass_contigs=$(grep 'Node count' $band | rev | cut -d ' ' -f 1 | rev )
+        ass_length=$(grep 'Total length (bp):' $band | rev | cut -d ' ' -f 1 | rev )
+        ass_N50=$(grep 'N50 (bp):' $band | rev | cut -d ' ' -f 1 | rev )
+        ass_cov=$(grep 'Median depth:' $band | rev | cut -d ' ' -f 1 | rev )
 
         echo -e "\
         $strain\t\
