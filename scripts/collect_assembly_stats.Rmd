@@ -1,0 +1,169 @@
+---
+title: "_Nostoc azollae_ and _Azolla_ plastid assembly stats."
+output: html_notebook
+author: "Laura Dijkhuizen"
+---
+
+Here I collect and plot some stats on various assemblies in a colourful figure which would otherwise have been a boring table.
+
+First, get data and libraries set:
+```{r,root.dir="/stor/azolla_metagenome/nostoc_pangenome/"}
+library(data.table)
+library(ggplot2)
+library(ggtext)
+stats <- fread(file="../analyses/assemblystats.tab"
+               ,header = T
+               ,stringsAsFactors = T)
+stats
+```
+
+Add species names and correct sample names
+```{r}
+levels(stats$strain)
+species <- c(
+  '_Azolla filiculoides_',
+  '_Azolla rubra_',
+  '_Azolla caroliniana_',
+  '_Azolla sp_.',
+  '_Azolla mexicana_',
+  '_Azolla microphylla_',
+  '_Azolla nilotica_',
+  '_Azolla pinnata_'
+)
+
+samples <- c(
+  '_Azolla filiculoides_ lab',
+  '_Azolla filiculoides_ wild',
+  '_Azolla rubra_',
+  '_Azolla caroliniana_ 1',
+  '_Azolla caroliniana_ 2',
+  '_Azolla sp_. Bordeaux',
+  '_Azolla mexicana_',
+  '_Azolla microphylla_',
+  '_Azolla nilotica_',
+  '_Azolla pinnata_'
+)
+
+stats$sample  <- factor(levels = samples)
+stats$species <- factor(levels = species)
+
+stats[strain == 'Azcar1', sample  := '_Azolla caroliniana_  1' ]
+stats[strain == 'Azcar1', species := '_Azolla caroliniana_' ]
+stats[strain == 'Azcar2', sample  := '_Azolla caroliniana_  2' ]
+stats[strain == 'Azcar2', species := '_Azolla caroliniana_' ]
+stats[strain == 'Azfil_lab', sample  := '_Azolla filiculoides_  lab' ]
+stats[strain == 'Azfil_lab', species := '_Azolla filiculoides_' ]
+stats[strain == 'Azfil_wild', sample  := '_Azolla filiculoides_  wild' ]
+stats[strain == 'Azfil_wild', species := '_Azolla filiculoides_' ]
+stats[strain == 'Azmex', sample  := '_Azolla mexicana_' ]
+stats[strain == 'Azmex', species := '_Azolla mexicana_' ]
+stats[strain == 'Azmexicana', sample  := '_Azolla mexicana_' ]
+stats[strain == 'Azmexicana', species := '_Azolla mexicana_' ]
+stats[strain == 'Azmic', sample  := '_Azolla microphylla_' ]
+stats[strain == 'Azmic', species := '_Azolla microphylla_' ]
+stats[strain == 'Azmicrophylla', sample  := '_Azolla microphylla_' ]
+stats[strain == 'Azmicrophylla', species := '_Azolla microphylla_' ]
+stats[strain == 'Aznil', sample  := '_Azolla nilotica_' ]
+stats[strain == 'Aznil', species := '_Azolla nilotica_' ]
+stats[strain == 'Aznilotica', sample  := '_Azolla nilotica_' ]
+stats[strain == 'Aznilotica', species := '_Azolla nilotica_' ]
+stats[strain == 'Azpinnata', sample  := '_Azolla pinnata_' ]
+stats[strain == 'Azpinnata', species := '_Azolla pinnata_' ]
+stats[strain == 'Azrub', sample  := '_Azolla rubra_' ]
+stats[strain == 'Azrub', species := '_Azolla rubra_' ]
+stats[strain == 'Azrubra', sample  := '_Azolla rubra_' ]
+stats[strain == 'Azrubra', species := '_Azolla rubra_' ]
+stats[strain == 'Azsp_bordeaux', sample  := '_Azolla sp_. Bordeaux ' ]
+stats[strain == 'Azsp_bordeaux', species := '_Azolla sp_.' ]
+stats
+```
+
+do some more cleaning
+```{r}
+levels(stats$genome) <- c('_Nostoc azollae_','chloroplast','mitochondrium')
+stats$strain <- NULL
+stats$seqyield_bp <- as.numeric(stats$seqyield_bp)
+
+names(stats)[names(stats) == 'seqtype'] <- 'assembly type'
+names(stats)[names(stats) == 'seqyield_bp'] <- 'Sequencing  \ninput (bp)'
+names(stats)[names(stats) == 'readN50bp']   <- 'Read N50 (bp)'
+names(stats)[names(stats) == 'assembled_contigs'] <- 'Assembled  \ncontig count'
+names(stats)[names(stats) == 'assembled_length_bp'] <- 'Assembled  \nlength (bp)'
+names(stats)[names(stats) == 'assembled_N50'] <- 'Assembled N50  \n(bp)'
+names(stats)[names(stats) == 'coverage'] <- 'Coverage'
+
+levels(stats$`assembly type`) <- c('Illumina SPAdes','Illumina novoplasty','nanopore flye')
+```
+
+Now melt the stuff I want into a var and val column so I can spread them over ggplot2 facets
+```{r}
+meltstats <- data.table::melt(data = stats,
+                              id.vars=c('species','sample','genome','assembly type'),
+                              na.rm = T
+                             )
+meltstats
+```
+This error is safe to ignore, all val variables are doubles (or integers).
+
+```{r}
+meltstats$species <- NULL
+attach(meltstats)
+p <- ggplot(data=meltstats)
+p <- p + geom_bar(mapping = aes(x=value+1,
+                                y=sample,
+                                fill=`assembly type`),
+                  stat = 'identity',
+                  position='dodge')
+p <- p + geom_text(data=meltstats,
+                   mapping = aes(label=round(value),
+                                 x=1,
+                                 y=sample,
+                                 ),
+                   nudge_x = 1,
+                   col='white')
+
+p <- p + facet_grid(genome ~ variable ,scales = 'free',space = 'free_y')#,switch = "y")
+
+p <- p + scale_x_continuous(trans = 'log10',
+                            breaks = c( 2 ,11  ,101  ,1001  ,10001,100001,1000001,100000001),
+                            labels = c('1','10','100','1000','10k','100k','1M'   ,'1G'))
+p <- p + scale_fill_brewer(palette = 2,type = "qual")
+
+
+p <- p + theme_classic()
+p <- p + theme(text = element_text(size=12),
+               axis.text.x = element_markdown(angle=-45,hjust = 0,size=12),
+               axis.text.y = element_markdown(angle=00,size=12),
+               axis.title.x= element_blank(),
+               legend.position = "bottom",
+               strip.switch.pad.grid = unit(x = 0,units = 'cm'),
+               strip.text.x= element_markdown(angle=0,size = 12,),
+               strip.text.y= element_markdown(angle=-90,size = 12),
+               strip.background = element_blank()
+)
+
+
+
+stats_fig <- p
+
+ggsave(filename = "/stor/azolla_metagenome/nostoc_pangenome/analyses/assembly_stats.svg",
+       plot = stats_fig,
+       device = 'svg', 
+       #,device = 'png'
+       width = unit(x = 22,units = 'cm'),
+       height = unit(x = 14,units = 'cm')
+       ,scale = .55 # somehow I don't get the right dimensions out and this is an approximate fix...
+       # for landscape format:
+       #,width = unit(x = 27,units = 'cm')
+       #,height = unit(x = 18,units = 'cm')
+       ,dpi = 1500
+             )
+
+stats_fig
+```
+
+This is the bash script that collects the input data:
+```{bash}
+cat ./collect_assembly_stats.bash
+```
+
