@@ -16,13 +16,22 @@ assembled_N50\t\
 coverage\
 "
 
+# Collect nanopore data
 for s in ${NANOPORE[@]}
 do  for g in ${SELECTION[@]}
     do  strain="$s"
         seqyield=$(grep 'Total read length' data/nanopore_assembly/$g/$s/flye.log | rev | cut -d ' ' -f 1 | rev )
 
-        echo -e "$strain\t\
-        $seqyield"
+        echo -e "\
+        $strain\t\
+        $genome\t\
+        $seqyield\t\
+        $readN50bp\t\
+        $ass_contigs\t\
+        $ass_length\t\
+        $ass_N50\t\
+        $ass_cov\
+        "
     done
 done | tr -d ' '
 
