@@ -43,5 +43,65 @@ do  for g in ${SELECTION[@]}
     done
 done | tr -d ' '
 
+# Now for illumina samples:
+
+SELECTION=( mitochondrium chloroplast )
+
+for s in ${ILLUMINA[@]}
+do  for g in ${SELECTION[@]}
+    do  novo=data/illumina_assembly/"$g"_novoplasty/"$g"_"$s"/log_"$g"_"$s".txt
+        fsta=data/illumina_assembly/"$g"_novoplasty/"$g"_"$s"_assembly.fasta
+        strain="$s"
+        genome="$g"
+        seqyield=$(grep 'Assembled reads' $novo | rev | cut -d ' ' -f 1 | rev )
+        readN50bp='100'
+        ass_contigs=$(grep 'Total contigs' $novo | rev | cut -d ' ' -f 1 | rev )
+        ass_length=$(Bandage info $fsta | grep 'Total length (bp):' | rev | cut -d ' ' -f 1 | rev )
+        ass_N50=$(Bandage info $fsta | grep 'N50 (bp):' | rev | cut -d ' ' -f 1 | rev )
+        ass_cov=$(grep 'Average organelle coverage' $novo | rev | cut -d ' ' -f 1 | rev )
+
+        echo -e "\
+        $strain\t\
+        $genome\t\
+        illumina\t\
+        $seqyield\t\
+        $readN50bp\t\
+        $ass_contigs\t\
+        $ass_length\t\
+        $ass_N50\t\
+        $ass_cov\
+        "
+    done
+done | tr -d ' '
+
+# MAG stats
+
+MAGS=( Azfil_lab Azfil_wild Azmex Azmic Aznil Azrub Azcar1 Azcar2 )
+
+g=Nazollae
+for s in ${MAGS[@]}
+do  fsta=data/MAG_anvi_dbs/"$s"_contigs.fasta
+    strain="$s"
+    genome="$g"
+    seqyield='NA'
+    readN50bp='NA'
+    ass_contigs=$(Bandage info $fsta | grep 'Node count' | rev | cut -d ' ' -f 1 | rev )
+    ass_length=$(Bandage info $fsta | grep 'Total length (bp):' | rev | cut -d ' ' -f 1 | rev )
+    ass_N50=$(Bandage info $fsta | grep 'N50 (bp):' | rev | cut -d ' ' -f 1 | rev )
+    ass_cov='NA'
+
+    echo -e "\
+    $strain\t\
+    $genome\t\
+    MAG\t\
+    $seqyield\t\
+    $readN50bp\t\
+    $ass_contigs\t\
+    $ass_length\t\
+    $ass_N50\t\
+    $ass_cov\
+    "
+done | tr -d ' '
+
 
 exit 0
