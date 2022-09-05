@@ -3,6 +3,8 @@ SELECTION=['Nazollae','mitochondrium','chloroplast']
 ILLUMINA_HOSTS=['Azcar1','Azcar2','Azmexicana','Azmicrophylla','Aznilotica','Azrubra','Azfil_lab']
 MAG_HOSTS=['Azfil_lab','Azfil_wild','Azmex','Azmic','Aznil','Azrub','Azcar1','Azcar2']
 
+#include: "scripts/organelle_filter_assemble_rules.snakemake"
+
 ############################### stage 1: collect MAGs and genomes of Nostoc azollae from anvio ###############################
 rule gather_anvi_MAGs:
   output:
