@@ -740,3 +740,20 @@ rule collect_pangenome_enrichment_all_annotations:
     expand("data/anvio_pangenomes/functional_enrichment/subgroup/{annotation}_{{selection}}_mcl{{mcl}}.tab",annotation=ANNOTATION)
   output:
     touch("data/anvio_pangenomes/functional_enrichment/subgroup_ALL_{selection}_mcl{mcl}.touch")
+
+
+######### Collect stuff for figures
+
+rule assembly_stats_table:
+  input:
+    nanoporetxt=expand("data/nanopore_assembly/{selection}/{nanopore_host}.txt",selection=SELECTION,nanopore_host=NANOPORE),
+    magfastas = expand("data/MAG_anvi_dbs/{mag_host}_contigs.fasta",mag_host=MAG_HOSTS),
+    novoplasty= expand("data/illumina_assembly/{selection}_novoplasty/{selection}_{illumina_host}_assembly.fasta",
+                       selection=['chloroplast','mitochondrium'],
+                       illumina_host=ILLUMINA_HOSTS)
+  output:
+    "analyses/assemblystats.tab"
+  conda:
+    "envs/bandage.yaml"
+  shell:
+    "bash ./scripts/collect_assembly_stats.bash > {output}"
