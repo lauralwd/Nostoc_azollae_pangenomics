@@ -5,13 +5,16 @@ NANOPORE=( Azfil_lab Azpinnata Azsp_bordeaux )
 SELECTION=( Nazollae mitochondrium chloroplast )
 
 # header for the table:
-echo -e "strain\t\
-seqyield\t\
+echo -e "\
+strain\t\
 genome\t\
+seqyield_bp\t\
+readN50bp\t\
 assembled_contigs\t\
-assembled_length\t\
+assembled_length_bp\t\
 assembled_N50\t\
-coverage"
+coverage\
+"
 
 for s in ${NANOPORE[@]}
 do  for g in ${SELECTION[@]}
