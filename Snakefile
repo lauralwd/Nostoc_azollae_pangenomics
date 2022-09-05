@@ -405,7 +405,7 @@ rule assemble_mitochondrium_NOVOPlasty:
 
 rule choose_novoplasty_assembly:
   input:
-    "data/illumina_assembly/{selection}_novoplasty/{selection}_{illumina_host}/"
+    "data/illumina_assembly/{selection}_novoplasty/{selection}_{illumina_host}"
   output:
     "data/illumina_assembly/{selection}_novoplasty/{selection}_{illumina_host}_assembly.fasta"
   shell:
