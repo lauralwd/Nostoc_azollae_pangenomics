@@ -2,6 +2,7 @@
 
 # collect nanopore assembly stats
 NANOPORE=( Azfil_lab Azpinnata Azsp_bordeaux )
+ILLUMINA=( Azcar1 Azcar2 Azmexicana Azmicrophylla Aznilotica Azrubra Azfil_lab )
 SELECTION=( Nazollae mitochondrium chloroplast )
 
 # header for the table:
