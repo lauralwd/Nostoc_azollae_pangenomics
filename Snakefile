@@ -1,6 +1,6 @@
 NANOPORE=['Azfil_lab','Azpinnata','Azsp_bordeaux']
 SELECTION=['Nazollae','mitochondrium','chloroplast']
-ILLUMINA_HOSTS=['Azcar1','Azcar2','Azmexicana','Azmicrophylla','Aznilotica','Azrubra','Azfil_lab']
+ILLUMINA_HOSTS=['Azcar1','Azcar2','Azmexicana','Azmicrophylla','Aznilotica','Azrubra'] #,'Azfil_lab']
 MAG_HOSTS=['Azfil_lab','Azfil_wild','Azmex','Azmic','Aznil','Azrub','Azcar1','Azcar2']
 
 ############################### stage 1: collect MAGs and genomes of Nostoc azollae from anvio ###############################
@@ -368,8 +368,10 @@ rule assemble_chloroplast_NOVOPlasty:
 
 rule assemble_mitochondrium_NOVOPlasty:
   input:
-    R1="data/illumina_reads/{illumina_host}_R1.fastq.gz",
-    R2="data/illumina_reads/{illumina_host}_R2.fastq.gz",
+#   R1="data/illumina_reads/{illumina_host}_R1.fastq.gz",
+#   R2="data/illumina_reads/{illumina_host}_R2.fastq.gz",
+    R1="data/illumina_filtered/mitochondrium/{illumina_host}_R1.fastq.gz",
+    R2="data/illumina_filtered/mitochondrium/{illumina_host}_R2.fastq.gz",
     mitochondrium="references/azfi_mito_laura-v1.fasta",
     config_base="scripts/novoplasty_mitochondrium_config_base"
   output:
