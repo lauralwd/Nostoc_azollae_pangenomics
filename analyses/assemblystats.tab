@@ -1,0 +1,32 @@
+strain	genome	seqtype	seqyield_bp	readN50bp	assembled_contigs	assembled_length_bp	assembled_N50	coverage
+Azfil_lab	Nazollae	nanopore	259214672	12631	3	5509116	5355831	42
+Azfil_lab	mitochondrium	nanopore	328258	7219	1	42679	42679	3
+Azfil_lab	chloroplast	nanopore	23504766	12995	3	126565	83401	134
+Azpinnata	Nazollae	nanopore	2711619402	9886	40	5257882	4986311	423
+Azpinnata	mitochondrium	nanopore	2511200	7295	8	137710	38538	10
+Azpinnata	chloroplast	nanopore	240562042	11520	9	125787	30449	1280
+Azsp_bordeaux	Nazollae	nanopore	64651717	2503	218	3027217	22625	7
+Azsp_bordeaux	mitochondrium	nanopore	806751	4079	2	58176	42026	9
+Azsp_bordeaux	chloroplast	nanopore	27182801	2961	1	147257	147257	117
+Azcar1	mitochondrium	illumina	90192	100	41	164245	5935	182
+Azcar1	chloroplast	illumina	1820266	100	3	149355	138329	1303
+Azcar2	mitochondrium	illumina	57562	100	33	159772	5732	90
+Azcar2	chloroplast	illumina	1231398	100	1	147592	147592	880
+Azmexicana	mitochondrium	illumina	101842	100	42	191634	9215	172
+Azmexicana	chloroplast	illumina	1566034	100	3	149216	89778	1127
+Azmicrophylla	mitochondrium	illumina	179410	100	26	168366	14288	271
+Azmicrophylla	chloroplast	illumina	1003014	100	2	148436	131878	721
+Aznilotica	mitochondrium	illumina	13182	100	2	4973	3913	
+Aznilotica	chloroplast	illumina	902084	100	5	191786	132832	672
+Azrubra	mitochondrium	illumina	114274	100	33	159014	11006	
+Azrubra	chloroplast	illumina	1030638	100	3	147851	116463	748
+Azfil_lab	mitochondrium	illumina	118710	100	27	182331	12950	132
+Azfil_lab	chloroplast	illumina	1158308	100	3	148469	132587	
+Azfil_lab	Nazollae	MAG	NA	100	4836	88021465	72504	NA
+Azfil_wild	Nazollae	MAG	NA	100	6290	63972791	19602	NA
+Azmex	Nazollae	MAG	NA	100	5532	89736951	62257	NA
+Azmic	Nazollae	MAG	NA	100	5344	83651508	45488	NA
+Aznil	Nazollae	MAG	NA	100	5654	82911044	39215	NA
+Azrub	Nazollae	MAG	NA	100	1672	45977049	227824	NA
+Azcar1	Nazollae	MAG	NA	100	4014	72358097	71318	NA
+Azcar2	Nazollae	MAG	NA	100	3010	64781373	74328	NA
