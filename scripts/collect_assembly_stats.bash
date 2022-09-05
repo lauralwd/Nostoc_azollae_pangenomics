@@ -8,6 +8,7 @@ SELECTION=( Nazollae mitochondrium chloroplast )
 echo -e "\
 strain\t\
 genome\t\
+seqtype\t\
 seqyield_bp\t\
 readN50bp\t\
 assembled_contigs\t\
@@ -33,6 +34,7 @@ do  for g in ${SELECTION[@]}
         echo -e "\
         $strain\t\
         $genome\t\
+        nanopore\t\
         $seqyield\t\
         $readN50bp\t\
         $ass_contigs\t\
