@@ -676,6 +676,8 @@ rule extract_phylogenomic_fasta:
                                          -C default                  \
                                          -b phylogenomic_core        \
                                          --concatenate-gene-clusters \
+                                         --report-DNA-sequences --just-do-it  \
+                                         --align-with muscle         \
                                          --partition-file {output.partition} \
                                          -o {output.fasta}           \
     > {log.stdout} 2> {log.stderr}
