@@ -753,9 +753,26 @@ checkpoint find_reference_genomes:
     cp --reflink=always -r references/nostocaceae/*/ncbi_dataset/data/GCA_* references/nostocaceae/contig_dbs/
     """
 
+rule nostocaceae_reformat_fasta:
+  input:
+    "references/nostocaceae/contig_dbs/{genbank}"
+  output:
+    "references/nostocaceae/contig_dbs/{genbank}/{genbank}.fasta"
+  log:
+    stdout="logs/anvi_create_contigdb_nostocaceae/reformat_fasta_{genbank}.stdout",
+    stderr="logs/anvi_create_contigdb_nostocaceae/reformat_fasta_{genbank}.stderr"
+  shell:
+    """
+    anvi-script-reformat-fasta {input}/{wildcards.genbank}_*_genomic.fna \
+                                    --simplify-names     \
+                                    --seq-type NT        \
+                                    -o {output}          \
+    > {log.stdout} 2> {log.stderr}
+    """
+
 rule nostocaceae_to_contigdb:
   input:
-    dir="references/nostocaceae/contig_dbs/{genbank}"
+    fasta="references/nostocaceae/contig_dbs/{genbank}/{genbank}.fasta"
   output:
     "references/nostocaceae/contig_dbs/{genbank}/{genbank}_contigs.db"
   log:
@@ -763,9 +780,8 @@ rule nostocaceae_to_contigdb:
     stderr="logs/anvi_create_contigdb_nostocaceae/{genbank}.stderr"
   shell:
     """
-    fasta={input.dir}/{wildcards.genbank}_*_genomic.fna
     anvi-gen-contigs-database           \
-      -f $fasta                         \
+      -f {input.fasta}                         \
       -o {output}                       \
       > {log.stdout} 2> {log.stderr}
     """
