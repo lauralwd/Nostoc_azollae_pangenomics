@@ -745,36 +745,47 @@ rule collect_pangenome_enrichment_all_annotations:
 
 
 ######### Nostocaceae pangenomics #########
-rule find reference genomes:
+checkpoint find_reference_genomes:
   output:
-    dynamic("references/nostocaceae/GCA_{genbank}/{fasta}.fna")
+    directory("references/nostocaceae/contig_dbs/")
   shell:
     """
-    cp --reflink=always -r references/nostocaceae/*/ncbi_dataset/data/GCA_* references/nostocaceae/
+    cp --reflink=always -r references/nostocaceae/*/ncbi_dataset/data/GCA_* references/nostocaceae/contig_dbs/
     """
 
 rule nostocaceae_to_contigdb:
   input:
-    fasta=dynamic("references/nostocaceae/GCA_{genbank}/GCA_{genbank}_{asm}_genomic.fna")
+    dir="references/nostocaceae/contig_dbs/{genbank}"
   output:
-    "references/nostocaceae/{genbank}/{genbank}_contigs.db"
+    "references/nostocaceae/contig_dbs/{genbank}/{genbank}_contigs.db"
   log:
     stdout="logs/anvi_create_contigdb_nostocaceae/{genbank}.stdout",
     stderr="logs/anvi_create_contigdb_nostocaceae/{genbank}.stderr"
   shell:
     """
+    fasta={input.dir}/{wildcards.genbank}_*_genomic.fna
     anvi-gen-contigs-database           \
-      -f {input.fasta}                  \
-      --external-gene-calls             \
-           references/nostocaceae/GCA_{wildcards.genbank}/genomic.gff \
+      -f $fasta                         \
       -o {output}                       \
       > {log.stdout} 2> {log.stderr}
     """
 
+def aggregate_input(wildcards):
+    checkpoint_output = checkpoints.find_reference_genomes.get(**wildcards).output[0]
+    return expand("references/nostocaceae/contig_dbs/{genbank}/{genbank}_contigs.db.{ext}",
+                  genbank=glob_wildcards(os.path.join(checkpoint_output ,
+                                                      "{genbank}/genomic.gff")).genbank,
+                  ext=['hmms','kegg','cogs'])
+
 rule all_nostocaceae_contig_dbs:
   input:
-    dynamic("references/nostocaceae/{genbank}/{genbank}_contigs.db"),
-    dynamic( expand("references/nostocaceae/{{genbank}}/{{genbank}}_contigs.db.{ext}",ext=['hmms','kegg','cogs']) )
+    aggregate_input
+    #dynamic("references/nostocaceae/{genbank}/{genbank}_contigs.db"),
+    #dynamic( expand("references/nostocaceae/{{genbank}}/{{genbank}}_contigs.db.{ext}",ext=['hmms','kegg','cogs']) )
+    #expand("references/nostocaceae/{genbank}/{genbank}_contigs.db",genbank=checkpoints.find_reference_genomes.get(**wildcards).output)#,
+    #expand("references/nostocaceae/{genbank}/{genbank}_contigs.db.{ext}",ext=['hmms','kegg','cogs'],genbank=checkpoints.find_reference_genomes.get(**wildcards).output)
+
+
 
 ######### Collect stuff for figures
 
