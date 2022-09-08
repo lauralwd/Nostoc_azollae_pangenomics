@@ -744,6 +744,38 @@ rule collect_pangenome_enrichment_all_annotations:
     touch("data/anvio_pangenomes/functional_enrichment/subgroup_ALL_{selection}_mcl{mcl}.touch")
 
 
+######### Nostocaceae pangenomics #########
+rule find reference genomes:
+  output:
+    dynamic("references/nostocaceae/GCA_{genbank}/{fasta}.fna")
+  shell:
+    """
+    cp --reflink=always -r references/nostocaceae/*/ncbi_dataset/data/GCA_* references/nostocaceae/
+    """
+
+rule nostocaceae_to_contigdb:
+  input:
+    fasta=dynamic("references/nostocaceae/GCA_{genbank}/GCA_{genbank}_{asm}_genomic.fna")
+  output:
+    "references/nostocaceae/{genbank}/{genbank}_contigs.db"
+  log:
+    stdout="logs/anvi_create_contigdb_nostocaceae/{genbank}.stdout",
+    stderr="logs/anvi_create_contigdb_nostocaceae/{genbank}.stderr"
+  shell:
+    """
+    anvi-gen-contigs-database           \
+      -f {input.fasta}                  \
+      --external-gene-calls             \
+           references/nostocaceae/GCA_{wildcards.genbank}/genomic.gff \
+      -o {output}                       \
+      > {log.stdout} 2> {log.stderr}
+    """
+
+rule all_nostocaceae_contig_dbs:
+  input:
+    dynamic("references/nostocaceae/{genbank}/{genbank}_contigs.db"),
+    dynamic( expand("references/nostocaceae/{{genbank}}/{{genbank}}_contigs.db.{ext}",ext=['hmms','kegg','cogs']) )
+
 ######### Collect stuff for figures
 
 rule assembly_stats_table:
