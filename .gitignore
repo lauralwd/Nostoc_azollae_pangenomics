@@ -6,3 +6,4 @@ data
 *.bam
 logs/IQtree
 references/*.fasta.*
+references/nostocaceae/*
