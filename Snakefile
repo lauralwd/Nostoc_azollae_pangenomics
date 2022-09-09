@@ -870,7 +870,7 @@ rule create_pangenome_analysis_diamond:
     > {log.stdout} 2> {log.stderr}
     """
 
-rule create_pangenome_ANI_Nazollae:
+rule create_pangenome_ANI_Nostocaceae:
   input:
     pangenome="data/anvio_pangenomes/{selection}_diamond/{selection}_mcl{mcl}-PAN.db",
     internal="scripts/Nazollae_internal_genomes.anvi-list",
