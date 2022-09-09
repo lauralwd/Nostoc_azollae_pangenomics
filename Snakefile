@@ -818,6 +818,32 @@ rule create_list_pangenome_storage_all_nostocaceae:
     done >> {output}
     """
 
+rule create_pangenome_storage_all_nostocaceae:
+  input:
+    magdbs=expand("data/MAG_anvi_dbs/{mag_host}_contigs.db"      ,mag_host=MAG_HOSTS                           ),
+    magprf=expand("data/MAG_anvi_dbs/{mag_host}_PROFILE.db"      ,mag_host=MAG_HOSTS                           ),
+    magann=expand("data/MAG_anvi_dbs/{mag_host}_contigs.db.{ext}",mag_host=MAG_HOSTS,ext=['hmms','kegg','cogs']),    nandbs=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db",nanopore_host=NANOPORE,selection='Nazollae'),
+    nanann=expand("data/nanopore_contig_dbs/{nanopore_host}_{selection}_contigs.db.{ext}",nanopore_host=NANOPORE,selection='Nazollae', ext=['hmms','kegg','cogs']),
+    refdb =       "data/external_contig_dbs/Nazollae_0708_contigs.db",
+    refann=expand("data/external_contig_dbs/Nazollae_0708_contigs.db.{ext}",ext=['hmms','kegg','cogs']),
+    internal="scripts/Nazollae_internal_genomes.anvi-list",
+    external="scripts/nostocaceae_external_genomes.anvi-list"
+  output:
+    "data/anvio_genomes_storage/Nostocaceae_GENOMES.db"
+  log:
+    stdout="logs/anvi_create_pangenome_storage_all.stdout",
+    stderr="logs/anvi_create_pangenome_storage_all.stderr"
+  shell:
+    """
+    anvi-gen-genomes-storage \
+      -i {input.internal}    \
+      -e {input.external}    \
+      -o {output}            \
+      > {log.stdout} 2> {log.stderr}
+    """
+
+
+
 ######### Collect stuff for figures
 
 rule assembly_stats_table:
