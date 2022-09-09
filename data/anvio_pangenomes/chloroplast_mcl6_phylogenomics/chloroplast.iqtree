@@ -1,0 +1,170 @@
+IQ-TREE 2.0.3 built Dec 20 2020
+
+Partition file name: data/anvio_pangenomes/chloroplast_mcl6_phylogenomic_core.partitions
+Input file name: data/anvio_pangenomes/chloroplast_mcl6_phylogenomic_core.fasta
+Type of analysis: ModelFinder + tree reconstruction + non-parametric bootstrap (100 replicates)
+Random seed number: 663090
+
+REFERENCES
+----------
+
+To cite IQ-TREE please use:
+
+Bui Quang Minh, Heiko A. Schmidt, Olga Chernomor, Dominik Schrempf,
+Michael D. Woodhams, Arndt von Haeseler, and Robert Lanfear (2020)
+IQ-TREE 2: New models and efficient methods for phylogenetic inference
+in the genomic era. Mol. Biol. Evol., in press.
+https://doi.org/10.1093/molbev/msaa015
+
+To cite ModelFinder please use: 
+
+Subha Kalyaanamoorthy, Bui Quang Minh, Thomas KF Wong, Arndt von Haeseler,
+and Lars S Jermiin (2017) ModelFinder: Fast model selection for
+accurate phylogenetic estimates. Nature Methods, 14:587–589.
+https://doi.org/10.1038/nmeth.4285
+
+Since you used partition models please also cite:
+
+Olga Chernomor, Arndt von Haeseler, and Bui Quang Minh (2016)
+Terrace aware data structure for phylogenomic inference from
+supermatrices. Syst. Biol., 65:997-1008.
+https://doi.org/10.1093/sysbio/syw037
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 11 taxa with 4 partitions and 5039 total sites (0% missing data)
+
+  ID  Name                                                                                                                                                                                             Type	Seq	Site	Unique	Infor	Invar	Const
+   1  GC_00000043+GC_00000051+GC_00000056+GC_00000040+GC_00000039+GC_00000065+GC_00000050+GC_00000052                                                                                                  AA	11	1096	104	39	1013	1013
+   2  GC_00000068+GC_00000046+GC_00000062+GC_00000074+GC_00000075+GC_00000080+GC_00000059+GC_00000057+GC_00000070+GC_00000063+GC_00000087+GC_00000088+GC_00000058+GC_00000045+GC_00000071+GC_00000048  AA	11	2920	439	171	2500	2500
+   3  GC_00000090+GC_00000089+GC_00000072+GC_00000079+GC_00000091                                                                                                                                      AA	11	664	246	80	492	492
+   4  GC_00000077+GC_00000054                                                                                                                                                                          AA	11	359	70	22	331	331
+
+Column meanings:
+  Unique: Number of unique site patterns
+  Infor:  Number of parsimony-informative sites
+  Invar:  Number of invariant sites
+  Const:  Number of constant sites (can be subset of invariant sites)
+
+ModelFinder
+-----------
+
+Best-fit model according to BIC: JTT:GC_00000043+GC_00000051+GC_00000056+GC_00000040+GC_00000039+GC_00000065+GC_00000050+GC_00000052,HIVb+F+G4:GC_00000068+GC_00000046+GC_00000062+GC_00000074+GC_00000075+GC_00000080+GC_00000059+GC_00000057+GC_00000070+GC_00000063+GC_00000087+GC_00000088+GC_00000058+GC_00000045+GC_00000071+GC_00000048,cpREV+R2:GC_00000090+GC_00000089+GC_00000072+GC_00000079+GC_00000091,JTT+I:GC_00000077+GC_00000054
+
+List of best-fit models per partition:
+
+  ID  Model                  LogL         AIC      w-AIC        AICc     w-AICc         BIC      w-BIC
+   1  JTT               -3742.725    7487.451 + 6.95e-310    7487.455 + 5.09e-322    7492.450 + 4.66e-310
+   2  HIVb+F+G4        -11590.830   23223.660 + 6.95e-310   23223.978 + 5.09e-322   23349.226 + 4.66e-310
+   3  cpREV+R2          -3288.318    6582.636 + 6.95e-310    6582.672 + 5.09e-322    6596.131 + 4.66e-310
+   4  JTT+I             -1352.190    2708.379 + 6.95e-310    2708.413 + 5.09e-322    2716.146 + 4.66e-310
+
+AIC, w-AIC   : Akaike information criterion scores and weights.
+AICc, w-AICc : Corrected AIC scores and weights.
+BIC, w-BIC   : Bayesian information criterion scores and weights.
+
+Plus signs denote the 95% confidence sets.
+Minus signs denote significant exclusion.
+
+SUBSTITUTION PROCESS
+--------------------
+
+Edge-linked-proportional partition model with separate substitution models and separate rates across sites
+
+  ID  Model           Speed  Parameters
+   1  JTT            0.3416  JTT
+   2  HIVb+F+G4      0.8841  HIVb+F+G4{0.289788}
+   3  cpREV+R2       2.6439  cpREV+R2{0.872997,0.354665,0.127003,5.4359}
+   4  JTT+I          0.9120  JTT+I{0.906793}
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -19973.1223 (s.e. 186.5644)
+Unconstrained log-likelihood (without tree): -20253.2342
+Number of free parameters (#branches + #model parameters): 45
+Akaike information criterion (AIC) score: 40036.2446
+Corrected Akaike information criterion (AICc) score: 40037.0738
+Bayesian information criterion (BIC) score: 40329.8680
+
+Total tree length (sum of branch lengths): 0.2341
+Sum of internal branch lengths: 0.1058 (45.1822% of tree length)
+
+WARNING: 1 near-zero internal branches (<0.0002) should be treated with caution
+         Such branches are denoted by '**' in the figure below
+
+NOTE: Tree is UNROOTED although outgroup taxon 'Azfil_cp1_4' is drawn at root
+Numbers in parentheses are  standard bootstrap support (%)
+
++**Azfil_cp1_4
+|
+|              +--illumina_Azcar1
+|           +--| (100)
+|           |  +**illumina_Azcar2
+|        +--| (73)
+|        |  |     +--illumina_Azmexicana
+|        |  |  +--| (100)
+|        |  |  |  +--illumina_Azmicrophylla
+|        |  +--| (100)
+|        |     +--nanopore_Azsp_bordeaux
+|     +--| (100)
+|     |  |                          +-------------illumina_Aznilotica
+|     |  +--------------------------| (100)
+|     |                             +---------------------------nanopore_Azpinnata
+|  +--| (100)
+|  |  +--illumina_Azrubra
++**| (100)
+|  +--nanopore_Azfil_lab
+|
++**illumina_Azfil_lab
+
+Tree in newick format:
+
+(Azfil_cp1_4:0.0000010040,(((((illumina_Azcar1:0.0002101476,illumina_Azcar2:0.0000010040)100:0.0062281667,((illumina_Azmexicana:0.0014633870,illumina_Azmicrophylla:0.0008270059)100:0.0027155419,nanopore_Azsp_bordeaux:0.0059173979)100:0.0086612632)73:0.0052370590,(illumina_Aznilotica:0.0398163463,nanopore_Azpinnata:0.0767335966)100:0.0727389778)100:0.0069765728,illumina_Azrubra:0.0022983691)100:0.0032136874,nanopore_Azfil_lab:0.0010602796)100:0.0000010041,illumina_Azfil_lab:0.0000010040);
+
+CONSENSUS TREE
+--------------
+
+Consensus tree is constructed from 100 bootstrap trees
+Log-likelihood of consensus tree: -19973.152411
+Robinson-Foulds distance between ML tree and consensus tree: 0
+
+Branches with support >0.000000% are kept (extended consensus)
+Branch lengths are optimized by maximum likelihood on original alignment
+Numbers in parentheses are bootstrap supports (%)
+
++--Azfil_cp1_4
+|
+|              +--illumina_Azcar1
+|           +--| (100)
+|           |  +--illumina_Azcar2
+|        +--| (73)
+|        |  |     +--illumina_Azmexicana
+|        |  |  +--| (100)
+|        |  |  |  +--illumina_Azmicrophylla
+|        |  +--| (100)
+|        |     +--nanopore_Azsp_bordeaux
+|     +--| (100)
+|     |  |                          +-------------illumina_Aznilotica
+|     |  +--------------------------| (100)
+|     |                             +---------------------------nanopore_Azpinnata
+|  +--| (100)
+|  |  +--illumina_Azrubra
++--| (100)
+|  +--nanopore_Azfil_lab
+|
++--illumina_Azfil_lab
+
+
+Consensus tree in newick format: 
+
+(Azfil_cp1_4:0.0000025502,(((((illumina_Azcar1:0.0002096957,illumina_Azcar2:0.0000025502)100:0.0062282935,((illumina_Azmexicana:0.0014626687,illumina_Azmicrophylla:0.0008277338)100:0.0027161086,nanopore_Azsp_bordeaux:0.0059177925)100:0.0086620066)73:0.0052372648,(illumina_Aznilotica:0.0398172070,nanopore_Azpinnata:0.0767339122)100:0.0727395172)100:0.0069766602,illumina_Azrubra:0.0022979236)100:0.0032138516,nanopore_Azfil_lab:0.0010604495)100:0.0000025502,illumina_Azfil_lab:0.0000025502);
+
+TIME STAMP
+----------
+
+Date and time: Fri Sep  2 12:47:12 2022
+Total CPU time used: 2919.642701 seconds (0h:48m:39s)
+Total wall-clock time used: 740.281301 seconds (0h:12m:20s)
+
