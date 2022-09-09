@@ -14,9 +14,24 @@ Rather than using an up-to-date snakemake, I chose to use the snakemake with anv
  - nanopore data is new and will be in ENA
  - Illumina data is part of Li2018, but something seems wrong with the data upload. Contact me for the original data as I used it
  - Genome and chloroplast available from fernbase
- - Mitochondrium is novel and will be uploaded some appropriate place. 
+ - Mitochondrium is novel and will be uploaded some appropriate place.
 
-## Azolla associated pan- and phylo-genomics
+## Visualise analyses
+Within this Git repository with an anvio 7.1 environment activated, run for the chloroplast:
+
+`anvi-display-pan -g ./data/anvio_genomes_storage/chloroplast_GENOMES.db -p data/anvio_pangenomes/chloroplast/chloroplast_mcl6-PAN.db --title 'Azolla genus chloroplast pangenome'`
+
+Similarly for the _Nostoc azollae_ pangenome:
+
+`anvi-display-pan -g ./data/anvio_genomes_storage/Nazollae_GENOMES.db -p data/anvio_pangenomes/Nazollae/Nazollae_mcl7-PAN.db --title 'Nostoc azollae pangenome'`
+
+And finally for the mitochodrium one:
+
+`anvi-display-pan -g ./data/anvio_genomes_storage/mitochondrium_GENOMES.db -p data/anvio_pangenomes/mitochondrium/mitochondrium_mcl3-PAN.db --title 'Azolla genus mitochondrium pangenome'`
+
+This will allow you to browse the pangenomes interactively.
+
+## recreate Azolla associated pan- and phylo-genomics
 To create all pangenome databases in anvio
 
 `snakemake --use-conda all_azolla_associated_pangenomes`
@@ -38,4 +53,4 @@ Save your specific visualisation and binning under the name 'default' and export
 
 ## Genome degradation
 
-## Nostoocales pan- and phylo-genomics
+## Nostocaceae pan- and phylo-genomics
