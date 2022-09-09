@@ -803,7 +803,7 @@ rule create_list_pangenome_storage_all_nostocaceae:
     aggregate_nostocaceae,
     refdb="data/external_contig_dbs/Nazollae_0708_contigs.db",
     refann=expand("data/external_contig_dbs/Nazollae_0708_contigs.db.{ext}"     ,ext=['hmms','kegg','cogs']),
-    nostocaceae_table="references/nostocaceae/nostocaceae selection.tsv",
+    nostocaceae_table="references/nostocaceae/nostocaceae_selection.tsv",
     nanopore_stuff="scripts/Nazollae_external_genomes.anvi-list"
   output:
     "scripts/nostocaceae_external_genomes.anvi-list"
@@ -813,8 +813,15 @@ rule create_list_pangenome_storage_all_nostocaceae:
 
     for db in references/nostocaceae/contig_dbs/*/*_contigs.db
     do  acc=$(echo $db | cut -d '/' -f 4)
-        name=$(grep "$acc" references/nostocaceae/nostocaceae\ selection.tsv | cut -f 2 | tr ' ' _ | tr -d '.')
-        echo -e "$name\t./../$db"
+        name=$(grep "$acc" {input.nostocaceae_table} | cut -f 2 | tr -d "\''"  \
+                                                                | tr ' ' _     \
+                                                                | tr '-' _     \
+                                                                | tr -d '('    \
+                                                                | tr -d ')'    \
+                                                                | tr -d '='    \
+                                                                | tr -d '.'    )
+        acc2=$(echo $acc | cut -d '.' -f 1)
+        echo -e "$name""_$acc2\t./../$db"
     done >> {output}
     """
 
@@ -842,7 +849,7 @@ rule create_pangenome_storage_all_nostocaceae:
       > {log.stdout} 2> {log.stderr}
     """
 
-
+# nostocaceae pangenome, ANI and phylogenomics calculations resuses the rules above
 
 ######### Collect stuff for figures
 
