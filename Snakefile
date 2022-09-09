@@ -798,6 +798,26 @@ rule all_nostocaceae_contig_dbs:
     aggregate_nostocaceae
 
 
+rule create_list_pangenome_storage_all_nostocaceae:
+  input:
+    aggregate_nostocaceae,
+    refdb="data/external_contig_dbs/Nazollae_0708_contigs.db
+    refann=expand("data/external_contig_dbs/Nazollae_0708_contigs.db.{ext}"     ,ext=['hmms','kegg','cogs'])
+    nostocaceae_table="references/nostocaceae/nostocaceae selection.tsv"
+  output:
+    external="scripts/nostocaceae_external_genomes.anvi-list",
+  shell:
+    """
+    echo -e "name\tcontigs_db_path" > {output}
+
+    echo -e "Nostoc azollae 0708\t../{input.refdb}" >> {output}
+
+    for db in references/nostocaceae/contig_dbs/*/*_contigs.db
+    do  acc=$(echo $db | cut -d '/' -f 4)
+        name=$(grep "$acc" references/nostocaceae/nostocaceae\ selection.tsv | cut -f 2 | tr ' ' _ | tr -d '.')
+        echo -e "$name\t./../$db"
+    done >> {output}
+    """
 
 ######### Collect stuff for figures
 
