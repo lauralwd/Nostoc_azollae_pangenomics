@@ -594,7 +594,6 @@ rule create_pangenome_analysis:
     stderr="logs/anvi_create_pangenome_{selection}_mcl{mcl}.stderr"
   threads: 12
   params:
-    mcl= "7",
     dir=lambda w: expand ("data/anvio_pangenomes/{selection}/",selection=w.selection)
   shell:
     """
@@ -603,7 +602,7 @@ rule create_pangenome_analysis:
                     --output-dir   {params.dir}          \
                     --num-threads  {threads}             \
                     --minbit 0.5                         \
-                    --mcl-inflation {params.mcl}         \
+                    --mcl-inflation {wildcards.mcl}      \
                     --use-ncbi-blast                     \
     > {log.stdout} 2> {log.stderr}
     """
@@ -859,8 +858,7 @@ rule create_pangenome_analysis_diamond:
     stderr="logs/anvi_create_pangenome_{selection}_mcl{mcl}.stderr"
   threads: 12
   params:
-    mcl= "7",
-    dir=lambda w: expand ("data/anvio_pangenomes/{selection}/",selection=w.selection)
+    dir=lambda w: expand ("data/anvio_pangenomes/{selection}_diamond/",selection=w.selection)
   shell:
     """
     anvi-pan-genome -g {input}                           \
@@ -868,7 +866,7 @@ rule create_pangenome_analysis_diamond:
                     --output-dir   {params.dir}          \
                     --num-threads  {threads}             \
                     --minbit 0.5                         \
-                    --mcl-inflation {params.mcl}         \
+                    --mcl-inflation {wildcards.mcl}         \
     > {log.stdout} 2> {log.stderr}
     """
 
