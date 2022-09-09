@@ -7,3 +7,5 @@ data
 logs/IQtree
 references/*.fasta.*
 references/nostocaceae/*
+logs/anvi_annotate/*
+logs/anvi_create_contigdb_nostocaceae
