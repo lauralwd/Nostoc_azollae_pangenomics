@@ -872,6 +872,28 @@ rule create_pangenome_analysis_diamond:
     > {log.stdout} 2> {log.stderr}
     """
 
+rule create_pangenome_ANI_Nazollae:
+  input:
+    pangenome="data/anvio_pangenomes/{selection}_diamond/{selection}_mcl{mcl}-PAN.db",
+    internal="scripts/Nazollae_internal_genomes.anvi-list",
+    external="scripts/nostocaceae_external_genomes.anvi-list"
+  output:
+    directory("data/anvio_pangenomes/Nostocaceae_ANI_mcl{mcl}")
+  log:
+    stdout="logs/anvi_create_pangenome_ANI_Nostocaceae_mcl{mcl}.stdout",
+    stderr="logs/anvi_create_pangenome_ANI_Nostocaceae_mcl{mcl}.stderr"
+  threads: 12
+  shell:
+    """
+    anvi-compute-genome-similarity --external-genomes {input.external} \
+                                   --internal-genomes {input.internal} \
+                                   --program pyANI                     \
+                                   --output-dir {output}               \
+                                   --num-threads {threads}             \
+                                   --pan-db {input.pangenome}          \
+    > {log.stdout} 2> {log.stderr}
+    """
+
 ######### Collect stuff for figures
 
 rule assembly_stats_table:
