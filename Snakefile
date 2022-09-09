@@ -801,16 +801,15 @@ rule all_nostocaceae_contig_dbs:
 rule create_list_pangenome_storage_all_nostocaceae:
   input:
     aggregate_nostocaceae,
-    refdb="data/external_contig_dbs/Nazollae_0708_contigs.db
-    refann=expand("data/external_contig_dbs/Nazollae_0708_contigs.db.{ext}"     ,ext=['hmms','kegg','cogs'])
-    nostocaceae_table="references/nostocaceae/nostocaceae selection.tsv"
+    refdb="data/external_contig_dbs/Nazollae_0708_contigs.db",
+    refann=expand("data/external_contig_dbs/Nazollae_0708_contigs.db.{ext}"     ,ext=['hmms','kegg','cogs']),
+    nostocaceae_table="references/nostocaceae/nostocaceae selection.tsv",
+    nanopore_stuff="scripts/Nazollae_external_genomes.anvi-list"
   output:
-    external="scripts/nostocaceae_external_genomes.anvi-list",
+    "scripts/nostocaceae_external_genomes.anvi-list"
   shell:
     """
-    echo -e "name\tcontigs_db_path" > {output}
-
-    echo -e "Nostoc azollae 0708\t../{input.refdb}" >> {output}
+    cat {input.nanopore_stuff} > {output}
 
     for db in references/nostocaceae/contig_dbs/*/*_contigs.db
     do  acc=$(echo $db | cut -d '/' -f 4)
