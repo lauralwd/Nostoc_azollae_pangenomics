@@ -439,7 +439,7 @@ rule all_illumina_assembly_novoplasty:
            selection=['chloroplast','mitochondrium'],
            illumina_host=ILLUMINA_HOSTS)
 
-############################### stage 4 create pangenomes ###############################
+############################### stage 4 create Azolla pangenomes ###############################
 rule illumina_assembly_to_contigdb:
   input:
     "data/illumina_assembly/{selection}_novoplasty/{selection}_{illumina_host}_assembly.fasta"
@@ -744,7 +744,7 @@ rule collect_pangenome_enrichment_all_annotations:
     touch("data/anvio_pangenomes/functional_enrichment/subgroup_ALL_{selection}_mcl{mcl}.touch")
 
 
-######### Nostocaceae pangenomics #########
+############################### stage 4 Collect Nostocaceae genomes and process into pangenome ###############################
 checkpoint find_reference_genomes:
   output:
     directory("references/nostocaceae/contig_dbs/")
@@ -786,7 +786,7 @@ rule nostocaceae_to_contigdb:
       > {log.stdout} 2> {log.stderr}
     """
 
-def aggregate_input(wildcards):
+def aggregate_nostocaceae(wildcards):
     checkpoint_output = checkpoints.find_reference_genomes.get(**wildcards).output[0]
     return expand("references/nostocaceae/contig_dbs/{genbank}/{genbank}_contigs.db.{ext}",
                   genbank=glob_wildcards(os.path.join(checkpoint_output ,
@@ -795,11 +795,7 @@ def aggregate_input(wildcards):
 
 rule all_nostocaceae_contig_dbs:
   input:
-    aggregate_input
-    #dynamic("references/nostocaceae/{genbank}/{genbank}_contigs.db"),
-    #dynamic( expand("references/nostocaceae/{{genbank}}/{{genbank}}_contigs.db.{ext}",ext=['hmms','kegg','cogs']) )
-    #expand("references/nostocaceae/{genbank}/{genbank}_contigs.db",genbank=checkpoints.find_reference_genomes.get(**wildcards).output)#,
-    #expand("references/nostocaceae/{genbank}/{genbank}_contigs.db.{ext}",ext=['hmms','kegg','cogs'],genbank=checkpoints.find_reference_genomes.get(**wildcards).output)
+    aggregate_nostocaceae
 
 
 
