@@ -849,7 +849,28 @@ rule create_pangenome_storage_all_nostocaceae:
       > {log.stdout} 2> {log.stderr}
     """
 
-# nostocaceae pangenome, ANI and phylogenomics calculations resuses the rules above
+rule create_pangenome_analysis_diamond:
+  input:
+    "data/anvio_genomes_storage/{selection}_GENOMES.db"
+  output:
+    "data/anvio_pangenomes/{selection}_diamond/{selection}_mcl{mcl}-PAN.db"
+  log:
+    stdout="logs/anvi_create_pangenome_{selection}_mcl{mcl}.stdout",
+    stderr="logs/anvi_create_pangenome_{selection}_mcl{mcl}.stderr"
+  threads: 12
+  params:
+    mcl= "7",
+    dir=lambda w: expand ("data/anvio_pangenomes/{selection}/",selection=w.selection)
+  shell:
+    """
+    anvi-pan-genome -g {input}                           \
+                    --project-name {wildcards.selection}_mcl{wildcards.mcl} \
+                    --output-dir   {params.dir}          \
+                    --num-threads  {threads}             \
+                    --minbit 0.5                         \
+                    --mcl-inflation {params.mcl}         \
+    > {log.stdout} 2> {log.stderr}
+    """
 
 ######### Collect stuff for figures
 
