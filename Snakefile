@@ -838,8 +838,8 @@ rule create_pangenome_storage_all_nostocaceae:
   output:
     "data/anvio_genomes_storage/Nostocaceae_GENOMES.db"
   log:
-    stdout="logs/anvi_create_pangenome_storage_all.stdout",
-    stderr="logs/anvi_create_pangenome_storage_all.stderr"
+    stdout="logs/anvi_create_pangenome_storage_Nostocaceae.stdout",
+    stderr="logs/anvi_create_pangenome_storage_Nostocaceae.stderr"
   shell:
     """
     anvi-gen-genomes-storage \
