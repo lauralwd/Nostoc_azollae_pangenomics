@@ -848,7 +848,7 @@ rule create_pangenome_storage_all_nostocaceae:
       > {log.stdout} 2> {log.stderr}
     """
 
-rule create_pangenome_analysis_diamond:
+rule create_pangenome_analysis_big:
   input:
     "data/anvio_genomes_storage/{selection}_GENOMES.db"
   output:
@@ -866,7 +866,10 @@ rule create_pangenome_analysis_diamond:
                     --output-dir   {params.dir}          \
                     --num-threads  {threads}             \
                     --minbit 0.5                         \
-                    --mcl-inflation {wildcards.mcl}         \
+                    --mcl-inflation {wildcards.mcl}      \
+                    --enforce-hierarchical-clustering    \
+                    --min-occurrence 3                   \
+                    --sensitive                          \
     > {log.stdout} 2> {log.stderr}
     """
 
