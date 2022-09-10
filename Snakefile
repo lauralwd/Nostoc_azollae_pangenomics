@@ -875,7 +875,7 @@ rule create_pangenome_analysis_big:
 
 rule create_pangenome_ANI_Nostocaceae:
   input:
-    pangenome="data/anvio_pangenomes/{selection}_diamond/{selection}_mcl{mcl}-PAN.db",
+    pangenome="data/anvio_pangenomes/Nostocaceae_diamond/Nostocaceae_mcl{mcl}-PAN.db",
     internal="scripts/Nazollae_internal_genomes.anvi-list",
     external="scripts/nostocaceae_external_genomes.anvi-list"
   output:
