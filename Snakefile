@@ -895,6 +895,55 @@ rule create_pangenome_ANI_Nostocaceae:
     > {log.stdout} 2> {log.stderr}
     """
 
+rule extract_phylogenomic_fasta_big:
+  input:
+    pangenome="data/anvio_pangenomes/Nostocaceae_diamond/Nostocaceae_mcl{mcl}-PAN.db",
+    genomestorage="data/anvio_genomes_storage/Nostocaceae_GENOMES.db"
+  output:
+    fasta="data/anvio_pangenomes/Nostocaceae_diamond_mcl{mcl}_phylogenomic_core.fasta",
+    partition="data/anvio_pangenomes/Nostocaceae_diamond_mcl{mcl}_phylogenomic_core.partitions"
+  log:
+    stdout="logs/anvi_pangenome_fasta_Nostocaceae_diamond_mcl{mcl}.stdout",
+    stderr="logs/anvi_pangenome_fasta_Nostocaceae_diamond_mcl{mcl}.stderr"
+  shell:
+    """
+    anvi-get-sequences-for-gene-clusters -p {input.pangenome}        \
+                                         -g {input.genomestorage}    \
+                                         -C default                  \
+                                         -b phylogenomic_core        \
+                                         --concatenate-gene-clusters \
+                                         --partition-file {output.partition} \
+                                         -o {output.fasta}           \
+    > {log.stdout} 2> {log.stderr}
+    """
+
+rule phylogenomic_tree_big:
+  input:
+    fasta="data/anvio_pangenomes/Nostocaceae_diamond_mcl{mcl}_phylogenomic_core.fasta",
+    partition="data/anvio_pangenomes/Nostocaceae_diamond_mcl{mcl}_phylogenomic_core.partitions"
+  output:
+    tree="data/anvio_pangenomes/Nostocaceae_diamond_mcl{mcl}_phylogenomics/Nostocaceae.treefile"
+  params:
+    pre=lambda w: expand ("data/anvio_pangenomes/Nostocaceae_diamond_mcl{mcl}_phylogenomics/Nostocaceae",
+                          mcl=w.mcl)
+  threads: 6
+  log:
+    stdout="logs/IQtree/anvi_phylogenomic_Nostocaceae_mcl{mcl}.stdout",
+    stderr="logs/IQtree/anvi_phylogenomic_Nostocaceae_mcl{mcl}.stderr"
+  shell:
+    """
+    iqtree -s {input.fasta}     \
+           -p {input.partition} \
+           -m MFP+MERGE         \
+           -bb 2000             \
+           -alrt 2000           \
+           -nt {threads}        \
+           -ntmax {threads}     \
+           -pre {params.pre}    \
+    > {log.stdout} 2> {log.stderr}
+    """
+
+
 ######### Collect stuff for figures
 
 rule assembly_stats_table:
