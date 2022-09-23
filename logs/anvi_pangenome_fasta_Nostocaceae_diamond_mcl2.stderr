@@ -1,0 +1,36 @@
+Num genomes in storage ......................................: 97
+Num genomes will be used ....................................: 97
+Pan DB ......................................................: Initialized: data/anvio_pangenomes/Nostocaceae_diamond/Nostocaceae_mcl2-PAN.db (v. 15)
+Gene cluster homogeneity estimates ..........................: Functional: [YES]; Geometric: [YES]; Combined: [YES]
+* A short announcement for the curious: anvi'o found 20108 gene clusters in the
+database, attempted to initialize a gene clusters dictionary for 42 of them as
+requested by the user or the programmer, and managed to get back a gene clusters
+dictionary with 42 items. We just hope all these make sense to you.
+
+GENE CLUSTER FILTERS
+==============================================================
+Based on --min-num-genomes-gene-cluster-occurs 0, --max-num-genomes-gene-
+cluster-occurs 97, --min-num-genes-from-each-genome 0, --max-num-genes-from-
+each-genome 97, --min-functional-homogeneity-index -1.000, --max-functional-
+homogeneity-index 1.000, --min-geometric-homogeneity-index -1.000, --max-
+geometric-homogeneity-index 1.000, --min-combined-homogeneity-index -1.000,
+--max-combined-homogeneity-index 1.000 (some of these may be default values, no
+need to panic).
+
+All gene clusters (42) ......................................: GC_00001987, GC_00001990, GC_00001266, (... 39 more (`--debug` will show all))
+Gene clusters that passed the filter (42) ...................: GC_00001987, GC_00001990, GC_00001266, (... 39 more (`--debug` will show all))
+Genes clusters that failed the filter (0) ...................: None.
+
+
+INFO
+===============================================
+Your filters resulted in 42 gene clusters that contain a total of 4074 genes.
+for downstream analyses. Just so you know.
+
+
+* Your partition file is ready. Please do not forget to replace placeholders for
+model names ('[MODEL]') in this file with appropriate model names prior to your
+phylogenomic analysis.
+
+Sequence type ...............................................: Amino acid
+Output file for phylogenomics ...............................: data/anvio_pangenomes/Nostocaceae_diamond_mcl2_phylogenomic_core.fasta

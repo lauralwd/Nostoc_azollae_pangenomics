@@ -1,0 +1,90 @@
+
+WARNING
+===============================================
+If you publish results from this workflow, please do not forget to cite DIAMOND
+(doi:10.1038/nmeth.3176), unless you use it with --use-ncbi-blast flag, and MCL
+(http://micans.org/mcl/ and doi:10.1007/978-1-61779-361-5_15)
+
+Num genomes in storage .......................: 97
+Num genomes will be used .....................: 97
+Pan database .................................: A new database,
+                                                /stor/azolla_metagenome/nostoc_pangenome/data/anvio_pangenomes/Nostocaceae_diamond/Nostocaceae_mcl2-PAN.db, has been
+                                                created.
+Exclude partial gene calls ...................: False
+
+
+Num AA sequences reported ....................: 638,171
+Num excluded gene calls ......................: 0
+
+WARNING
+===============================================
+Notice: A diamond database is found in the output directory, and will be used!
+
+
+WARNING
+===============================================
+Notice: A DIAMOND search result is found in the output directory: skipping
+BLASTP!
+
+
+WARNING
+===============================================
+Notice: A DIAMOND tabular output is found in the output directory. Anvi'o will
+not generate another one!
+
+
+MCL INPUT
+===============================================
+WARNING
+===============================================
+DIAMOND did not retun search results for 1 of 635493 the amino acid sequences in
+your input FASTA file. Anvi'o will do some heuristic magic to complete the
+missing data in the search output to recover from this. But since you are a
+scientist, here are the amino acid sequence IDs for which DIAMOND failed to
+report self search results: hash68b96c00_2597.
+
+Min percent identity .........................: 0.0
+Minbit .......................................: 0.5
+MCL input ....................................: /stor/azolla_metagenome/nostoc_pangenome/data/anvio_pangenomes/Nostocaceae_diamond/mcl-input.txt
+
+MCL
+===============================================
+MCL inflation ................................: 2.0
+Number of MCL clusters .......................: 60,163
+CITATION
+===============================================
+The workflow you are using will likely use 'muscle' by Edgar,
+doi:10.1093/nar/gkh340 (http://www.drive5.com/muscle) to align your sequences.
+If you publish your findings, please do not forget to properly credit this tool.
+
+
+WARNING
+===============================================
+You have 20,108 gene_clusters, which exceeds the number of gene_clusters anvi'o
+is comfortable to cluster. But since you have used the flag `--enforce-
+hierarchical-clustering`, anvi'o will attempt to create a hierarchical
+clustering of your gene_clusters anyway. It may take a bit of time. Pour
+yourself a coffee. Or go to a nice vacation. See you in 10 mins, or next year or
+never.
+
+FRIENDLY WARNING
+===============================================
+It seems you have a lot of gene clusters in this pan database :) It is all good!
+But please be aware that you may run into performance issues when you try to
+interactively visaulize these data using `anvi-display-pan`. In some cases it
+may even be impossible to do it, in fact. This is largely because the part of
+the anvi'o workflow to offer interactive access to a pangenomes is not designed
+to accommodate very large number of gene clusters, but rather enable in-depth
+exploratory analyses of pangenomes interactively. You still can work with large
+pangenomes via the command line utilities and do a lot of science with them. If
+you are unable to work with the interactive interface and it is critical for
+you, you have multiple options, You can use the `--min-occurrence` flag to
+reduce the number of gene clusters, or use the program `anvi-dereplicate-
+genomes` in an attempt to reduce the number of redundant genomes in your
+analysis. If you are unsure what would be the best game plan for you, you can
+consider coming to the anvi'o Slack channel and consult the opinion of the
+anvi'o community. Despite all these, it is still a good idea to run `anvi-
+display-pan` and see what it says first.
+
+* Your pangenome is ready with a total of 20,108 gene clusters across 97 genomes 🎉
+

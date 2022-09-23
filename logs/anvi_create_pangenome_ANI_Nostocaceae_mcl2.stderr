@@ -1,0 +1,112 @@
+
+CITATION
+===============================================
+Anvi'o will use 'PyANI' by Pritchard et al. (DOI: 10.1039/C5AY02550H) to compute
+ANI. If you publish your findings, please do not forget to properly credit their
+work.
+
+[PyANI] Num threads to use ...................: 12
+[PyANI] Alignment method .....................: ANIb
+[PyANI] Log file path ........................: /tmp/tmpdpbmlbl_
+
+
+WARNING
+===============================================
+You are comparing 97 genomes. That's no small task. For context, 10
+Prochlorococcus genomes using 4 threads took 2m20s on a 2016 Macbook Pro. And 50
+genomes took 49m53s. Consider instead using fastANI (--program fastANI). It's
+orders of magnitudes faster.
+
+WARNING
+===============================================
+The SCG taxonomy database on your computer has a different version (v202.0) than
+the SCG taxonomy information stored in your contigs database (v89). This is not
+a problem and things will most likely continue to work fine, but we wanted to
+let you know. You can get rid of this warning by re-running `anvi-run-scg-
+taxonomy` on your database.
+
+Contigs DB ...................................: /stor/azolla_metagenome/nostoc_pangenome/data/MAG_anvi_dbs/Azfil_wild_contigs.db
+Metagenome mode ..............................: False
+WARNING
+===============================================
+The SCG taxonomy database on your computer has a different version (v202.0) than
+the SCG taxonomy information stored in your contigs database (v89). This is not
+a problem and things will most likely continue to work fine, but we wanted to
+let you know. You can get rid of this warning by re-running `anvi-run-scg-
+taxonomy` on your database.
+
+Contigs DB ...................................: /stor/azolla_metagenome/nostoc_pangenome/data/MAG_anvi_dbs/Azfil_lab_contigs.db
+Metagenome mode ..............................: False
+WARNING
+===============================================
+The SCG taxonomy database on your computer has a different version (v202.0) than
+the SCG taxonomy information stored in your contigs database (v89). This is not
+a problem and things will most likely continue to work fine, but we wanted to
+let you know. You can get rid of this warning by re-running `anvi-run-scg-
+taxonomy` on your database.
+
+Contigs DB ...................................: /stor/azolla_metagenome/nostoc_pangenome/data/MAG_anvi_dbs/Azrub_contigs.db
+Metagenome mode ..............................: False
+WARNING
+===============================================
+The SCG taxonomy database on your computer has a different version (v202.0) than
+the SCG taxonomy information stored in your contigs database (v89). This is not
+a problem and things will most likely continue to work fine, but we wanted to
+let you know. You can get rid of this warning by re-running `anvi-run-scg-
+taxonomy` on your database.
+
+Contigs DB ...................................: /stor/azolla_metagenome/nostoc_pangenome/data/MAG_anvi_dbs/Azmex_contigs.db
+Metagenome mode ..............................: False
+WARNING
+===============================================
+The SCG taxonomy database on your computer has a different version (v202.0) than
+the SCG taxonomy information stored in your contigs database (v89). This is not
+a problem and things will most likely continue to work fine, but we wanted to
+let you know. You can get rid of this warning by re-running `anvi-run-scg-
+taxonomy` on your database.
+
+Contigs DB ...................................: /stor/azolla_metagenome/nostoc_pangenome/data/MAG_anvi_dbs/Azmic_contigs.db
+Metagenome mode ..............................: False
+WARNING
+===============================================
+The SCG taxonomy database on your computer has a different version (v202.0) than
+the SCG taxonomy information stored in your contigs database (v89). This is not
+a problem and things will most likely continue to work fine, but we wanted to
+let you know. You can get rid of this warning by re-running `anvi-run-scg-
+taxonomy` on your database.
+
+Contigs DB ...................................: /stor/azolla_metagenome/nostoc_pangenome/data/MAG_anvi_dbs/Azcar1_contigs.db
+Metagenome mode ..............................: False
+WARNING
+===============================================
+The SCG taxonomy database on your computer has a different version (v202.0) than
+the SCG taxonomy information stored in your contigs database (v89). This is not
+a problem and things will most likely continue to work fine, but we wanted to
+let you know. You can get rid of this warning by re-running `anvi-run-scg-
+taxonomy` on your database.
+
+Contigs DB ...................................: /stor/azolla_metagenome/nostoc_pangenome/data/MAG_anvi_dbs/Azcar2_contigs.db
+Metagenome mode ..............................: False
+WARNING
+===============================================
+The SCG taxonomy database on your computer has a different version (v202.0) than
+the SCG taxonomy information stored in your contigs database (v89). This is not
+a problem and things will most likely continue to work fine, but we wanted to
+let you know. You can get rid of this warning by re-running `anvi-run-scg-
+taxonomy` on your database.
+
+Contigs DB ...................................: /stor/azolla_metagenome/nostoc_pangenome/data/MAG_anvi_dbs/Aznil_contigs.db
+Metagenome mode ..............................: False
+ANI RESULTS
+===============================================
+* Matrix and clustering of 'alignment coverage' written to output directory
+* Matrix and clustering of 'alignment lengths' written to output directory
+* Matrix and clustering of 'hadamard' written to output directory
+* Matrix and clustering of 'percentage identity' written to output directory
+* Matrix and clustering of 'similarity errors' written to output directory
+* Matrix and clustering of 'full percentage identity' written to output directory
+
+MISC DATA MAGIC FOR YOUR PAN DB
+===============================================
+
+✓ anvi-compute-genome-similarity took 12:51:51.740243
