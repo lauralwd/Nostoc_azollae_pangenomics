@@ -1,0 +1,136 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# find Nostocaceae genomes in GTDB metadata
+
+First find the GTDB taxonomy IDs for Nostocaceae genomes.
+
+<https://data.ace.uq.edu.au/public/gtdb/data/releases/release220/220.0/>
+
+```{bash}
+gunzip -c bac120_taxonomy_r220.tsv.gz  | grep "Nostocaceae" |  cut -f 1 > nostocaceae_genomes.list
+wc -l nostocaceae_genomes.list
+```
+
+Subset the metadata file to Nostocaceae genomes only.
+
+```{bash}
+#gunzip -c bac120_metadata_r220.tsv.gz | grep -f nostocaceae_genomes.list | pigz > nostocaceae_metadata_r220.tsv.gz
+```
+
+import the nostocaceae genomes metadata with data.table
+
+```{bash}
+gunzip -c bac120_metadata_r220.tsv.gz | head -n 1 > nostocaceae_metadata_r220.tsv.header
+cat nostocaceae_metadata_r220.tsv.header
+```
+
+# load data in R and do some formatting
+
+load the data, convert logical values to logical and see how the logical values sum up.
+
+```{r}
+nostocaceae <- data.table::fread(file = "nostocaceae_metadata_r220.tsv.gz")
+names(nostocaceae) <- as.character(read.table(file = "nostocaceae_metadata_r220.tsv.header"))
+row.names(nostocaceae) <- nostocaceae$accession
+logical_cols <- as.logical(sapply(nostocaceae, function(x) all(x %in% c('t','f'))))
+
+nostocaceae[, (names(nostocaceae))[logical_cols] := lapply(.SD, function(x) x == 't'), .SDcols = logical_cols]
+
+sapply(nostocaceae[,..logical_cols],sum)
+```
+
+# make a selection of genomes based on quality assessments.
+
+```{r}
+genome_selection <- nostocaceae$accession[
+  nostocaceae$gtdb_representative & 
+      nostocaceae$checkm_completeness >= 50 & 
+      nostocaceae$checkm_contamination < 20
+#      nostocaceae$checkm_strain_heterogeneity < 5
+#      nostocaceae$mimag_high_quality
+]
+
+length(genome_selection)
+```
+
+# Check the distribution of genomes across genera
+
+```{r}
+taxonomy <- strsplit(nostocaceae$gtdb_taxonomy,split = ';',fixed = TRUE)
+taxonomy <- sapply(taxonomy,function(x) x[6])
+barplot(table(taxonomy))
+```
+
+```{r}
+as.data.frame(sort(table(taxonomy),decreasing = T))
+```
+
+```{r}
+length(genome_selection)
+```
+
+There are too many genera to make a meaningful plot, let's select only genera with 12 genomes or more and add trichormus_B to the selection as well.
+
+```{r}
+genera_selection <- names(table(taxonomy)[table(taxonomy) >= 12])
+genera_selection <- c(genera_selection,"g__Trichormus_B")
+genera_selection <- nostocaceae$accession[taxonomy %in% genera_selection]
+
+```
+
+And overlap both selections:
+
+```{r}
+genome_selection[1:5]
+genera_selection[1:5]
+gengen_selection <- genome_selection[genome_selection %in% genera_selection]
+length(gengen_selection)
+length(genera_selection)
+
+```
+
+Now I need to get the right identifiers so I can subset the pre-made tree.
+
+```{r}
+write.table(x = gengen_selection,file = 'genome_and_genera_selection.txt',row.names = F,col.names = F,quote = F)
+```
+
+```{bash}
+head genome_and_genera_selection.txt
+```
+
+## plot new genera distribution
+
+```{r}
+logical_selection <- nostocaceae$accession %in% gengen_selection
+taxonomy <- strsplit(nostocaceae$gtdb_taxonomy[logical_selection],split = ';',fixed = TRUE)
+taxonomy <- sapply(taxonomy,function(x) x[6])
+barplot(table(taxonomy))
+# rotate axis labels 90degrees in the same barplot
+barplot(table(taxonomy),las = 2)
+
+
+
+```
+
+```{r}
+as.data.frame(sort(table(taxonomy),decreasing = T))
+```
+
+```{r}
+length(gengen_selection)
+```
+
+# work on heatmap of ANI results
+
+```{r}
+# list files in current wd
+#ani_mat <- read.table(file = "ANIb_full_percentage_identity.txt",header = T,row.names = 1)
+ani_mat <- read.table(file = "ANIb_percentage_identity.txt",header = T,row.names = 1)
+#ani_mat <- read.table(file = "ANIb_hadamard.txt",header = T,row.names = 1)
+heatmap(as.matrix(ani_mat))
+
+```
